@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block user %}
+{% if user == "Login_needed" %}
+<a href="{{url_for("login")}}">Login</a>
+<a href="{{url_for("signin")}}">회원가입</a>
+{% else %}
+<p>user : {{user}}</p>
+<a href="{{url_for("logout")}}">Logout</a>
+{% endif %}
+
+
+{% endblock user %}
+
+
+{% block contents %}
+
+{% endblock contents %}
