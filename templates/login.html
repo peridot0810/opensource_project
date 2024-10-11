@@ -1,5 +1,9 @@
+<!-- 로그인 페이지 -->
+
+<!-- base.html의 뼈대를 사용 -->
 {% extends "base.html" %}
 
+<!-- 로그인 실패 메세지 -->
 {% block message %}
   {%with messages = get_flashed_messages()%}
     {% if messages %} 

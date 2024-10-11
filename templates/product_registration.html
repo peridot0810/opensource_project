@@ -1,9 +1,9 @@
-<!-- 회원가입 페이지 -->
+<!-- 제품 등록 페이지 -->
 
 <!-- base.html의 뼈대를 사용 -->
 {% extends "base.html" %}
 
-<!-- 회원가입 실패 메세지 -->
+<!-- 제품등록 실패 메세지 -->
 {% block message %}
   {%with messages = get_flashed_messages()%}
     {%if messages %}
@@ -17,14 +17,14 @@
 
 {% block contents %}
 
-  <form action="{{url_for("signin_done")}}" method="get">
-    <p>user id: </p>
+  <form action="{{url_for("registration_done")}}" method="get">
+    <p>product id: </p>
     <input type="text" name="id" id="id">
-    <p>password: </p>
-    <input type="password" name="pwd" id="pwd">
-    <p>name: </p>
+    <p>price: </p>
+    <input type="text" name="price" id="price">
+    <p>product name: </p>
     <input type="text" name="name" id="name">
-    <button type="submit">회원가입하기</button>
+    <button type="submit">제품 등록하기</button>
   </form>
 
 {% endblock contents%}

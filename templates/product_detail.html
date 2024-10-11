@@ -1,0 +1,20 @@
+<!-- 제품 상세정보 페이지 -->
+
+<!-- base.html의 뼈대를 사용 -->
+{% extends "base.html" %}
+
+{% block contents %}
+
+<div style="margin-top: 20px;">
+  <div style="margin-top: 10px;">
+    <img src="/static/images/{{pid}}.jpg" alt="제품 이미지" width="200px">  <!-- 제품 이미지 이름은 pid.jpg 형태로 통일하기 -->
+  </div>
+  <div style="margin-top: 10px;">
+    {{product_info['product_name']}}
+  </div>
+  <div style="margin-top: 10px;">
+    {{product_info['price']}}원
+  </div>
+</div>
+
+{% endblock contents%}
