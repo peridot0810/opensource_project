@@ -32,11 +32,11 @@ def signin():
     return redirect(url_for("index"))
   return render_template("signin.html")
 
-@app.route("/signin_done", methods=["get"])  
+@app.route("/signin_done", methods=["post"])  
 def signin_done():
-  uid = request.args.get("id")
-  pwd = request.args.get("pwd")
-  name = request.args.get("name")
+  uid = request.form.get("id")
+  pwd = request.form.get("pwd")
+  name = request.form.get("name")
   
   if DB.signin(uid, pwd, name):      # 회원가입 성공
     return redirect(url_for("index"))
@@ -54,10 +54,10 @@ def login():
     return redirect(url_for("index"))
   return render_template("login.html")
 
-@app.route("/login_done", methods=["get"])  
+@app.route("/login_done", methods=["post"])  
 def login_done():
-  uid = request.args.get("id")
-  pwd = request.args.get("pwd")
+  uid = request.form.get("id")
+  pwd = request.form.get("pwd")
   if DB.login(uid, pwd):              # 로그인 성공 -> session["uid"] = 유저 아이디
     session["uid"] = uid
     return redirect(url_for("index"))
@@ -83,11 +83,11 @@ def product_registration():
     return redirect(url_for("index"))
   return render_template("product_registration.html")
 
-@app.route("/registration_done", methods=["get"])  
+@app.route("/registration_done", methods=["post"])  
 def registration_done():
-  pid = request.args.get("id")
-  price = request.args.get("price")
-  product_name = request.args.get("name")
+  pid = request.form.get("id")
+  price = request.form.get("price")
+  product_name = request.form.get("name")
   if DB.product_registration(pid, price, product_name):  # 제품 등록 성공
     return redirect(url_for("index"))
   else:                                                  # 제품 등록 실패
