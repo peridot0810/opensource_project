@@ -37,8 +37,11 @@ def signin_done():
   uid = request.form.get("id")
   pwd = request.form.get("pwd")
   name = request.form.get("name")
+  img = None
+  if 'user_img' in request.files:
+    img = request.files['user_img']
   
-  if DB.signin(uid, pwd, name):      # 회원가입 성공
+  if DB.signin(uid, pwd, name, img):      # 회원가입 성공
     return redirect(url_for("index"))
   else:
     flash("이미 존재하는 아이디 입니다")    # 회원가입 실패

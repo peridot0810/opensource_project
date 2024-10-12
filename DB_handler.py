@@ -1,6 +1,6 @@
 import pyrebase
 import json
-import uuid  
+import os
 
 class DBModule:  
   def __init__(self):
@@ -9,6 +9,7 @@ class DBModule:
     
     firebase = pyrebase.initialize_app(config)     # 데이터베이스 앱 초기화
     self.db = firebase.database()                  # 데이터베이스 연결
+    self.storage = firebase.storage()              # firebase 저장소 연결
 
   # ======= 회원가입 =======
   def signin_verification(self, uid):              # 회원가입 검증
@@ -21,10 +22,19 @@ class DBModule:
     except:                                        # except : 회원이 한명도 없는 경우 (users가 None)
       return True
 
-  def signin(self, uid, pwd, name):
+  def signin(self, uid, pwd, name, img):
+    try:
+      img_name = img.filename
+      img_path = os.path.join('uploads', img_name)
+      img.save(img_path)
+      self.storage.child(img_name).put(img_path)
+      img_url = self.storage.child(img_name).get_url(None)
+    except:
+      img_url = "No_img"
     information = {
       "pwd" : pwd,
-      "name" : name
+      "name" : name,
+      "img_url": img_url
     }
     if self.signin_verification(uid):
       self.db.child("users").child(uid).set(information)
@@ -86,3 +96,9 @@ class DBModule:
     product_info = self.db.child("products").get().val()[pid]
     return product_info
   # ===========================
+
+
+  # ====== 유저 정보 가져오기 =====
+  def get_user(self, uid):
+    user_info = self.db.child("users").get().val()[uid]
+    return user_info
