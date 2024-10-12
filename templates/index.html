@@ -40,24 +40,27 @@
       </div>
     <!-- 제품이 있는 경우 -->
     {% else %}
-      {% for pid in products %}
-        <a href="{{url_for("product_detail", pid = pid)}}">
-          <div style="margin-top: 80px; border-style:solid; border-color: aqua;">
-            <!-- 제품 이미지 -->
-            <div style="margin-top: 10px;">  
-              <img src="/static/images/{{pid}}.jpg" alt="제품 이미지" width="200px">
+      <div style="display:flex; flex-wrap:wrap; gap:20px; margin-top:50px">
+        {% for pid in products %}
+          <a href="{{url_for("product_detail", pid = pid)}}">
+            <div style="border:1px solid gray; padding:10px; width:220px; height:270px; text-align:center;">
+              <!-- 제품 이미지 -->
+              <div>  
+                <img src="/static/images/{{pid}}.jpg" alt="제품 이미지" width="100%" height="100%">
+              </div>
+              <!-- 제품 이름 -->
+              <div>    
+                {{products[pid]['product_name']}}
+              </div>
+              <!-- 제품 가격 -->
+              <div>    
+                {{products[pid]['price']}}
+              </div>
             </div>
-            <!-- 제품 이름 -->
-            <div style="margin-top:5px;">    
-              {{products[pid]['product_name']}}
-            </div>
-            <!-- 제품 가격 -->
-            <div style="margin-top:5px;">    
-              {{products[pid]['price']}}
-            </div>
-          </div>
-        </a>
-      {% endfor %}
+          </a>
+        {% endfor %}
+      </div>
+      
     {% endif %}
   </div>
 
