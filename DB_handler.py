@@ -13,7 +13,7 @@ class DBModule:
 
   # ======= 회원가입 =======
   def signin_verification(self, uid):              # 회원가입 검증
-    users = self.db.child("users").get().val()
+    users = self.get_users()
     try:
       for i in users:
         if uid == i:                               # 중복 ID가 있다면 False 반환
@@ -47,7 +47,7 @@ class DBModule:
 
   # ===== 로그인 ======
   def login(self, uid, pwd):
-    users = self.db.child("users").get().val()
+    users = self.get_users()
     try:
       userinfo = users[uid]                         # userinfo : 딕셔너리
       if pwd == userinfo["pwd"]:
@@ -62,7 +62,7 @@ class DBModule:
   
   # ===== 제품 등록 =====
   def registration_verification(self, pid):          # 제품 등록 검증 (pid : product id가 겹치는 경우는 없는지 확인)
-    products = self.db.child("products").get().val()
+    products = self.get_products()
     try:
       for i in products:
         if pid == i:
@@ -90,15 +90,29 @@ class DBModule:
       products = self.db.child("products").get().val()
       return products
     except:
-      return False
+      return None
 
-  def product_detail(self, pid):      # 개별 제품의 세부정보 가져오기
-    product_info = self.db.child("products").get().val()[pid]
-    return product_info
+  def get_product_detail(self, pid):      # 개별 제품의 세부정보 가져오기
+    try:
+      product_info = self.db.child("products").get().val()[pid]
+      return product_info
+    except:
+      return None
   # ===========================
 
 
   # ====== 유저 정보 가져오기 =====
-  def get_user(self, uid):
-    user_info = self.db.child("users").get().val()[uid]
-    return user_info
+  def get_users(self):
+    try:
+      users = self.db.child("users").get().val()
+      return users
+    except:
+      return None
+  
+  def get_user_detail(self, uid):
+    try:
+      user_info = self.db.child("users").get().val()[uid]
+      return user_info
+    except:
+      return None
+# =============================

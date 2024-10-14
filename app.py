@@ -103,11 +103,26 @@ def registration_done():
 # ===== 개별 제품 상세정보 =====
 @app.route("/product_detail/<string:pid>")  # /product_detail/제품 ID
 def product_detail(pid):
-  product_info = DB.product_detail(pid)
+  product_info = DB.get_product_detail(pid)
   return render_template("product_detail.html", product_info=product_info, pid=pid)
 # ==========================
+
+
+
+# ===== 옷 입어보기 ======
+@app.route("/try_on/<string:pid>")
+def try_on(pid):
+  uid = session["uid"]
+  user_info = DB.get_user_detail(uid)
+  user_img_url = user_info['img_url']
+  return render_template("try_on.html", url=user_img_url, pid=pid)
+# =====================
+
+
 
 
 # ===== 서버 실행 =====
 if __name__ == "__main__":
   app.run(host = "0.0.0.0", debug=True)
+
+
