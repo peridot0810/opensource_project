@@ -31,6 +31,7 @@ class DBModule:
       img_url = self.storage.child(img_name).get_url(None)
     except:
       img_url = "No_img"
+    
     information = {
       "pwd" : pwd,
       "name" : name,
@@ -47,14 +48,13 @@ class DBModule:
 
   # ===== 로그인 ======
   def login(self, uid, pwd):
-    users = self.get_users()
+    userinfo = self.get_user_detail(uid)            # userinfo : 딕셔너리
     try:
-      userinfo = users[uid]                         # userinfo : 딕셔너리
       if pwd == userinfo["pwd"]:
         return True
       else:
         return False
-    except:                                         # except : 회원이 한명도 없는 경우 (users가 None)
+    except:                                         # except : 회원이 한명도 없는 경우 (userinfo가 None)
       return False
   # =================
 
@@ -85,7 +85,7 @@ class DBModule:
 
 
   # ===== 제품 정보 가져오기 =====
-  def get_products(self):             # 모든 제품 목록 가져오기
+  def get_products(self):                 # 모든 제품 목록 가져오기
     try:
       products = self.db.child("products").get().val()
       return products
@@ -94,7 +94,7 @@ class DBModule:
 
   def get_product_detail(self, pid):      # 개별 제품의 세부정보 가져오기
     try:
-      product_info = self.db.child("products").get().val()[pid]
+      product_info = self.get_products()[pid]
       return product_info
     except:
       return None
@@ -102,17 +102,35 @@ class DBModule:
 
 
   # ====== 유저 정보 가져오기 =====
-  def get_users(self):
+  def get_users(self):                    # 모든 유저 목록 가져오기
     try:
       users = self.db.child("users").get().val()
       return users
     except:
       return None
   
-  def get_user_detail(self, uid):
+  def get_user_detail(self, uid):         # 개별 유저의 세부정보 가져오기
     try:
-      user_info = self.db.child("users").get().val()[uid]
+      user_info = self.get_users()[uid]
       return user_info
     except:
       return None
-# =============================
+  # =============================
+
+
+
+  # ======= 이미지 업로드 =======
+  def upload_img(self, img, uid):
+    try:
+      img_name = img.filename
+      img_path = os.path.join('uploads', img_name)
+      img.save(img_path)
+      self.storage.child(img_name).put(img_path)
+      img_url = self.storage.child(img_name).get_url(None)
+    except:
+      return False
+    user_info = self.get_user_detail(uid)
+    user_info["img_url"] = img_url
+    self.db.child("users").child(uid).set(user_info)
+    return True
+  # =============================

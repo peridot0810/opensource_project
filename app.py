@@ -44,14 +44,14 @@ def signin_done():
   if DB.signin(uid, pwd, name, img):      # 회원가입 성공
     return redirect(url_for("index"))
   else:
-    flash("이미 존재하는 아이디 입니다")    # 회원가입 실패
+    flash("이미 존재하는 아이디 입니다")         # 회원가입 실패
     return redirect(url_for("signin"))
 # ======================
 
 
 
 # ===== 로그인/로그아웃 =====
-@app.route("/login")  # 로그인창
+@app.route("/login") 
 def login():
   if "uid" in session:                # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
@@ -112,10 +112,31 @@ def product_detail(pid):
 # ===== 옷 입어보기 ======
 @app.route("/try_on/<string:pid>")
 def try_on(pid):
+  if "uid" not in session:
+    flash("로그인이 필요한 서비스입니다") 
+    return redirect(url_for("login"))
   uid = session["uid"]
   user_info = DB.get_user_detail(uid)
   user_img_url = user_info['img_url']
+  if user_img_url == "No_img":
+    flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
+    return redirect(url_for("upload_img", uid=uid))
   return render_template("try_on.html", url=user_img_url, pid=pid)
+
+@app.route("/upload_img/<string:uid>")        # 회원가입때 이미지를 업로드하지 않은 경우
+def upload_img(uid):
+  return render_template("upload_img.html", uid=uid)
+
+@app.route("/upload_done/<string:uid>", methods=["post"])
+def upload_done(uid):
+  img = None
+  if 'user_img' in request.files:
+    img = request.files['user_img']
+  if DB.upload_img(img, uid): 
+    return redirect(url_for("index"))
+  else:
+    flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
+    return redirect(url_for("upload_img", uid=uid))
 # =====================
 
 

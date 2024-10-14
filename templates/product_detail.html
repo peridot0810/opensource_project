@@ -3,6 +3,17 @@
 <!-- base.html의 뼈대를 사용 -->
 {% extends "base.html" %}
 
+<!-- 로그인/사진 업로드 요청 메세지 -->
+{% block message %}
+  {%with messages = get_flashed_messages()%}
+    {%if messages %}
+    <script type="text/javascript">
+      alert("{{messages[-1]}}");
+    </script>
+    {%endif%}
+  {%endwith%}
+{% endblock message %}
+
 {% block contents %}
 
 <div style="margin-top: 20px;">
