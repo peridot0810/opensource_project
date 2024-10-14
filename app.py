@@ -42,7 +42,7 @@ def signin_done():
     img = request.files['user_img']
   
   if DB.signin(uid, pwd, name, img):      # 회원가입 성공
-    return redirect(url_for("index"))
+    return redirect(url_for("login"))
   else:
     flash("이미 존재하는 아이디 입니다")         # 회원가입 실패
     return redirect(url_for("signin"))
@@ -91,7 +91,8 @@ def registration_done():
   pid = request.form.get("id")
   price = request.form.get("price")
   product_name = request.form.get("name")
-  if DB.product_registration(pid, price, product_name):  # 제품 등록 성공
+  product_explain = request.form.get("product_explain")
+  if DB.product_registration(pid, price, product_name, product_explain):  # 제품 등록 성공
     return redirect(url_for("index"))
   else:                                                  # 제품 등록 실패
     flash("제품 ID가 중복됩니다")

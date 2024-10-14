@@ -23,7 +23,7 @@ class DBModule:
       return True
 
   def signin(self, uid, pwd, name, img):
-    try:
+    try:                                           # 이미지 저장 및 파이어베이스에 업로드
       img_name = img.filename
       img_path = os.path.join('uploads', img_name)
       img.save(img_path)
@@ -71,10 +71,11 @@ class DBModule:
     except:                                          # except : 제품이 하나도 없는 경우 (products가 None)
       return True
 
-  def product_registration(self, pid, price, product_name):
+  def product_registration(self, pid, price, product_name, product_explain):
     information = {
       "price" : price,
-      "product_name" : product_name
+      "product_name" : product_name,
+      "product_explain" : product_explain
     }
     if self.registration_verification(pid):
       self.db.child("products").child(pid).set(information)
