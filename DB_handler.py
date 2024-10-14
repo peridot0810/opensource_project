@@ -24,18 +24,21 @@ class DBModule:
 
   def signin(self, uid, pwd, name, img):
     try:                                           # 이미지 저장 및 파이어베이스에 업로드
-      img_name = img.filename
+      extension = img.filename.split(".")[1]
+      img_name = f'{uid}.{extension}'
       img_path = os.path.join('uploads', img_name)
       img.save(img_path)
-      self.storage.child(img_name).put(img_path)
+      self.storage.child(f"users/{img_name}").put(img_path)
       img_url = self.storage.child(img_name).get_url(None)
     except:
       img_url = "No_img"
+      extension = "No_extension"
     
     information = {
       "pwd" : pwd,
       "name" : name,
-      "img_url": img_url
+      "img_url": img_url,
+      "img_extension": extension
     }
     if self.signin_verification(uid):
       self.db.child("users").child(uid).set(information)
@@ -123,15 +126,27 @@ class DBModule:
   # ======= 이미지 업로드 =======
   def upload_img(self, img, uid):
     try:
-      img_name = img.filename
+      extension = img.filename.split(".")[1]
+      img_name = f'{uid}.{extension}'
       img_path = os.path.join('uploads', img_name)
       img.save(img_path)
-      self.storage.child(img_name).put(img_path)
+      self.storage.child(f"users/{img_name}").put(img_path)
       img_url = self.storage.child(img_name).get_url(None)
     except:
       return False
     user_info = self.get_user_detail(uid)
     user_info["img_url"] = img_url
+    user_info["img_extension"] = extension
     self.db.child("users").child(uid).set(user_info)
     return True
   # =============================
+
+
+  # ====== 유저/제품 삭제 ======
+  def user_delete(self, uid):
+    self.db.child(f"users/{uid}").remove()
+    return True
+  
+  def product_delete(self, pid):
+    self.db.child(f"products/{pid}").remove()
+    return True

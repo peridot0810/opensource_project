@@ -1,0 +1,23 @@
+<!-- 제품 관리 페이지 -->
+
+<!-- base.html의 뼈대를 사용 -->
+{% extends "base.html" %}
+
+{% block contents %}
+
+<div style="margin-top: 20px;">
+  {% if products != None %}
+    {% for pid in products %}
+      {% if uid != "root" %}
+      product : {{pid}} <br>
+      product info : {{products[pid]}} <br>
+      <a href="{{url_for("product_delete", pid = pid)}}">이 제품 삭제하기</a>
+      <br><br><br><br>
+      {% endif %}
+    
+    {% endfor %}
+  {% endif %}
+  
+</div>
+
+{% endblock contents%}

@@ -142,6 +142,40 @@ def upload_done(uid):
 
 
 
+# ====== 관리 페이지 =======
+@app.route("/user_manage")       
+def user_manage():
+  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
+    return redirect(url_for("index"))
+  users = DB.get_users()
+  return render_template("user_manage.html", users=users)
+
+@app.route("/product_manage")       
+def product_manage():
+  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
+    return redirect(url_for("index"))
+  products = DB.get_products()
+  return render_template("product_manage.html", products = products)
+# =========================
+
+
+
+# ======= 관리(삭제) 페이지 ========
+@app.route("/user_delete/<string:uid>")       
+def user_delete(uid):
+  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 삭제 가능
+    return redirect(url_for("index"))
+  DB.user_delete(uid)
+  return redirect(url_for("user_manage"))
+
+@app.route("/product_delete/<string:pid>")       
+def product_delete(pid):
+  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 삭제 가능
+    return redirect(url_for("index"))
+  DB.product_delete(pid)
+  return redirect(url_for("product_manage"))
+
+
 
 # ===== 서버 실행 =====
 if __name__ == "__main__":
