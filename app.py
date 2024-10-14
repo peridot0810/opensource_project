@@ -119,6 +119,7 @@ def try_on(pid):
   uid = session["uid"]
   user_info = DB.get_user_detail(uid)
   user_img_url = user_info['img_url']
+  print(user_img_url)
   if user_img_url == "No_img":
     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
     return redirect(url_for("upload_img", uid=uid))
@@ -174,6 +175,7 @@ def product_delete(pid):
     return redirect(url_for("index"))
   DB.product_delete(pid)
   return redirect(url_for("product_manage"))
+# ================================
 
 
 

@@ -29,7 +29,7 @@ class DBModule:
       img_path = os.path.join('uploads', img_name)
       img.save(img_path)
       self.storage.child(f"users/{img_name}").put(img_path)
-      img_url = self.storage.child(img_name).get_url(None)
+      img_url = self.storage.child(f"users/{img_name}").get_url(None)
     except:
       img_url = "No_img"
       extension = "No_extension"
@@ -131,13 +131,14 @@ class DBModule:
       img_path = os.path.join('uploads', img_name)
       img.save(img_path)
       self.storage.child(f"users/{img_name}").put(img_path)
-      img_url = self.storage.child(img_name).get_url(None)
+      img_url = self.storage.child(f"users/{img_name}").get_url(None)
     except:
       return False
-    user_info = self.get_user_detail(uid)
-    user_info["img_url"] = img_url
-    user_info["img_extension"] = extension
-    self.db.child("users").child(uid).set(user_info)
+    update_info = {
+      "img_url" : img_url,
+      "img_extension" : extension
+    }
+    self.db.child("users").child(uid).update(update_info)
     return True
   # =============================
 
@@ -150,3 +151,4 @@ class DBModule:
   def product_delete(self, pid):
     self.db.child(f"products/{pid}").remove()
     return True
+  # =========================
