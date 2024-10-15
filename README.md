@@ -8,7 +8,7 @@
 ## 회원가입
 - 차례대로 입력 (이미지 업로드는 선택사항)
 - firebase의 Realtime Database에 유저 정보 저장
-  - 이미지는 /uploads 디렉토리에 저장되고, firebase의 storage에 저장된 후 해당 URL이 유저 정보에 저장됨 
+  - 이미지는 /static/user_img 디렉토리에 저장, 이미지 path가 유저 정보에 저장됨 
 - firebase 데이터베이스에 등록된 사용자는 로그인 가능
 
 
@@ -17,7 +17,7 @@
   - 현재는 uid, pwd, name 모두 root로 등록되어있음 (로그인 안되면 uid "root"로 회원가입하기)
 - 차례대로 입력 -> 유저 정보처럼 firebase에 저장됨
 - 새로 등록된 제품은 홈페이지에 추가됨
-- **주의 : 제품 이미지는 "static/images/ 위치에 "(product id).jpg" 형태로 저장되어있어야 페이지에 반영됨**
+- **주의 : 제품 이미지는 "static/product_img/ 위치에 "(product id).jpg" 형태로 저장되어있어야 페이지에 반영됨**
 
 
 ## 옷 입어보기
