@@ -118,12 +118,11 @@ def try_on(pid):
     return redirect(url_for("login"))
   uid = session["uid"]
   user_info = DB.get_user_detail(uid)
-  user_img_url = user_info['img_url']
-  print(user_img_url)
-  if user_img_url == "No_img":
+  user_img_path = user_info['img_path']
+  if user_img_path == "No_img":
     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
     return redirect(url_for("upload_img", uid=uid))
-  return render_template("try_on.html", url=user_img_url, pid=pid)
+  return render_template("try_on.html", img_path=user_img_path, pid=pid)
 
 @app.route("/upload_img/<string:uid>")        # 회원가입때 이미지를 업로드하지 않은 경우
 def upload_img(uid):

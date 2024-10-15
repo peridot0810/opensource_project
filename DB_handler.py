@@ -9,7 +9,6 @@ class DBModule:
     
     firebase = pyrebase.initialize_app(config)     # 데이터베이스 앱 초기화
     self.db = firebase.database()                  # 데이터베이스 연결
-    self.storage = firebase.storage()              # firebase 저장소 연결
 
   # ======= 회원가입 =======
   def signin_verification(self, uid):              # 회원가입 검증
@@ -26,19 +25,15 @@ class DBModule:
     try:                                           # 이미지 저장 및 파이어베이스에 업로드
       extension = img.filename.split(".")[1]
       img_name = f'{uid}.{extension}'
-      img_path = os.path.join('uploads', img_name)
+      img_path = os.path.join('static/user_img', img_name)
       img.save(img_path)
-      self.storage.child(f"users/{img_name}").put(img_path)
-      img_url = self.storage.child(f"users/{img_name}").get_url(None)
     except:
-      img_url = "No_img"
-      extension = "No_extension"
+      img_path = "No_img"
     
     information = {
       "pwd" : pwd,
       "name" : name,
-      "img_url": img_url,
-      "img_extension": extension
+      "img_path": img_path,
     }
     if self.signin_verification(uid):
       self.db.child("users").child(uid).set(information)
@@ -128,15 +123,12 @@ class DBModule:
     try:
       extension = img.filename.split(".")[1]
       img_name = f'{uid}.{extension}'
-      img_path = os.path.join('uploads', img_name)
+      img_path = os.path.join('static/user_img', img_name)
       img.save(img_path)
-      self.storage.child(f"users/{img_name}").put(img_path)
-      img_url = self.storage.child(f"users/{img_name}").get_url(None)
     except:
       return False
     update_info = {
-      "img_url" : img_url,
-      "img_extension" : extension
+      "img_path" : img_path,
     }
     self.db.child("users").child(uid).update(update_info)
     return True
@@ -145,6 +137,9 @@ class DBModule:
 
   # ====== 유저/제품 삭제 ======
   def user_delete(self, uid):
+    user_info = self.get_user_detail(uid)
+    if user_info["img_path"] != "No_img":
+      os.remove(user_info["img_path"])
     self.db.child(f"users/{uid}").remove()
     return True
   
