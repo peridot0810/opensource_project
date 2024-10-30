@@ -10,21 +10,29 @@ class DBModule:
     firebase = pyrebase.initialize_app(config)     # 데이터베이스 앱 초기화
     self.db = firebase.database()                  # 데이터베이스 연결
 
+
+
   # ======= 회원가입 =======
-  def signin_verification(self, uid):              # 회원가입 검증
-    users = self.get_users()
+  def signin_verification(self, id, type):         # 회원가입 검증
+    id_list = None
+    print(type)
+    if type == "user":
+      id_list = self.get_users()
+    if type == "designer":
+      id_list = self.get_designers()
+    
     try:
-      for i in users:
-        if uid == i:                               # 중복 ID가 있다면 False 반환
+      for i in id_list:
+        if id == i:                                # 중복 ID가 있다면 False 반환
           return False
       return True
     except:                                        # except : 회원이 한명도 없는 경우 (users가 None)
       return True
 
-  def signin(self, uid, pwd, name, img):
+  def signin(self, id, pwd, name, img, type):
     try:                                           # 이미지 저장 및 파이어베이스에 업로드
       extension = img.filename.split(".")[1]
-      img_name = f'{uid}.{extension}'
+      img_name = f'{id}.{extension}'
       img_path = os.path.join('static/user_img', img_name)
       img.save(img_path)
     except:
@@ -33,10 +41,11 @@ class DBModule:
     information = {
       "pwd" : pwd,
       "name" : name,
-      "img_path": img_path,
+      "img_path" : img_path,
+      "type" : type
     }
-    if self.signin_verification(uid):
-      self.db.child("users").child(uid).set(information)
+    if self.signin_verification(id, type):
+      self.db.child(f"{type}s").child(id).set(information)
       return True
     else:
       return False
@@ -45,8 +54,12 @@ class DBModule:
 
 
   # ===== 로그인 ======
-  def login(self, uid, pwd):
-    userinfo = self.get_user_detail(uid)            # userinfo : 딕셔너리
+  def login(self, id, pwd, type):
+    userinfo = None
+    if type == "user":
+      userinfo = self.get_user_detail(id)
+    if type == "designer":
+      userinfo = self.get_designer_detail(id)
     try:
       if pwd == userinfo["pwd"]:
         return True
@@ -112,6 +125,23 @@ class DBModule:
     try:
       user_info = self.get_users()[uid]
       return user_info
+    except:
+      return None
+  # =============================
+
+
+  # ====== 디자이너 정보 가져오기 =====
+  def get_designers(self):                    # 모든 디자이너 목록 가져오기
+    try:
+      designers = self.db.child("designers").get().val()
+      return designers
+    except:
+      return None
+  
+  def get_designer_detail(self, did):         # 개별 디자이너의 세부정보 가져오기
+    try:
+      designer_info = self.get_designers()[did]
+      return designer_info
     except:
       return None
   # =============================

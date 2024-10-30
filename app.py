@@ -12,8 +12,8 @@ DB = DBModule()                      # DB모듈 인스턴스 생성
 # ===== 메인 페이지 =====
 @app.route("/")
 def index():
-  if "uid" in session:               # 로그인이 되어있다면  -> user = 유저 아이디
-    user = session['uid']
+  if "id" in session:               # 로그인이 되어있다면  -> user = 유저 아이디
+    user = session['id']
   else:                              # 로그인되어있지 않다면 -> user = "Login_needed"
     user = "Login_needed"
 
@@ -26,52 +26,68 @@ def index():
 
 
 # ===== 회원가입 =====
-@app.route("/signin") 
+@app.route("/signin_userType")
+def signin_userType():                   # 디자이너인지 소비자인지 구분
+  return render_template("signin_userType.html")
+
+
+@app.route("/signin", methods=["post"]) 
 def signin():
-  if "uid" in session:               # 로그인 상태라면 redirect -> 메인페이지
+  if "id" in session:                       # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  return render_template("signin.html")
+  if request.form.get("type") == "user" :    # 일반 사용자 -> 일반 가입 페이지
+    return render_template("signin.html")
+  else:                                      # 디자이너 사용자 -> 디자이너 가입 페이지
+    return render_template("signin_designer.html")                                   
+
 
 @app.route("/signin_done", methods=["post"])  
 def signin_done():
   uid = request.form.get("id")
   pwd = request.form.get("pwd")
   name = request.form.get("name")
+  type = request.form.get("type")
   img = None
   if 'user_img' in request.files:
     img = request.files['user_img']
   
-  if DB.signin(uid, pwd, name, img):      # 회원가입 성공
-    return redirect(url_for("login"))
+  if DB.signin(uid, pwd, name, img, type):      # 회원가입 성공
+    return redirect(url_for("login_userType"))
   else:
-    flash("이미 존재하는 아이디 입니다")         # 회원가입 실패
-    return redirect(url_for("signin"))
+    flash("이미 존재하는 아이디 입니다")               # 회원가입 실패
+    return redirect(url_for("signin_userType"))
 # ======================
 
 
 
 # ===== 로그인/로그아웃 =====
-@app.route("/login") 
+@app.route("/login_userType")
+def login_userType():                   # 디자이너인지 소비자인지 구분
+  return render_template("login_userType.html")
+
+@app.route("/login", methods=["post"]) 
 def login():
-  if "uid" in session:                # 로그인 상태라면 redirect -> 메인페이지
+  if "id" in session:                # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  return render_template("login.html")
+  type = request.form.get("type")
+  return render_template("login.html", type=type)
 
 @app.route("/login_done", methods=["post"])  
 def login_done():
-  uid = request.form.get("id")
+  id = request.form.get("id")
   pwd = request.form.get("pwd")
-  if DB.login(uid, pwd):              # 로그인 성공 -> session["uid"] = 유저 아이디
-    session["uid"] = uid
+  type = request.form.get("type")
+  if DB.login(id, pwd, type):              # 로그인 성공 -> session["id"] = 유저 아이디
+    session["id"] = id
     return redirect(url_for("index"))
   else:                               # 로그인 실패
     flash("아이디가 없거나 틀린 비밀번호 입니다")
-    return redirect(url_for("login"))
+    return redirect(url_for("login_userType"))
 
 @app.route("/logout")
 def logout():
-  if "uid" in session:                # 로그인 상태라면 session에서 "uid"라는 key를 pop
-    session.pop("uid")
+  if "id" in session:                # 로그인 상태라면 session에서 "uid"라는 key를 pop
+    session.pop("id")
     return redirect(url_for("index"))
   else:                               # 로그인 상태가 아니라면 redirect -> 로그인 창
     return redirect(url_for("login"))
@@ -82,7 +98,7 @@ def logout():
 # ====== 제품 등록 ======
 @app.route("/product_registration")  
 def product_registration():
-  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 등록 가능 
+  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 등록 가능 
     return redirect(url_for("index"))
   return render_template("product_registration.html")
 
@@ -116,7 +132,7 @@ def try_on(pid):
   if "uid" not in session:
     flash("로그인이 필요한 서비스입니다") 
     return redirect(url_for("login"))
-  uid = session["uid"]
+  uid = session["id"]
   user_info = DB.get_user_detail(uid)
   user_img_path = user_info['img_path']
   if user_img_path == "No_img":
@@ -145,14 +161,14 @@ def upload_done(uid):
 # ====== 관리 페이지 =======
 @app.route("/user_manage")       
 def user_manage():
-  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
+  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
     return redirect(url_for("index"))
   users = DB.get_users()
   return render_template("user_manage.html", users=users)
 
 @app.route("/product_manage")       
 def product_manage():
-  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
+  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
     return redirect(url_for("index"))
   products = DB.get_products()
   return render_template("product_manage.html", products = products)
@@ -163,14 +179,14 @@ def product_manage():
 # ======= 관리(삭제) 페이지 ========
 @app.route("/user_delete/<string:uid>")       
 def user_delete(uid):
-  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 삭제 가능
+  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 삭제 가능
     return redirect(url_for("index"))
   DB.user_delete(uid)
   return redirect(url_for("user_manage"))
 
 @app.route("/product_delete/<string:pid>")       
 def product_delete(pid):
-  if "uid" not in session or session["uid"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 삭제 가능
+  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 삭제 가능
     return redirect(url_for("index"))
   DB.product_delete(pid)
   return redirect(url_for("product_manage"))

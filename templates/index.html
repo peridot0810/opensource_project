@@ -7,8 +7,8 @@
 {% block user %}
   <!-- 로그인 되지 않은 상태 -->
   {% if user == "Login_needed" %}
-    <a href="{{url_for("login")}}">Login</a>
-    <a href="{{url_for("signin")}}">회원가입</a>
+    <a href="{{url_for("login_userType")}}">Login</a>
+    <a href="{{url_for("signin_userType")}}">회원가입</a>
 
   <!-- 관리자(root)로 로그인되어있는 상태 -->
   {% elif user == "root" %}
