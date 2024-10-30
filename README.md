@@ -1,5 +1,5 @@
 # opensource_project
-virtual try on 관련 전체 코드는 아래 레포지토리에 있음. 현재 opensource_project 레포지토리에는 일부만 존재
+virtual try on 관련 전체 코드는 아래 레포지토리에 있음. 현재 opensource_project 레포지토리 새로 판 브랜치에는 일부만 존재.
 https://github.com/sebinyday/IDM-VTON 
 ## 코드 실행
 1. 가상환경 생성 후 requirements.txt 설치
