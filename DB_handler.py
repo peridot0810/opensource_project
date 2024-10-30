@@ -16,8 +16,8 @@ class DBModule:
   def signin_verification(self, id, type):         # 회원가입 검증
     id_list = None
     print(type)
-    if type == "user":
-      id_list = self.get_users()
+    if type == "consumer":
+      id_list = self.get_consumers()
     if type == "designer":
       id_list = self.get_designers()
     
@@ -33,7 +33,7 @@ class DBModule:
     try:                                           # 이미지 저장 및 파이어베이스에 업로드
       extension = img.filename.split(".")[1]
       img_name = f'{id}.{extension}'
-      img_path = os.path.join('static/user_img', img_name)
+      img_path = os.path.join('static/consumer_img', img_name)
       img.save(img_path)
     except:
       img_path = "No_img"
@@ -56,8 +56,8 @@ class DBModule:
   # ===== 로그인 ======
   def login(self, id, pwd, type):
     userinfo = None
-    if type == "user":
-      userinfo = self.get_user_detail(id)
+    if type == "consumer":
+      userinfo = self.get_consumer_detail(id)
     if type == "designer":
       userinfo = self.get_designer_detail(id)
     try:
@@ -113,18 +113,18 @@ class DBModule:
   # ===========================
 
 
-  # ====== 유저 정보 가져오기 =====
-  def get_users(self):                    # 모든 유저 목록 가져오기
+  # ====== 소비자 정보 가져오기 =====
+  def get_consumers(self):                    # 모든 소비자 목록 가져오기
     try:
-      users = self.db.child("users").get().val()
-      return users
+      consumers = self.db.child("consumers").get().val()
+      return consumers
     except:
       return None
   
-  def get_user_detail(self, uid):         # 개별 유저의 세부정보 가져오기
+  def get_consumer_detail(self, cid):         # 개별 소비자의 세부정보 가져오기
     try:
-      user_info = self.get_users()[uid]
-      return user_info
+      consumer_info = self.get_consumers()[cid]
+      return consumer_info
     except:
       return None
   # =============================
@@ -149,28 +149,33 @@ class DBModule:
 
 
   # ======= 이미지 업로드 =======
-  def upload_img(self, img, uid):
+  def upload_img(self, img, cid):
     try:
       extension = img.filename.split(".")[1]
-      img_name = f'{uid}.{extension}'
-      img_path = os.path.join('static/user_img', img_name)
+      img_name = f'{cid}.{extension}'
+      img_path = os.path.join('static/consumer_img', img_name)
       img.save(img_path)
     except:
       return False
     update_info = {
       "img_path" : img_path,
     }
-    self.db.child("users").child(uid).update(update_info)
+    self.db.child("consumers").child(cid).update(update_info)
     return True
   # =============================
 
 
   # ====== 유저/제품 삭제 ======
-  def user_delete(self, uid):
-    user_info = self.get_user_detail(uid)
+  def user_delete(self, type, uid):
+    user_info = None
+    if type == "consumer":
+      user_info = self.get_consumer_detail(uid)
+    elif type == "designer":
+      user_info = self.get_designer_detail(uid)
+
     if user_info["img_path"] != "No_img":
       os.remove(user_info["img_path"])
-    self.db.child(f"users/{uid}").remove()
+    self.db.child(f"{type}s/{uid}").remove()
     return True
   
   def product_delete(self, pid):

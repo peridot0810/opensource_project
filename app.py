@@ -24,6 +24,28 @@ def index():
 # =====================
 
 
+# ========= 마이 페이지 ===========
+@app.route("/my_page")
+def my_page():
+  if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디
+    user = session['id']
+    type = session['type']
+  else:                              # 로그인되어있지 않다면 -> 로그인 창으로 redirect
+    return redirect(url_for("login_userType"))
+  
+  if type == "consumer":
+    user_info = DB.get_consumer_detail(user)
+  elif type == "designer":
+    user_info = DB.get_designer_detail(user)
+  
+  return render_template("my_page.html", user_info = user_info, user_type=type)
+  
+# ===============================
+  
+
+
+
+
 
 # ===== 회원가입 =====
 @app.route("/signin_userType")
@@ -35,7 +57,7 @@ def signin_userType():                   # 디자이너인지 소비자인지 �
 def signin():
   if "id" in session:                       # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  if request.form.get("type") == "user" :    # 일반 사용자 -> 일반 가입 페이지
+  if request.form.get("type") == "consumer" :    # 일반 사용자 -> 일반 가입 페이지
     return render_template("signin.html")
   else:                                      # 디자이너 사용자 -> 디자이너 가입 페이지
     return render_template("signin_designer.html")                                   
@@ -48,8 +70,8 @@ def signin_done():
   name = request.form.get("name")
   type = request.form.get("type")
   img = None
-  if 'user_img' in request.files:
-    img = request.files['user_img']
+  if 'consumer_img' in request.files:
+    img = request.files['consumer_img']
   
   if DB.signin(uid, pwd, name, img, type):      # 회원가입 성공
     return redirect(url_for("login_userType"))
@@ -79,6 +101,7 @@ def login_done():
   type = request.form.get("type")
   if DB.login(id, pwd, type):              # 로그인 성공 -> session["id"] = 유저 아이디
     session["id"] = id
+    session["type"] = type
     return redirect(url_for("index"))
   else:                               # 로그인 실패
     flash("아이디가 없거나 틀린 비밀번호 입니다")
@@ -88,6 +111,7 @@ def login_done():
 def logout():
   if "id" in session:                # 로그인 상태라면 session에서 "uid"라는 key를 pop
     session.pop("id")
+    session.pop("type")
     return redirect(url_for("index"))
   else:                               # 로그인 상태가 아니라면 redirect -> 로그인 창
     return redirect(url_for("login"))
@@ -98,7 +122,7 @@ def logout():
 # ====== 제품 등록 ======
 @app.route("/product_registration")  
 def product_registration():
-  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 등록 가능 
+  if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 등록 가능 
     return redirect(url_for("index"))
   return render_template("product_registration.html")
 
@@ -129,26 +153,26 @@ def product_detail(pid):
 # ===== 옷 입어보기 ======
 @app.route("/try_on/<string:pid>")
 def try_on(pid):
-  if "uid" not in session:
+  if "id" not in session:
     flash("로그인이 필요한 서비스입니다") 
     return redirect(url_for("login"))
-  uid = session["id"]
-  user_info = DB.get_user_detail(uid)
-  user_img_path = user_info['img_path']
-  if user_img_path == "No_img":
+  cid = session["id"]
+  consumer_info = DB.get_consumer_detail(cid)
+  consumer_img_path = consumer_info['img_path']
+  if consumer_img_path == "No_img":
     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
-    return redirect(url_for("upload_img", uid=uid))
-  return render_template("try_on.html", img_path=user_img_path, pid=pid)
+    return redirect(url_for("upload_img", cid=cid))
+  return render_template("try_on.html", img_path=consumer_img_path, pid=pid)
 
 @app.route("/upload_img/<string:uid>")        # 회원가입때 이미지를 업로드하지 않은 경우
-def upload_img(uid):
-  return render_template("upload_img.html", uid=uid)
+def upload_img(cid):
+  return render_template("upload_img.html", cid=cid)
 
 @app.route("/upload_done/<string:uid>", methods=["post"])
 def upload_done(uid):
   img = None
-  if 'user_img' in request.files:
-    img = request.files['user_img']
+  if 'consumer_img' in request.files:
+    img = request.files['consumer_img']
   if DB.upload_img(img, uid): 
     return redirect(url_for("index"))
   else:
@@ -161,14 +185,16 @@ def upload_done(uid):
 # ====== 관리 페이지 =======
 @app.route("/user_manage")       
 def user_manage():
-  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
+  if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
     return redirect(url_for("index"))
-  users = DB.get_users()
-  return render_template("user_manage.html", users=users)
+  consumers = DB.get_consumers()
+  designers = DB.get_designers()
+  print(designers)
+  return render_template("user_manage.html", consumers=consumers, designers=designers)
 
 @app.route("/product_manage")       
 def product_manage():
-  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
+  if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
     return redirect(url_for("index"))
   products = DB.get_products()
   return render_template("product_manage.html", products = products)
@@ -177,16 +203,19 @@ def product_manage():
 
 
 # ======= 관리(삭제) 페이지 ========
-@app.route("/user_delete/<string:uid>")       
-def user_delete(uid):
-  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 삭제 가능
+@app.route("/user_delete")       
+def user_delete():
+  type = request.args.get('type')
+  uid = request.args.get('uid')
+  if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 삭제 가능
     return redirect(url_for("index"))
-  DB.user_delete(uid)
+  DB.user_delete(type, uid)
   return redirect(url_for("user_manage"))
 
-@app.route("/product_delete/<string:pid>")       
-def product_delete(pid):
-  if "uid" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 삭제 가능
+@app.route("/product_delete")       
+def product_delete():
+  pid = request.args.get("pid")
+  if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 삭제 가능
     return redirect(url_for("index"))
   DB.product_delete(pid)
   return redirect(url_for("product_manage"))

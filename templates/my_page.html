@@ -1,0 +1,24 @@
+<!-- 마이 페이지 -->
+
+<!-- base.html의 뼈대를 사용 -->
+{% extends "base.html" %}  
+
+
+{% block user %}
+  
+{% endblock user %}
+
+
+{% block contents %}
+
+  <div>
+    <p>
+      이름 : {{user_info["name"]}}
+    </p>
+    <p>
+      타입 : {{user_type}}
+    </p>
+  </div>
+  
+
+{% endblock contents %}
