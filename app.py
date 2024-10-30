@@ -12,14 +12,14 @@ DB = DBModule()                      # DB모듈 인스턴스 생성
 # ===== 메인 페이지 =====
 @app.route("/")
 def index():
-  if "id" in session:               # 로그인이 되어있다면  -> user = 유저 아이디
+  if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디
     user = session['id']
   else:                              # 로그인되어있지 않다면 -> user = "Login_needed"
     user = "Login_needed"
 
   products = DB.get_products()
   if not products:                   # product가 없음 -> 제품 가져오기 실패
-    return render_template("index.html", user = user, products = "No_products")
+    products = "No_products"
   return render_template("index.html", user = user, products = products)  # index.html에 user, products 넘기기
 # =====================
 
@@ -32,11 +32,8 @@ def my_page():
     type = session['type']
   else:                              # 로그인되어있지 않다면 -> 로그인 창으로 redirect
     return redirect(url_for("login_userType"))
-  
-  if type == "consumer":
-    user_info = DB.get_consumer_detail(user)
-  elif type == "designer":
-    user_info = DB.get_designer_detail(user)
+
+  user_info = DB.get_user_detail(user, type)
   
   return render_template("my_page.html", user_info = user_info, user_type=type)
   
@@ -157,27 +154,28 @@ def try_on(pid):
     flash("로그인이 필요한 서비스입니다") 
     return redirect(url_for("login"))
   cid = session["id"]
-  consumer_info = DB.get_consumer_detail(cid)
+  type = session["type"]
+  consumer_info = DB.get_user_detail(cid, type)
   consumer_img_path = consumer_info['img_path']
   if consumer_img_path == "No_img":
     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
     return redirect(url_for("upload_img", cid=cid))
   return render_template("try_on.html", img_path=consumer_img_path, pid=pid)
 
-@app.route("/upload_img/<string:uid>")        # 회원가입때 이미지를 업로드하지 않은 경우
+@app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
 def upload_img(cid):
   return render_template("upload_img.html", cid=cid)
 
-@app.route("/upload_done/<string:uid>", methods=["post"])
-def upload_done(uid):
+@app.route("/upload_done/<string:cid>", methods=["post"])
+def upload_done(cid):
   img = None
   if 'consumer_img' in request.files:
     img = request.files['consumer_img']
-  if DB.upload_img(img, uid): 
+  if DB.upload_img(img, cid): 
     return redirect(url_for("index"))
   else:
     flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
-    return redirect(url_for("upload_img", uid=uid))
+    return redirect(url_for("upload_img", cid=cid))
 # =====================
 
 
@@ -187,9 +185,8 @@ def upload_done(uid):
 def user_manage():
   if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
     return redirect(url_for("index"))
-  consumers = DB.get_consumers()
-  designers = DB.get_designers()
-  print(designers)
+  consumers = DB.get_users("consumer")
+  designers = DB.get_users("designer")
   return render_template("user_manage.html", consumers=consumers, designers=designers)
 
 @app.route("/product_manage")       

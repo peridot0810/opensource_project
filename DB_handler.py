@@ -14,13 +14,8 @@ class DBModule:
 
   # ======= 회원가입 =======
   def signin_verification(self, id, type):         # 회원가입 검증
-    id_list = None
     print(type)
-    if type == "consumer":
-      id_list = self.get_consumers()
-    if type == "designer":
-      id_list = self.get_designers()
-    
+    id_list = self.get_users(type)
     try:
       for i in id_list:
         if id == i:                                # 중복 ID가 있다면 False 반환
@@ -55,11 +50,7 @@ class DBModule:
 
   # ===== 로그인 ======
   def login(self, id, pwd, type):
-    userinfo = None
-    if type == "consumer":
-      userinfo = self.get_consumer_detail(id)
-    if type == "designer":
-      userinfo = self.get_designer_detail(id)
+    userinfo = self.get_user_detail(id, type)
     try:
       if pwd == userinfo["pwd"]:
         return True
@@ -113,35 +104,18 @@ class DBModule:
   # ===========================
 
 
-  # ====== 소비자 정보 가져오기 =====
-  def get_consumers(self):                    # 모든 소비자 목록 가져오기
+  # ====== 유저 정보 가져오기 =====
+  def get_users(self, type):                    # 해당 타입의 유저 목록 가져오기
     try:
-      consumers = self.db.child("consumers").get().val()
-      return consumers
+      users = self.db.child(f"{type}s").get().val()
+      return users
     except:
       return None
   
-  def get_consumer_detail(self, cid):         # 개별 소비자의 세부정보 가져오기
+  def get_user_detail(self, uid, type):         # 개별 유저 세부정보 가져오기
     try:
-      consumer_info = self.get_consumers()[cid]
-      return consumer_info
-    except:
-      return None
-  # =============================
-
-
-  # ====== 디자이너 정보 가져오기 =====
-  def get_designers(self):                    # 모든 디자이너 목록 가져오기
-    try:
-      designers = self.db.child("designers").get().val()
-      return designers
-    except:
-      return None
-  
-  def get_designer_detail(self, did):         # 개별 디자이너의 세부정보 가져오기
-    try:
-      designer_info = self.get_designers()[did]
-      return designer_info
+      user_info = self.get_users(type)[uid]
+      return user_info
     except:
       return None
   # =============================
@@ -167,11 +141,7 @@ class DBModule:
 
   # ====== 유저/제품 삭제 ======
   def user_delete(self, type, uid):
-    user_info = None
-    if type == "consumer":
-      user_info = self.get_consumer_detail(uid)
-    elif type == "designer":
-      user_info = self.get_designer_detail(uid)
+    user_info = self.get_user_detail(uid, type)
 
     if user_info["img_path"] != "No_img":
       os.remove(user_info["img_path"])
