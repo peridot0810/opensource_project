@@ -1,6 +1,7 @@
 import pyrebase
 import json
 import os
+import shutil
 
 class DBModule:  
   def __init__(self):
@@ -25,20 +26,29 @@ class DBModule:
       return True
 
   def signin(self, id, pwd, name, img, type):
-    try:                                           # 이미지 저장 및 파이어베이스에 업로드
-      extension = img.filename.split(".")[1]
-      img_name = f'{id}.{extension}'
-      img_path = os.path.join('static/consumer_img', img_name)
-      img.save(img_path)
-    except:
-      img_path = "No_img"
-    
     information = {
       "pwd" : pwd,
       "name" : name,
-      "img_path" : img_path,
       "type" : type
     }
+
+    try:                          
+      if type == 'consumer':                 # 이미지 저장 및 경로를 파이어베이스에 업로드
+        extension = img.filename.split(".")[1]
+        img_name = f'{id}.{extension}'
+        path = os.path.join('static/consumer_img', img_name)
+        img.save(path)
+        information["img_path"] = path
+      elif type == 'designer':
+        folder_name = id
+        path = os.path.join('static/designer_products', folder_name)
+        # 폴더가 이미 존재하는지 확인 후 생성
+        if not os.path.exists(path):
+          os.makedirs(path)  # 폴더 생성
+        # information["designer_productFolder_path"] = path
+    except:
+      information["img_path"] = "No_img"
+
     if self.signin_verification(id, type):
       self.db.child(f"{type}s").child(id).set(information)
       return True
@@ -73,12 +83,23 @@ class DBModule:
     except:                                          # except : 제품이 하나도 없는 경우 (products가 None)
       return True
 
-  def product_registration(self, pid, price, product_name, product_explain):
+  def product_registration(self, pid, price, product_name, product_explain, product_img):
+    try:
+      extension = product_img.filename.split(".")[1]
+      product_name = f"{product_name}.{extension}"
+      path = os.path.join(f'static/product_img', product_name)
+      product_img.save(path)
+      print("저장 성공")
+    except:
+      return False
+
     information = {
       "price" : price,
       "product_name" : product_name,
-      "product_explain" : product_explain
+      "product_explain" : product_explain,
+      "product_img_path" : path
     }
+
     if self.registration_verification(pid):
       self.db.child("products").child(pid).set(information)
       return True
@@ -98,6 +119,23 @@ class DBModule:
   def get_product_detail(self, pid):      # 개별 제품의 세부정보 가져오기
     try:
       product_info = self.get_products()[pid]
+      return product_info
+    except:
+      return None
+  # ===========================
+
+
+  # ===== 디자이너 제품 정보 가져오기 =====
+  def get_designer_products(self, did):                 # 모든 제품 목록 가져오기
+    try:
+      products = self.db.child("designers").child(did).child("products").get().val()
+      return products
+    except:
+      return None
+
+  def get_designer_products_detail(self, did, product_name):      # 개별 제품의 세부정보 가져오기
+    try:
+      product_info = self.get_designer_products(did)[product_name]
       return product_info
     except:
       return None
@@ -127,28 +165,56 @@ class DBModule:
     try:
       extension = img.filename.split(".")[1]
       img_name = f'{cid}.{extension}'
-      img_path = os.path.join('static/consumer_img', img_name)
-      img.save(img_path)
+      path = os.path.join('static/consumer_img', img_name)
+      img.save(path)
     except:
       return False
     update_info = {
-      "img_path" : img_path,
+      "img_path" : path,
     }
     self.db.child("consumers").child(cid).update(update_info)
     return True
   # =============================
 
 
+  # ========= 디자이너 제품 업로드 ============
+  def upload_product(self, product_img, product_info, did):
+    try:
+      extension = product_img.filename.split(".")[1]
+      product_name = f"{product_info['product_name']}.{extension}"
+      path = os.path.join(f'static/designer_products/{did}', product_name)
+      product_img.save(path)
+      print("저장 성공")
+    except:
+      return False
+    
+    product_info["designer_product_path"] = path
+    self.db.child("designers").child(did).child("products").child(product_info['product_name']).set(product_info)
+    return True
+
+  # ======================================
+
+
+
+
   # ====== 유저/제품 삭제 ======
   def user_delete(self, type, uid):
     user_info = self.get_user_detail(uid, type)
-
-    if user_info["img_path"] != "No_img":
-      os.remove(user_info["img_path"])
+    if type == "consumer":
+      if user_info["img_path"] != "No_img":
+        os.remove(user_info["img_path"])
+    elif type == "designer":
+      if os.path.exists(f"static/designer_products/{uid}"):
+        shutil.rmtree(f"static/designer_products/{uid}")  # 폴더 및 하위 내용 삭제
     self.db.child(f"{type}s/{uid}").remove()
     return True
   
   def product_delete(self, pid):
+    product_info = self.get_product_detail(pid)
+    img_path = product_info["product_img_path"]
     self.db.child(f"products/{pid}").remove()
+    if os.path.exists(img_path):
+      os.remove(img_path)
+
     return True
   # =========================

@@ -14,13 +14,21 @@ DB = DBModule()                      # DB모듈 인스턴스 생성
 def index():
   if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디
     user = session['id']
+    user_type = session['type']
   else:                              # 로그인되어있지 않다면 -> user = "Login_needed"
     user = "Login_needed"
+    user_type = None
 
-  products = DB.get_products()
+  if user_type == 'consumer':
+    products = DB.get_products()
+  elif user_type == 'designer':
+    products = DB.get_designer_products(user)
+  else:
+    products = None
+
   if not products:                   # product가 없음 -> 제품 가져오기 실패
     products = "No_products"
-  return render_template("index.html", user = user, products = products)  # index.html에 user, products 넘기기
+  return render_template("index.html", user = user, type = user_type, products = products)  # index.html에 user, products 넘기기
 # =====================
 
 
@@ -111,7 +119,7 @@ def logout():
     session.pop("type")
     return redirect(url_for("index"))
   else:                               # 로그인 상태가 아니라면 redirect -> 로그인 창
-    return redirect(url_for("login"))
+    return redirect(url_for("login_userType"))
 # =================================
   
 
@@ -129,7 +137,8 @@ def registration_done():
   price = request.form.get("price")
   product_name = request.form.get("name")
   product_explain = request.form.get("product_explain")
-  if DB.product_registration(pid, price, product_name, product_explain):  # 제품 등록 성공
+  product_img = request.files['product_img']
+  if DB.product_registration(pid, price, product_name, product_explain, product_img):  # 제품 등록 성공
     return redirect(url_for("index"))
   else:                                                  # 제품 등록 실패
     flash("제품 ID가 중복됩니다")
@@ -177,6 +186,29 @@ def upload_done(cid):
     flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
     return redirect(url_for("upload_img", cid=cid))
 # =====================
+
+
+
+# ======= 디자이너 제품 업로드 페이지 ========
+@app.route("/upload_product")
+def upload_product():
+  did = request.args.get("did")
+  print(did)
+  return render_template("upload_product.html", did=did)
+
+@app.route("/upload_product_done/<string:did>", methods=["post"])
+def upload_product_done(did):
+  product_img = request.files['product_img']
+  product_info = {
+    "product_name" : request.form.get("name"),
+    "product_explain" : request.form.get("product_explain")
+  }
+  if DB.upload_product(product_img, product_info, did): 
+    return redirect(url_for("index"))
+  else:
+    flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
+    return redirect(url_for("upload_product", did=did))
+# ==========================================
 
 
 
