@@ -6,27 +6,37 @@
 
 
 ## 회원가입
+- 일반 사용자(consumer), 디자이너(designer)중 택1
+### consumer
 - 차례대로 입력 (이미지 업로드는 선택사항)
-- firebase의 Realtime Database에 유저 정보 저장
-  - 이미지는 /static/user_img 디렉토리에 저장, 이미지 path가 유저 정보에 저장됨 
-- firebase 데이터베이스에 등록된 사용자는 로그인 가능
+- firebase의 Realtime Database-'consumers'에 정보 저장
+	-  이미지는 로컬의 /static/consumer_img 디렉토리에 저장, 이미지 path가 유저 정보에 저장됨 
+
+### designer
+- 차례대로 입력
+- firebase의 Realtime Database-'designers'에 정보 저장
+	- 로컬의 /static/designer_products 디렉토리에 해당 디자이너의 폴더 추가
+	- 디자이너가 제품 등록 시 제품 이미지가 저장됨
+- designer의 경우 홈페이지에 쇼핑몰 제품이 아닌, 본인이 등록한 제품이 보이게 됨
+ 
 
 
 ## 관리자 계정
-- 관리자 : user id(uid)가 "root"인 회원
-- 현재는 uid, pwd, name 모두 root로 등록되어있음 
-- 로그인 안되면 uid "root"로 회원가입하기
+- 관리자 : user id(uid)가 "root"인"consumer" 회원
+- 현재는 id, pwd, name 모두 root로 등록되어있음 
+- 로그인 안되면 consumer회원, id "root", pwd "root"로 회원가입하기
 
 ### 관리자 권한 1 : 제품 등록
-- 차례대로 입력 -> 유저 정보처럼 firebase에 저장됨
+- 로컬의 products_to_register 디렉토리에 등록할 제품 이미지 저장
+- 제품 등록 페이지에서 차례대로 입력 
+- firebase의 Realtime Database-'products'에 정보 저장
 - 새로 등록된 제품은 홈페이지에 추가됨
-- **주의 : 제품 이미지는 "static/product_img/ 위치에 "(product id).jpg" 형태로 저장되어있어야 페이지에 반영됨**
+- 제품 이미지는 로컬의 static/product_img에 저장됨 
 
 ### 관리자 권한 2 : 유저/제품 삭제
 - 유저관리/제품관리 페이지에서 유저 또는 제품 삭제 가능
 - 삭제된 유저/제품은 firebase 데이터베이스에서 제거
-- 유저의 경우 이미지까지(로컬의 /static/user_img/'유저이미지') 같이 삭제됨
-- 제품의 이미지는 삭제되지 않음
+- 로컬에 저장되어있는 유저/제품의 이미지도 삭제됨
 
 ## 옷 입어보기
 - 제품 상세페이지에 '이 옷 입어보기' 클릭 -> try on 페이지로 넘어감
