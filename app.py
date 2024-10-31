@@ -19,12 +19,10 @@ def index():
     user = "Login_needed"
     user_type = None
 
-  if user_type == 'consumer':
-    products = DB.get_products()
-  elif user_type == 'designer':
+  if user_type == 'designer':
     products = DB.get_designer_products(user)
   else:
-    products = None
+    products = DB.get_products()
 
   if not products:                   # product가 없음 -> 제품 가져오기 실패
     products = "No_products"
@@ -114,7 +112,7 @@ def login_done():
 
 @app.route("/logout")
 def logout():
-  if "id" in session:                # 로그인 상태라면 session에서 "uid"라는 key를 pop
+  if "id" in session:                # 로그인 상태라면 session에서 "id", "type"이라는 key를 pop
     session.pop("id")
     session.pop("type")
     return redirect(url_for("index"))
@@ -206,7 +204,7 @@ def upload_product_done(did):
   if DB.upload_product(product_img, product_info, did): 
     return redirect(url_for("index"))
   else:
-    flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
+    flash("제품명이 중복되거나 이미지가 업로드되지 않았습니다")                 
     return redirect(url_for("upload_product", did=did))
 # ==========================================
 

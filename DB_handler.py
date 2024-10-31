@@ -15,7 +15,6 @@ class DBModule:
 
   # ======= 회원가입 =======
   def signin_verification(self, id, type):         # 회원가입 검증
-    print(type)
     id_list = self.get_users(type)
     try:
       for i in id_list:
@@ -26,27 +25,27 @@ class DBModule:
       return True
 
   def signin(self, id, pwd, name, img, type):
-    information = {
+    information = {                           # consumer, designer 공통 정보
       "pwd" : pwd,
       "name" : name,
       "type" : type
     }
 
     try:                          
-      if type == 'consumer':                 # 이미지 저장 및 경로를 파이어베이스에 업로드
+      if type == 'consumer':                  # 유저가 consumer -> 이미지, 이미지 경로 저장
         extension = img.filename.split(".")[1]
         img_name = f'{id}.{extension}'
         path = os.path.join('static/consumer_img', img_name)
         img.save(path)
         information["img_path"] = path
-      elif type == 'designer':
+
+      elif type == 'designer':                # 유저가 designer -> 제품 등록용 폴더 생성, 폴더 경로 저장
         folder_name = id
         path = os.path.join('static/designer_products', folder_name)
-        # 폴더가 이미 존재하는지 확인 후 생성
-        if not os.path.exists(path):
-          os.makedirs(path)  # 폴더 생성
-        # information["designer_productFolder_path"] = path
-    except:
+        if not os.path.exists(path):          
+          os.makedirs(path)  
+
+    except:                                   # consumer유저가 이미지 등록 안한 경우 
       information["img_path"] = "No_img"
 
     if self.signin_verification(id, type):
@@ -73,7 +72,7 @@ class DBModule:
 
   
   # ===== 제품 등록 =====
-  def registration_verification(self, pid):          # 제품 등록 검증 (pid : product id가 겹치는 경우는 없는지 확인)
+  def registration_verification(self, pid):          # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
     products = self.get_products()
     try:
       for i in products:
@@ -86,8 +85,8 @@ class DBModule:
   def product_registration(self, pid, price, product_name, product_explain, product_img):
     try:
       extension = product_img.filename.split(".")[1]
-      product_name = f"{product_name}.{extension}"
-      path = os.path.join(f'static/product_img', product_name)
+      product_id_ext = f"{pid}.{extension}"
+      path = os.path.join(f'static/product_img', product_id_ext)
       product_img.save(path)
       print("저장 성공")
     except:
@@ -178,6 +177,16 @@ class DBModule:
 
 
   # ========= 디자이너 제품 업로드 ============
+  def designer_registration_verification(self, did, product_name):          # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
+    products = self.get_designer_products()
+    try:
+      for i in products:
+        if product_name == i:
+          return False
+      return True
+    except:                                          # except : 제품이 하나도 없는 경우 (products가 None)
+      return True
+
   def upload_product(self, product_img, product_info, did):
     try:
       extension = product_img.filename.split(".")[1]
@@ -188,10 +197,12 @@ class DBModule:
     except:
       return False
     
-    product_info["designer_product_path"] = path
-    self.db.child("designers").child(did).child("products").child(product_info['product_name']).set(product_info)
-    return True
-
+    if self.designer_registration_verification(did, product_name):
+      product_info["designer_product_path"] = path
+      self.db.child("designers").child(did).child("products").child(product_info['product_name']).set(product_info)
+      return True
+    else:
+      return False
   # ======================================
 
 
@@ -203,9 +214,11 @@ class DBModule:
     if type == "consumer":
       if user_info["img_path"] != "No_img":
         os.remove(user_info["img_path"])
+
     elif type == "designer":
       if os.path.exists(f"static/designer_products/{uid}"):
-        shutil.rmtree(f"static/designer_products/{uid}")  # 폴더 및 하위 내용 삭제
+        shutil.rmtree(f"static/designer_products/{uid}")  
+
     self.db.child(f"{type}s/{uid}").remove()
     return True
   
