@@ -178,7 +178,7 @@ class DBModule:
 
   # ========= 디자이너 제품 업로드 ============
   def designer_registration_verification(self, did, product_name):          # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
-    products = self.get_designer_products()
+    products = self.get_designer_products(did)
     try:
       for i in products:
         if product_name == i:
