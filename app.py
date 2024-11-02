@@ -164,10 +164,12 @@ def try_on(pid):
   type = session["type"]
   consumer_info = DB.get_user_detail(cid, type)
   consumer_img_path = consumer_info['img_path']
+  product_info = DB.get_product_detail(pid)
+  product_img_path = product_info["product_img_path"]
   if consumer_img_path == "No_img":
     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
     return redirect(url_for("upload_img", cid=cid))
-  return render_template("try_on.html", img_path=consumer_img_path, pid=pid)
+  return render_template("try_on.html", consumer_img_path=consumer_img_path, product_img_path=product_img_path)
 
 @app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
 def upload_img(cid):
