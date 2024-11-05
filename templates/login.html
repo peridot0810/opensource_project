@@ -3,25 +3,16 @@
 <!-- base.html의 뼈대를 사용 -->
 {% extends "base.html" %}
 
-<!-- 로그인 실패 메세지 -->
-{% block message %}
-  {%with messages = get_flashed_messages()%}
-    {% if messages %} 
-      <script type="text/javascript">
-        alert("{{messages[-1]}}");
-      </script>
-    {% endif %}
-  {%endwith%}
-{% endblock message %}
-
 
 {% block contents %}
 
   <form action="{{url_for("login_done")}}" method="post">
     <p>user id : </p>
-    <input type="text" name="id" id="id">
+    <input type="text" name="id" id="id" required>
     <p>password : </p>
-    <input type="password" name="pwd" id="pwd">
+    <input type="password" name="pwd" id="pwd" required>
+
+    <input type="text" name="type" id="type" value="{{type}}" style="display: none;" required>
     <button type="submit">로그인</button>
   </form>
 

@@ -16,9 +16,9 @@
 
 {% block contents %}
 
-  <form action="{{url_for("upload_done", uid=uid)}}" method="post" enctype="multipart/form-data">
+  <form action="{{url_for("upload_done", cid=cid)}}" method="post" enctype="multipart/form-data">
     <p>옷 입어보기용 이미지: </p>
-    <input type="file" name="user_img" id="user_img">
+    <input type="file" name="consumer_img" id="consumer_img">
     <button type="submit">업로드하기</button>
   </form>
 

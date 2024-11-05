@@ -18,7 +18,7 @@
 
 <div style="margin-top: 20px;">
   <div style="margin-top: 10px;">
-    <img src="/static/product_img/{{pid}}.jpg" alt="제품 이미지" width="200px">  <!-- 제품 이미지 이름은 pid.jpg 형태로 통일하기 -->
+    <img src="/{{product_info["product_img_path"]}}" alt="제품 이미지" width="200px">  <!-- 제품 이미지 이름은 pid.jpg 형태로 통일하기 -->
   </div>
   <div style="margin-top: 10px;">
     {{product_info['product_name']}} <br>

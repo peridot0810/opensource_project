@@ -5,13 +5,15 @@
 
 {% block contents %}
 
+<h2>Products</h2>
+
 <div style="margin-top: 20px;">
   {% if products != None %}
     {% for pid in products %}
       {% if uid != "root" %}
       product : {{pid}} <br>
       product info : {{products[pid]}} <br>
-      <a href="{{url_for("product_delete", pid = pid)}}">이 제품 삭제하기</a>
+      <a href="/product_delete?pid={{pid}}">이 제품 삭제하기</a>
       <br><br><br><br>
       {% endif %}
     
