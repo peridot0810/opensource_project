@@ -3,27 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Fit.Me - Virtual Fitting Experience</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee&family=Baloo+Paaji&family=Nanum+Gothic&display=swap">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  {% block message %}
-  <!-- 다른 HTML 파일의 message 블록의 내용이 올 자리 -->
-  {% endblock message %}
-  
-  <header>
-    <a href="{{url_for("index")}}">홈페이지</a>
-    {% block user %}
-    <!-- 다른 HTML 파일의 user 블록의 내용이 올 자리 -->
-    {% endblock user %}
+  <!-- Header Section -->
+  <header class="header">
+    <div class="header-container">
+      <h1 class="logo">Fit.Me</h1>
+      <nav class="nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Shop</a>
+            <div class="dropdown-icon">
+              <img src="static/img/dropdown-icon.svg">
+            </div>
+          </li>
+          <li class="nav-item search">
+            <div class="search-bar">
+              <div class="search-icon">
+                <img src="static/img/search-icon.svg">
+              </div>
+              <input type="text" placeholder="Search for products..." class="search-input">
+            </div>
+          </li>
+          <li class="nav-item icons">
+            <div class="icon cart-icon">
+              <img src="static/img/cart-icon.svg">
+            </div>
+            <div class="icon user-icon">
+              <img src="static/img/user-icon.svg">
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  {% block contents %}
-  <!-- 다른 HTML 파일의 contents 블록의 내용이 올 자리 -->
-  {% endblock contents %}
+  <!-- Main Content Section -->
+  <main>
+    <!-- Add main content here -->
+  </main>
 
-  <footer>
-
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-branding">
+        <h2 class="footer-logo">Fit.Me</h2>
+        <p class="footer-description">You can virtually try on any outfit you want online.</p>
+        <div class="social-icons">
+          <div class="social-icon"></div>
+          <!-- Additional social icons can be added here -->
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-heading">App</h3>
+        <img src="https://via.placeholder.com/81x81" alt="App image" class="app-image">
+        <p class="footer-text">You can quickly receive notifications about various benefits.</p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-heading">Help</h3>
+        <p class="footer-links">
+          Customer Support <br>
+          Delivery Details <br>
+          Terms & Conditions <br>
+          Privacy Policy
+        </p>
+      </div>
+      <div class="footer-section">
+        <h3 class="footer-heading">FAQ</h3>
+        <p class="footer-links">
+          Account <br>
+          Manage Deliveries <br>
+          Orders <br>
+          Payments
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="payment-icons">
+        <div class="payment-icon visa-icon"></div>
+        <!-- Additional payment icons can be added here -->
+      </div>
+      <p class="copyright">Shop.co © 2024-2034, All Rights Reserved</p>
+    </div>
   </footer>
-
 </body>
 </html>
