@@ -72,7 +72,11 @@ class Server:
       return None
 
   def get_user_detail(self, id, type):
-    pass
+    user = self.db.get_user_detail(id, type)
+    if user:
+      return user
+    else:
+      return None
   # =========================================
 
 
@@ -86,3 +90,14 @@ class Server:
 
 
   # ================================
+
+  # ========== 유저 정보 수정 ==========
+  def edit_info(self, id, type, update_info):
+    new_user_info = self.db.edit_info(id, type, update_info)
+    if new_user_info:
+      self.log_out()
+      self.log_in(new_user_info)
+      return True
+    else:
+      return False
+  # ==================================

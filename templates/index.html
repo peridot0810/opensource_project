@@ -5,7 +5,7 @@
 
 
 {% block user %}
-<!-- 로그인 되지 않은 상태 -->
+  <!-- 로그인 되지 않은 상태 -->
   {% if user == "Login_needed" %}
   <a href="{{url_for("login_userType")}}">Login</a>
   <a href="{{url_for("signin_userType")}}">회원가입</a>
@@ -27,8 +27,6 @@
     <h3>관리자 계정입니다</h3>
     <a href="{{url_for("logout")}}">Logout</a> <br>
     <a href="{{url_for("user_manage")}}">유저 관리</a> <br>
-    
-
   {% endif %}
 
 {% endblock user %}

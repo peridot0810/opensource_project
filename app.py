@@ -32,21 +32,52 @@ def index():
 
 
 # ========= 마이 페이지 ===========
-# @app.route("/my_page")
-# def my_page():
-#   if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디
-#     user = session['id']
-#     type = session['type']
-#   else:                              # 로그인되어있지 않다면 -> 로그인 창으로 redirect
-#     return redirect(url_for("login_userType"))
-
-#   user_info = DB.get_user_detail(user, type)
+@app.route("/my_page")
+def my_page():
+  try:
+    user, user_type = Server.check_login()
+  except:
+    return redirect(url_for("login_userType"))
   
-#   return render_template("my_page.html", user_info = user_info, user_type=type)
+  user_info = Server.get_user_detail(user, user_type)
   
+  return render_template("my_page.html", user_info = user_info, user_type=user_type)
 # ===============================
   
+# ========= 내 정보 수정 ============
+@app.route("/edit_info")
+def edit_info():
+  try:
+    user, user_type = Server.check_login()
+  except:
+    return redirect(url_for("login_userType"))
+  
+  user_info = Server.get_user_detail(user, user_type)
 
+  if user_type == "Consumer":
+    return render_template("edit_info_consumer.html", user_info = user_info)
+  if user_type == "Designer":
+    return render_template("edit_info_designer.html", user_info = user_info)
+  
+
+@app.route("/edit_done", methods=["post"])  
+def edit_done():
+  try:
+    user, user_type = Server.check_login()
+  except:
+    return redirect(url_for("index"))
+  
+  update_info = {
+    "id" : request.form.get("id"),
+    "pwd" : request.form.get("pwd"),
+    "name" : request.form.get("name")
+  }
+
+  if Server.edit_info(user, user_type, update_info): # 정보 수정 성공
+    return redirect(url_for("my_page"))    
+  else:
+    flash("정보 수정 실패")                              # 정보 수정 실패
+    return redirect(url_for("edit_info"))
 
 
 
@@ -271,8 +302,6 @@ def user_delete():
     return redirect(url_for("user_manage"))
   else:
     return redirect(url_for("index"))
-
-    
   
 
 # @app.route("/product_delete")       

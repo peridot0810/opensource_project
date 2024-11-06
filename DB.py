@@ -125,3 +125,19 @@ class DBModule:
       return False
 
   # ========================================
+
+
+  # ========== 유저 정보 수정 ==========
+  def edit_info(self, id, type, update_info):
+    if self.signin_verification(update_info["id"], type):
+      try:
+        user_info = self.get_user_detail(id, type)
+        user_info["id"] = update_info["id"]
+        user_info["pwd"] = update_info["pwd"]
+        user_info["name"] = update_info["name"]
+        self.db.child(f"{type}s/{update_info["id"]}").set(user_info)
+        self.user_delete(type, id)
+        return user_info
+      except:
+        return False
+  # ==================================

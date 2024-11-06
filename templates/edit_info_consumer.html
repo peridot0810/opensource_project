@@ -1,0 +1,21 @@
+<!-- Consumer 정보 수정 페이지 -->
+
+<!-- base.html의 뼈대를 사용 -->
+{% extends "base.html" %}
+
+
+{% block contents %}
+
+  <form action="{{url_for("edit_done")}}" method="post" enctype="multipart/form-data">
+    <p>user id: </p>
+    <input type="text" name="id" id="id" value="{{user_info["id"]}}" required>
+    <p>password: </p>
+    <input type="password" name="pwd" id="pwd" value="{{user_info["pwd"]}}" required>
+    <p>name: </p>
+    <input type="text" name="name" id="name" value="{{user_info["name"]}}" required>
+    <!-- <p>옷 입어보기용 이미지: </p>
+    <input type="file" name="consumer_img" id="consumer_img"> -->
+    <button type="submit">정보 수정하기</button>
+  </form>
+
+{% endblock contents%}
