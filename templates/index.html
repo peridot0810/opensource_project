@@ -4,67 +4,19 @@
 {% extends "base.html" %}  
 
 
-{% block user %}
-  <!-- 로그인 되지 않은 상태 -->
-  {% if user == "Login_needed" %}
-    <a href="{{url_for("login")}}">Login</a>
-    <a href="{{url_for("signin")}}">회원가입</a>
-
-  <!-- 관리자(root)로 로그인되어있는 상태 -->
-  {% elif user == "root" %}
-    <h3>관리자 계정입니다</h3>
-    <a href="{{url_for("product_registration")}}">제품 등록</a> <br>
-    <a href="{{url_for("logout")}}">Logout</a> <br>
-    <a href="{{url_for("user_manage")}}">유저 관리</a> <br>
-    <a href="{{url_for("product_manage")}}">제품 관리</a> <br>
-
-
-  <!-- 일반 유저로 로그인되어있는 상태 -->
-  {% else %}
-    <p>user : {{user}}</p>
-    <a href="{{url_for("logout")}}">Logout</a>
-  {% endif %}
-
-{% endblock user %}
-
 
 {% block contents %}
-
-  <div style="margin-top:30px;">
-    <div style="margin-top:10px;">
-      <h3>
-        제품 목록
-      </h3>
-    </div>
-    <!-- 제품이 없는 경우 -->
-    {% if products == "No_products" %}
-      <div>
-        <p>제품이 없습니다</p>
-      </div>
-    <!-- 제품이 있는 경우 -->
-    {% else %}
-      <div style="display:flex; flex-wrap:wrap; gap:20px; margin-top:50px">
-        {% for pid in products %}
-          <a href="{{url_for("product_detail", pid = pid)}}">
-            <div style="border:1px solid gray; padding:10px; width:220px; height:270px; text-align:center;">
-              <!-- 제품 이미지 -->
-              <div>  
-                <img src="/static/product_img/{{pid}}.jpg" alt="제품 이미지" width="100%" height="100%">
-              </div>
-              <!-- 제품 이름 -->
-              <div>    
-                {{products[pid]['product_name']}}
-              </div>
-              <!-- 제품 가격 -->
-              <div>    
-                {{products[pid]['price']}}
-              </div>
-            </div>
-          </a>
-        {% endfor %}
-      </div>
-      
-    {% endif %}
+<div class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Fit.Me</h1>
+    <p class="hero-description">
+      직접 입어보기 어렵다면?<br>클릭 한 번으로 착용해보기
+    </p>
+    <p class="hero-description-small">
+      "FitMe" conveys the message of "finding clothes that fit me." It represents our goal of offering users an experience where they can try on and find outfits that best suit their body shape and style during the shopping process. We emphasize the core value of personalized service, proposing a customized shopping experience tailored to each customer.
+    </p>
+    <button class="hero-button">Shop Now</button>
   </div>
+</div>
 
 {% endblock contents %}
