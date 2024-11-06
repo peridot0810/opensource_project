@@ -1,0 +1,21 @@
+<!-- 관리자 가입 페이지 -->
+
+<!-- base.html의 뼈대를 사용 -->
+{% extends "base.html" %}
+
+
+{% block contents %}
+
+  <form action="{{url_for("signin_done")}}" method="post">
+    <p>root id: </p>
+    <input type="text" name="id" id="id" required>
+    <p>password: </p>
+    <input type="password" name="pwd" id="pwd" required>
+    <p>name: </p>
+    <input type="text" name="name" id="name" required>
+
+    <input type="text" name="type" id="type" value="Root" style="display: none;" required>
+    <button type="submit">회원가입하기</button>
+  </form>
+
+{% endblock contents%}

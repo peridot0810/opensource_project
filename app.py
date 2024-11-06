@@ -53,7 +53,7 @@ def index():
 
 # ===== 회원가입 =====
 @app.route("/signin_userType")
-def signin_userType():                           # 디자이너인지 소비자인지 구분
+def signin_userType():                           # Designer, Consumer 구분
   if Server.check_login():                       # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
   return render_template("signin_userType.html")
@@ -67,9 +67,11 @@ def signin():
   type = request.form.get("type")
 
   if type == "Consumer" :    # 일반 사용자 -> 일반 가입 페이지
-    return render_template("signin.html")
+    return render_template("signin_consumer.html")
   elif type == "Designer":   # 디자이너 사용자 -> 디자이너 가입 페이지
-    return render_template("signin_designer.html")                                   
+    return render_template("signin_designer.html")  
+  elif type == "Root":       # 관리자
+    return render_template("signin_root.html")                                   
 
 
 @app.route("/signin_done", methods=["post"])  
@@ -228,13 +230,19 @@ def logout():
 
 
 # ====== 관리 페이지 =======
-# @app.route("/user_manage")       
-# def user_manage():
-#   if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
-#     return redirect(url_for("index"))
-#   consumers = DB.get_users("consumer")
-#   designers = DB.get_users("designer")
-#   return render_template("user_manage.html", consumers=consumers, designers=designers)
+@app.route("/user_manage")       
+def user_manage():
+  try:
+    user, user_type = Server.check_login()
+  except:                                              # 로그인 상태가 아닌 경우
+    user, user_type = (None, None)
+
+  if user_type == "Root":
+    consumers = Server.get_users("Consumer")
+    designers = Server.get_users("Designer")
+    return render_template("user_manage.html", consumers=consumers, designers=designers)
+  else:
+    return redirect(url_for("index"))
 
 # @app.route("/product_manage")       
 # def product_manage():
@@ -247,14 +255,25 @@ def logout():
 
 
 # ======= 관리(삭제) 페이지 ========
-# @app.route("/user_delete")       
-# def user_delete():
-#   type = request.args.get('type')
-#   uid = request.args.get('uid')
-#   if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 삭제 가능
-#     return redirect(url_for("index"))
-#   DB.user_delete(type, uid)
-#   return redirect(url_for("user_manage"))
+@app.route("/user_delete")       
+def user_delete():
+  type = request.args.get('type')
+  id = request.args.get('uid')
+
+  try:
+    user, user_type = Server.check_login()
+  except:                                              # 로그인 상태가 아닌 경우
+    user, user_type = (None, None)
+
+  if user_type == "Root":
+    Server.user_delete(type, id)
+    print("삭제 성공")
+    return redirect(url_for("user_manage"))
+  else:
+    return redirect(url_for("index"))
+
+    
+  
 
 # @app.route("/product_delete")       
 # def product_delete():

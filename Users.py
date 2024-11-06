@@ -21,6 +21,6 @@ class Designer(User):
 
 
 class Root(User):
-  def __init__(self, rid : str, pwd : str):
-    super().__init__(rid, pwd, "Root", "Root")
+  def __init__(self, rid : str, pwd : str, name : str):
+    super().__init__(rid, pwd, name, "Root")
 

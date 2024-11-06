@@ -9,13 +9,15 @@ class Server:
     self.User = None
     
 
+  # ======== 회원가입 ==========
   def sign_in(self, user_info : dict, img):
     if self.db.sign_in(user_info, img):
       return True
     else:
       return False
+  # ============================
   
-
+  # ========= 로그인/로그아웃 ============
   def log_in(self, login_info : dict):
     User_info = self.db.log_in(login_info)  # User 정보를 dict 형태로 반환
     if User_info:    # 로그인 성공
@@ -23,6 +25,8 @@ class Server:
         self.User = Consumer(User_info["id"], User_info["pwd"], User_info["name"])
       elif User_info["type"] == "Designer":
         self.User = Designer(User_info["id"], User_info["pwd"], User_info["name"])
+      elif User_info["type"] == "Root":
+        self.User = Root(User_info["id"], User_info["pwd"], User_info["name"])
       # 세션 열기
       session["id"] = User_info["id"]
       session["type"] = User_info["type"]
@@ -35,8 +39,10 @@ class Server:
     session.pop("id")
     session.pop("type")
     return True
+  # ==================================
 
 
+  # ============= 로그인 여부 체크 =============
   def check_login(self):
     if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디
       user = self.User.id
@@ -44,9 +50,9 @@ class Server:
       return user, user_type
     else:                              # 로그인되어있지 않다면 -> None
       return None
-
+  # ========================================
     
-
+  # =============== 제품 get ================
   def get_products(self):
     try:
       if self.User.type == "Designer":
@@ -55,9 +61,28 @@ class Server:
         products = self.db.get_products()
     except:   # 로그인 X
       return None
+  # ========================================
 
+  # =============== 사용자 get ===============
   def get_users(self, type):
-    pass
+    users = self.db.get_users(type)
+    if users:
+      return users
+    else:
+      return None
 
   def get_user_detail(self, id, type):
     pass
+  # =========================================
+
+
+  # ========== 유저/제품 삭제 =========
+  def user_delete(self, type, id):
+    if self.db.user_delete(type, id):
+      print("삭제 성공 - 서버")
+      return True
+    else:
+      return False
+
+
+  # ================================

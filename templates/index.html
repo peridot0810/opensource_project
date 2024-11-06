@@ -21,6 +21,13 @@
     <h3>designer 계정입니다</h3>
     <p>user : {{user}}</p>
     <a href="{{url_for("logout")}}">Logout</a>
+  
+  <!-- 관리자(root)로 로그인되어있는 상태 -->
+  {% elif user == "root" %}
+    <h3>관리자 계정입니다</h3>
+    <a href="{{url_for("logout")}}">Logout</a> <br>
+    <a href="{{url_for("user_manage")}}">유저 관리</a> <br>
+    
 
   {% endif %}
 

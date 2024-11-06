@@ -44,6 +44,9 @@ class DBModule:
       if not os.path.exists(path):          
         os.makedirs(path)  
 
+    elif type == 'Root':
+      pass
+
     if self.signin_verification(id, type):
       self.db.child(f"{type}s/{id}").set(user_info)
       return True
@@ -95,4 +98,30 @@ class DBModule:
       return products
     except:
       return None
+  # ========================================
+
+
+  # ============= 유저/제품 삭제 ===============
+  def user_delete(self, type, id):
+    print("삭제 시도 - DB")
+    print(f"삭제 타입 : {type}")
+    try:
+      user_info = self.get_user_detail(id, type)
+      if type == "Consumer":
+        if user_info["img_path"] != "No_img":
+          os.remove(user_info["img_path"])
+
+      elif type == "Designer":
+        if os.path.exists(f"static/designer_products/{id}"):
+          shutil.rmtree(f"static/designer_products/{id}")  
+
+      elif type == "Root":
+        pass
+
+      self.db.child(f"{type}s/{id}").remove()
+      print("삭제 성공 - DB")
+      return True
+    except:
+      return False
+
   # ========================================
