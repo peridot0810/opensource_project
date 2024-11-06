@@ -17,16 +17,13 @@ class Server:
       return False
   # ============================
   
+
+
   # ========= 로그인/로그아웃 ============
   def log_in(self, login_info : dict):
     User_info = self.db.log_in(login_info)  # User 정보를 dict 형태로 반환
     if User_info:    # 로그인 성공
-      if User_info["type"] == "Consumer":
-        self.User = Consumer(User_info["id"], User_info["pwd"], User_info["name"])
-      elif User_info["type"] == "Designer":
-        self.User = Designer(User_info["id"], User_info["pwd"], User_info["name"])
-      elif User_info["type"] == "Root":
-        self.User = Root(User_info["id"], User_info["pwd"], User_info["name"])
+      self.make_User(User_info)
       # 세션 열기
       session["id"] = User_info["id"]
       session["type"] = User_info["type"]
@@ -42,6 +39,8 @@ class Server:
   # ==================================
 
 
+
+
   # ============= 로그인 여부 체크 =============
   def check_login(self):
     if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디, user_type = 사용자 타입
@@ -53,6 +52,8 @@ class Server:
   # ========================================
     
 
+
+
   # =============== 제품 get ================
   def get_products(self):
     try:
@@ -63,6 +64,9 @@ class Server:
     except:   # 로그인 X
       return None
   # ========================================
+
+
+
 
   # =============== 사용자 get ===============
   def get_users(self, type):
@@ -81,25 +85,40 @@ class Server:
   # =========================================
 
 
+
+
   # ========== 유저/제품 삭제 =========
   def user_delete(self, type, id):
     if self.db.user_delete(type, id):
       return True
     else:
       return False
-
-
   # ================================
+
+
+
 
   # ========== 유저 정보 수정 ==========
   def edit_info(self, id, type, update_info):
     new_user_info = self.db.edit_info(id, type, update_info)
     if new_user_info:
-      print("서버 : 수정 성공")
       self.log_out()
       self.log_in(new_user_info)
       return True
     else:
-      print("서버 : 수정 실패")
       return False
   # ==================================
+
+
+
+
+  # =========== 기타 함수 ==============
+  def make_User(self, User_info):
+    type = User_info["type"]
+    if type == "Consumer":
+      self.User = Consumer(User_info["id"], User_info["pwd"], User_info["name"])
+    elif type == "Designer":
+      self.User = Designer(User_info["id"], User_info["pwd"], User_info["name"])
+    elif type == "Root":
+      self.User = Root(User_info["id"], User_info["pwd"], User_info["name"])
+  # ===================================

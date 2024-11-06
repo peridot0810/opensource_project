@@ -31,6 +31,7 @@ def index():
 # =====================
 
 
+
 # ========= 마이 페이지 ===========
 @app.route("/my_page")
 def my_page():
@@ -44,6 +45,8 @@ def my_page():
   return render_template("my_page.html", user_info = user_info, user_type=user_type)
 # ===============================
   
+
+
 # ========= 내 정보 수정 ============
 @app.route("/edit_info")
 def edit_info():
@@ -74,13 +77,11 @@ def edit_done():
   }
 
   if Server.edit_info(user, user_type, update_info): # 정보 수정 성공
-    print("수정 성공")
     return redirect(url_for("my_page"))    
   else:
     flash("정보 수정 실패")                              # 정보 수정 실패
-    print("수정 실패")
     return redirect(url_for("edit_info"))
-
+# ===============================
 
 
 
@@ -172,94 +173,9 @@ def logout():
   
 
 
-# ====== 제품 등록 ======
-# @app.route("/product_registration")  
-# def product_registration():
-#   if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 등록 가능 
-#     return redirect(url_for("index"))
-#   return render_template("product_registration.html")
+# ========= 제품 등록 ==========
 
-# @app.route("/registration_done", methods=["post"])  
-# def registration_done():
-#   pid = request.form.get("id")
-#   price = request.form.get("price")
-#   product_name = request.form.get("name")
-#   product_explain = request.form.get("product_explain")
-#   product_img = request.files['product_img']
-#   if DB.product_registration(pid, price, product_name, product_explain, product_img):  # 제품 등록 성공
-#     return redirect(url_for("index"))
-#   else:                                                  # 제품 등록 실패
-#     flash("제품 ID가 중복됩니다")
-#     return redirect(url_for("product_registration"))
-# =======================
-
-
-
-# ===== 개별 제품 상세정보 =====
-# @app.route("/product_detail/<string:pid>")  # /product_detail/제품 ID
-# def product_detail(pid):
-#   product_info = DB.get_product_detail(pid)
-#   return render_template("product_detail.html", product_info=product_info, pid=pid)
-# ==========================
-
-
-
-# ===== 옷 입어보기 ======
-# @app.route("/try_on/<string:pid>")
-# def try_on(pid):
-#   if "id" not in session:
-#     flash("로그인이 필요한 서비스입니다") 
-#     return redirect(url_for("login"))
-#   cid = session["id"]
-#   type = session["type"]
-#   consumer_info = DB.get_user_detail(cid, type)
-#   consumer_img_path = consumer_info['img_path']
-#   product_info = DB.get_product_detail(pid)
-#   product_img_path = product_info["product_img_path"]
-#   if consumer_img_path == "No_img":
-#     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
-#     return redirect(url_for("upload_img", cid=cid))
-#   return render_template("try_on.html", consumer_img_path=consumer_img_path, product_img_path=product_img_path)
-
-# @app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
-# def upload_img(cid):
-#   return render_template("upload_img.html", cid=cid)
-
-# @app.route("/upload_done/<string:cid>", methods=["post"])
-# def upload_done(cid):
-#   img = None
-#   if 'consumer_img' in request.files:
-#     img = request.files['consumer_img']
-#   if DB.upload_img(img, cid): 
-#     return redirect(url_for("index"))
-#   else:
-#     flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
-#     return redirect(url_for("upload_img", cid=cid))
-# =====================
-
-
-
-# ======= 디자이너 제품 업로드 페이지 ========
-# @app.route("/upload_product")
-# def upload_product():
-#   did = request.args.get("did")
-#   print(did)
-#   return render_template("upload_product.html", did=did)
-
-# @app.route("/upload_product_done/<string:did>", methods=["post"])
-# def upload_product_done(did):
-#   product_img = request.files['product_img']
-#   product_info = {
-#     "product_name" : request.form.get("name"),
-#     "product_explain" : request.form.get("product_explain")
-#   }
-#   if DB.upload_product(product_img, product_info, did): 
-#     return redirect(url_for("index"))
-#   else:
-#     flash("제품명이 중복되거나 이미지가 업로드되지 않았습니다")                 
-#     return redirect(url_for("upload_product", did=did))
-# ==========================================
-
+# ==============================
 
 
 # ====== 관리 페이지 =======
@@ -277,43 +193,37 @@ def user_manage():
   else:
     return redirect(url_for("index"))
 
-# @app.route("/product_manage")       
-# def product_manage():
-#   if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 유저 관리 가능
-#     return redirect(url_for("index"))
-#   products = DB.get_products()
-#   return render_template("product_manage.html", products = products)
+@app.route("/product_manage")       
+def product_manage():
+  pass
 # =========================
+
 
 
 
 # ======= 관리(삭제) 페이지 ========
 @app.route("/user_delete")       
 def user_delete():
-  type = request.args.get('type')
-  id = request.args.get('uid')
-
   try:
     user, user_type = Server.check_login()
   except:                                              # 로그인 상태가 아닌 경우
     user, user_type = (None, None)
 
   if user_type == "Root":
+    type = request.args.get('type')
+    id = request.args.get('uid')
     Server.user_delete(type, id)
-    print("삭제 성공")
     return redirect(url_for("user_manage"))
   else:
     return redirect(url_for("index"))
   
 
-# @app.route("/product_delete")       
-# def product_delete():
-#   pid = request.args.get("pid")
-#   if "id" not in session or session["id"] != "root":   # 로그인 되어있고, 유저 아이디가 "root"일때만 제품 삭제 가능
-#     return redirect(url_for("index"))
-#   DB.product_delete(pid)
-#   return redirect(url_for("product_manage"))
+@app.route("/product_delete")       
+def product_delete():
+  pass
 # ================================
+
+
 
 
 
