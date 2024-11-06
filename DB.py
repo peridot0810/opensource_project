@@ -103,10 +103,9 @@ class DBModule:
 
   # ============= 유저/제품 삭제 ===============
   def user_delete(self, type, id):
-    print("삭제 시도 - DB")
-    print(f"삭제 타입 : {type}")
     try:
       user_info = self.get_user_detail(id, type)
+
       if type == "Consumer":
         if user_info["img_path"] != "No_img":
           os.remove(user_info["img_path"])
@@ -119,7 +118,6 @@ class DBModule:
         pass
 
       self.db.child(f"{type}s/{id}").remove()
-      print("삭제 성공 - DB")
       return True
     except:
       return False
@@ -135,9 +133,21 @@ class DBModule:
         user_info["id"] = update_info["id"]
         user_info["pwd"] = update_info["pwd"]
         user_info["name"] = update_info["name"]
+        
+        if type == "Consumer" and user_info["img_path"]!="No_img":
+          old_path = user_info["img_path"]
+          extension = user_info["img_path"].split("/")[-1].split(".")[-1]
+          user_info["img_path"] = f"static/consumer_img/{update_info["id"]}.{extension}"
+          os.rename(old_path, user_info["img_path"])
+        elif type == "Designer":
+          print("Designer 수정 시도")
+          os.rename(f"static/designer_products/{id}", f"static/designer_products/{update_info['id']}")
+
         self.db.child(f"{type}s/{update_info["id"]}").set(user_info)
-        self.user_delete(type, id)
+        self.db.child(f"{type}s/{id}").remove()
         return user_info
-      except:
+      
+      except Exception as e:
+        print(e)
         return False
   # ==================================

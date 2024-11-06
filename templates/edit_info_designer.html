@@ -3,30 +3,17 @@
 <!-- base.html의 뼈대를 사용 -->
 {% extends "base.html" %}
 
-<!-- 정보 수정 실패 메세지 -->
-{% block message %}
-  {%with messages = get_flashed_messages()%}
-    {%if messages %}
-    <script type="text/javascript">
-      alert("{{messages[-1]}}");
-    </script>
-    {%endif%}
-  {%endwith%}
-{% endblock message %}
-
 
 {% block contents %}
 
-  <form action="{{url_for("signin_done")}}" method="post" enctype="multipart/form-data">
+  <form action="{{url_for("edit_done")}}" method="post" enctype="multipart/form-data">
     <p>designer id: </p>
-    <input type="text" name="id" id="id">
+    <input type="text" name="id" id="id" value="{{user_info["id"]}}" required>
     <p>password: </p>
-    <input type="password" name="pwd" id="pwd">
+    <input type="password" name="pwd" id="pwd" value="{{user_info["pwd"]}}" required>
     <p>designer name: </p>
-    <input type="text" name="name" id="name">
-
-    <input type="text" name="type" id="type" value="Designer" style="display: none;">
-    <button type="submit">회원가입하기</button>
+    <input type="text" name="name" id="name" value="{{user_info["name"]}}" required>
+    <button type="submit">정보 수정하기</button>
   </form>
 
 {% endblock contents%}

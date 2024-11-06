@@ -74,9 +74,11 @@ def edit_done():
   }
 
   if Server.edit_info(user, user_type, update_info): # 정보 수정 성공
+    print("수정 성공")
     return redirect(url_for("my_page"))    
   else:
     flash("정보 수정 실패")                              # 정보 수정 실패
+    print("수정 실패")
     return redirect(url_for("edit_info"))
 
 
