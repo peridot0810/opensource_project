@@ -44,7 +44,7 @@ class Server:
 
   # ============= 로그인 여부 체크 =============
   def check_login(self):
-    if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디
+    if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디, user_type = 사용자 타입
       user = self.User.id
       user_type = self.User.type
       return user, user_type
@@ -52,6 +52,7 @@ class Server:
       return None
   # ========================================
     
+
   # =============== 제품 get ================
   def get_products(self):
     try:
@@ -83,7 +84,6 @@ class Server:
   # ========== 유저/제품 삭제 =========
   def user_delete(self, type, id):
     if self.db.user_delete(type, id):
-      print("삭제 성공 - 서버")
       return True
     else:
       return False
@@ -95,9 +95,11 @@ class Server:
   def edit_info(self, id, type, update_info):
     new_user_info = self.db.edit_info(id, type, update_info)
     if new_user_info:
+      print("서버 : 수정 성공")
       self.log_out()
       self.log_in(new_user_info)
       return True
     else:
+      print("서버 : 수정 실패")
       return False
   # ==================================
