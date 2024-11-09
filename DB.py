@@ -78,7 +78,53 @@ class DBModule:
       return None
   # ====================================
     
-      
+  
+
+  # ======== 제품 등록 검증 : Root, Designer 공통 =========
+  def registration_verification(self, pid, type, did=None):          # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
+    if type == "Root":
+      products = self.get_products()
+    elif type == "Designer" and did != None:
+      products = self.get_designer_products(did)
+    else:
+      products = None
+
+    try:
+      for i in products:
+        if pid == i:
+          return False
+      return True
+    except:                                          # except : 제품이 하나도 없는 경우 (products가 None)
+      return True
+  # ===================================================
+
+
+  # ========= 제품 등록 : Root ==========   =>  Consumer가 구매할 수 있는 제품 등록
+  def product_registration(self, product_info, product_img):
+    if self.registration_verification(product_info["pid"], "Root"):
+      try:
+        extension = self.get_img_extension(product_img)
+        path = self.set_img_path(product_info["pid"], extension, "Root")
+        product_img.save(path)
+        product_info["img_path"] = path
+      except:
+        product_info["img_path"] = "No_img"
+  
+      self.db.child(f"Products/{product_info["pid"]}").set(product_info)
+      return True
+    else:
+      return False
+  # ===================================
+
+
+
+  # ======= 제품 등록 : Designer ========  =>  Designer 본인만 확인할 수 있는 제품 등록
+  def designer_product_registration(self, product_info, product_img):
+    pass
+
+  # ===================================
+
+
 
   # ========== 제품 정보 가져오기 ===========
   def get_designer_products(self, did):
@@ -90,9 +136,13 @@ class DBModule:
 
   def get_products(self):
     try:
-      products = self.db.child("products").get().val()
+      print("DB : get_product 시도")
+      products = self.db.child("Products").get().val()
+      print("DB : get_product 성공")
+      print(products)
       return products
     except:
+      print("DB : get_product 실패")
       return None
     
   def get_product_detail(self):
@@ -147,10 +197,13 @@ class DBModule:
     return img.filename.split(".")[1]
   
   def set_img_path(self, id, extension, type):
+    img_name = f'{id}.{extension}'
+
     if type == "Consumer":
-      img_name = f'{id}.{extension}'
       path = os.path.join('static/consumer_img', img_name)
-    if type == "Designer":
+    elif type == "Root":
+      path = os.path.join('static/product_img', img_name)
+    elif type == "Designer":
       path = None
 
     return path

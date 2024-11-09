@@ -29,6 +29,7 @@ def index():
 
   if not products:                   # product가 없음 -> 제품 가져오기 실패
     products = "No_products"
+
   return render_template("index.html", user = user_id, type = user_type, products = products)  # index.html에 user, products 넘기기
 # =====================
 
@@ -175,8 +176,35 @@ def logout():
   
 
 
-# ========= 제품 등록 ==========
+# ========= 제품 등록 : 관리자 ==========
+@app.route("/product_registration")  
+def product_registration():
+  try:
+    user = Server.check_login()
+    user_type = user.type
+  except:                                              # 로그인 상태가 아닌 경우
+    user_type = None
 
+  if user_type == "Root":
+    return render_template("product_registration.html")
+  else : 
+    return redirect(url_for("index"))
+
+@app.route("/registration_done", methods=["post"])  
+def registration_done():
+  product_info = {
+    "pid" : request.form.get("id") ,
+    "price" : request.form.get("price") ,
+    "product_name" : request.form.get("name") ,
+    "product_explain" : request.form.get("product_explain")  
+  }
+  product_img = request.files['product_img']
+
+  if Server.product_registration(product_info, product_img, "Root"):  # 제품 등록 성공
+    return redirect(url_for("index"))
+  else:                                                  # 제품 등록 실패
+    flash("제품 ID가 중복됩니다")
+    return redirect(url_for("product_registration"))
 # ==============================
 
 
@@ -185,10 +213,9 @@ def logout():
 def user_manage():
   try:
     user = Server.check_login()
-    user_id = user.id
     user_type = user.type
   except:                                              # 로그인 상태가 아닌 경우
-    user_id, user_type = (None, None)
+    user_type = None
 
   if user_type == "Root":
     consumers = Server.get_users("Consumer")

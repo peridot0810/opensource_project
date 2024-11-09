@@ -51,16 +51,31 @@ class Server:
     
 
 
+  # ========= 제품 등록 ===============
+  def product_registration(self, product_info, product_img, type):
+    if type == "Root":
+      return self.db.product_registration(product_info, product_img)
+    elif type == "Designer":
+      return self.db.designer_product_registration(product_info, product_img)
+
+
+
+  # ========================================
+
+
 
   # =============== 제품 get ================
   def get_products(self):
     try:
-      if self.User.type == "Designer":
-        products = self.db.get_designer_products(self.User.id)
-      else:   # Consumer, Root
-        products = self.db.get_products()
-    except:   # 로그인 X
-      return None
+      user_type = self.User.type
+    except:
+      user_type = None
+
+    if user_type == "Designer":
+      products = self.db.get_designer_products(self.User.id)
+    else:   # Consumer, Root, 로그인 X
+      products = self.db.get_products()
+    return products
   # ========================================
 
 
