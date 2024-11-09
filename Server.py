@@ -52,14 +52,8 @@ class Server:
 
 
   # ========= 제품 등록 ===============
-  def product_registration(self, product_info, product_img, type):
-    if type == "Root":
-      return self.db.product_registration(product_info, product_img)
-    elif type == "Designer":
-      return self.db.designer_product_registration(product_info, product_img)
-
-
-
+  def product_registration(self, product_info, product_img, type, did=None):
+    return self.db.product_registration(product_info, product_img, type, did)
   # ========================================
 
 

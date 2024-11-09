@@ -208,6 +208,30 @@ def registration_done():
 # ==============================
 
 
+
+# ======= 디자이너 제품 업로드 페이지 ========
+@app.route("/upload_product")
+def upload_product():
+  user = Server.check_login()
+  print(user.id)
+  return render_template("upload_product.html", did=user.id)
+
+@app.route("/upload_product_done/<string:did>", methods=["post"])
+def upload_product_done(did):
+  product_img = request.files['product_img']
+  product_info = {
+    "product_name" : request.form.get("name"),
+    "product_explain" : request.form.get("product_explain")
+  }
+  if Server.product_registration(product_info, product_img, "Designer", did=did): 
+    return redirect(url_for("index"))
+  else:
+    flash("제품명이 중복되거나 이미지가 업로드되지 않았습니다")                 
+    return redirect(url_for("upload_product", did=did))
+# ==========================================
+
+
+
 # ====== 관리 페이지 =======
 @app.route("/user_manage")       
 def user_manage():

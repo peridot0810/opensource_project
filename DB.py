@@ -2,6 +2,7 @@ import pyrebase
 import json
 import os
 import shutil
+import random
 
 
 class DBModule:
@@ -80,37 +81,40 @@ class DBModule:
     
 
 
-  # ========= 제품 등록 : Root ==========   =>  Consumer가 구매할 수 있는 제품 등록
-  def product_registration(self, product_info, product_img):
-    if self.registration_verification(product_info["pid"], "Root"):
+  # ============= 제품 등록  ==============  
+  def product_registration(self, product_info, product_img, type, did):  # Root 제품 등록일때 did == None
+    if type == "Designer":
+        product_info["pid"] = f"{did}_{random.randint(100, 999)}"        # Designer 제품에도 pid 부여 : {did}_{랜덤3자리수}
+
+    if self.registration_verification(product_info["pid"], type, did):
       try:
         extension = self.get_img_extension(product_img)
-        path = self.set_img_path(product_info["pid"], extension, "Root")
+        path = self.set_img_path(product_info["pid"], extension, type, did=did)
         product_img.save(path)
         product_info["img_path"] = path
       except:
         product_info["img_path"] = "No_img"
   
-      self.db.child(f"Products/{product_info["pid"]}").set(product_info)
+      if type == "Root":
+        self.db.child(f"Products/{product_info["pid"]}").set(product_info)
+      elif type == "Designer":
+        self.db.child(f"Designers/{did}/products/{product_info["pid"]}").set(product_info)
+
       return True
     else:
-      return False
-  # ===================================
+      if type == "Designer":                                            # Designer인데 제품 등록 검증 실패 -> 새로운 pid 부여 후 다시 시도
+        return self.product_registration(product_info, product_img, type, did)
+      else:
+        return False
+  # =======================================
 
-
-
-  # ======= 제품 등록 : Designer ========  =>  Designer 본인만 확인할 수 있는 제품 등록
-  def designer_product_registration(self, product_info, product_img):
-    pass
-
-  # ===================================
 
 
 
   # ========== 제품 정보 가져오기 ===========
   def get_designer_products(self, did):
     try:
-      products = self.db.child(f"designers/{did}/products").get().val()
+      products = self.db.child(f"Designers/{did}/products").get().val()
       return products
     except:
       return None
@@ -187,7 +191,7 @@ class DBModule:
   def get_img_extension(self, img):
     return img.filename.split(".")[1]
   
-  def set_img_path(self, id, extension, type):
+  def set_img_path(self, id, extension, type, did=None):
     img_name = f'{id}.{extension}'
 
     if type == "Consumer":
@@ -195,7 +199,7 @@ class DBModule:
     elif type == "Root":
       path = os.path.join('static/product_img', img_name)
     elif type == "Designer":
-      path = None
+      path = os.path.join(f'static/designer_products/{did}', img_name)
 
     return path
   
@@ -241,7 +245,7 @@ class DBModule:
       print(e)
       return None
     
-  def registration_verification(self, pid, type, did=None):          # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
+  def registration_verification(self, pid, type, did=None):    # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
     if type == "Root":
       products = self.get_products()
     elif type == "Designer" and did != None:
@@ -254,6 +258,6 @@ class DBModule:
         if pid == i:
           return False
       return True
-    except:                                          # except : 제품이 하나도 없는 경우 (products가 None)
+    except:                                                     # except : 제품이 하나도 없는 경우 (products가 None)
       return True
   # ================================
