@@ -18,15 +18,21 @@
 
 <div style="margin-top: 20px;">
   <div style="margin-top: 10px;">
-    <img src="/{{product_info["product_img_path"]}}" alt="제품 이미지" width="200px">  <!-- 제품 이미지 이름은 pid.jpg 형태로 통일하기 -->
+    <img src="/{{product_info["img_path"]}}" alt="제품 이미지" width="200px">  <!-- 제품 이미지 이름은 pid.jpg 형태로 통일하기 -->
   </div>
   <div style="margin-top: 10px;">
     {{product_info['product_name']}} <br>
-    {{product_info['price']}}원
-    {{product_info['product_explain']}}
+    {% if user_type != "Designer" %}
+    {{product_info['price']}}원 <br>
+    {% endif %}
+    {{product_info['product_explain']}} <br>
+
+    {% if user_type == "Designer" %}
+    <a href="/product_delete?pid={{pid}}">이 제품 삭제하기</a> <br>
+    {% endif %}
   </div>
   <div style="margin-top: 10px;">
-    <a href="{{url_for("try_on", pid=pid)}}">이 옷 입어보기  </a>
+    
   </div>
 </div>
 

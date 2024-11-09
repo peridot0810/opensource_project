@@ -176,7 +176,7 @@ def logout():
   
 
 
-# ========= 제품 등록 : 관리자 ==========
+# ========= 제품 등록 : Root ==========
 @app.route("/product_registration")  
 def product_registration():
   try:
@@ -209,7 +209,7 @@ def registration_done():
 
 
 
-# ======= 디자이너 제품 업로드 페이지 ========
+# ======= 제품 등록 : Designer ========
 @app.route("/upload_product")
 def upload_product():
   user = Server.check_login()
@@ -229,6 +229,25 @@ def upload_product_done(did):
     flash("제품명이 중복되거나 이미지가 업로드되지 않았습니다")                 
     return redirect(url_for("upload_product", did=did))
 # ==========================================
+
+
+
+# ===== 개별 제품 상세정보 =====
+@app.route("/product_detail")  # /product_detail/제품 ID
+def product_detail():
+  try:
+    user = Server.check_login()
+    user_type = user.type
+  except:
+    user_type = None
+
+  pid = request.args.get("pid")
+  if user_type == "Designer":
+    product_info = Server.get_product_detail(pid, did=user.id)
+  else:
+    product_info = Server.get_product_detail(pid)
+  return render_template("product_detail.html", product_info=product_info, user_type=user_type, pid=pid)
+# ==========================
 
 
 
@@ -291,12 +310,15 @@ def product_delete():
     user = Server.check_login()
     user_type = user.type
   except:                                              # 로그인 상태가 아닌 경우
-    user_type = (None, None)
+    user_type = None
 
+  pid = request.args.get('pid')
   if user_type == "Root":
-    pid = request.args.get('pid')
     Server.product_delete("Root", pid)
     return redirect(url_for("product_manage"))
+  elif user_type == "Designer":
+    Server.product_delete("Designer", pid, did=user.id)
+    return redirect(url_for("index"))
   else:
     return redirect(url_for("index"))
 # ================================

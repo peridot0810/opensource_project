@@ -66,10 +66,15 @@ class Server:
       user_type = None
 
     if user_type == "Designer":
-      products = self.db.get_designer_products(self.User.id)
+      products = self.db.get_products(did = self.User.id)
     else:   # Consumer, Root, 로그인 X
       products = self.db.get_products()
     return products
+  
+  def get_product_detail(self, pid, did=None):
+    product_detail = self.db.get_product_detail(pid, did = did)
+    return product_detail
+
   # ========================================
 
 
@@ -98,8 +103,8 @@ class Server:
   def user_delete(self, type, id):
     return self.db.user_delete(type, id)
     
-  def product_delete(self, type, pid):
-    return self.db.product_delete(type, pid)
+  def product_delete(self, type, pid, did=None):
+    return self.db.product_delete(type, pid, did=did)
 
   # ================================
 

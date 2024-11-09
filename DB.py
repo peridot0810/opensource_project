@@ -84,7 +84,7 @@ class DBModule:
   # ============= 제품 등록  ==============  
   def product_registration(self, product_info, product_img, type, did):  # Root 제품 등록일때 did == None
     if type == "Designer":
-        product_info["pid"] = f"{did}_{random.randint(100, 999)}"        # Designer 제품에도 pid 부여 : {did}_{랜덤3자리수}
+        product_info["pid"] = f"{random.randint(100, 999)}"        # Designer 제품에도 pid 부여 : {랜덤3자리수}
 
     if self.registration_verification(product_info["pid"], type, did):
       try:
@@ -112,23 +112,19 @@ class DBModule:
 
 
   # ========== 제품 정보 가져오기 ===========
-  def get_designer_products(self, did):
+  def get_products(self, did=None):
     try:
-      products = self.db.child(f"Designers/{did}/products").get().val()
-      return products
-    except:
-      return None
-
-  def get_products(self):
-    try:
-      products = self.db.child("Products").get().val()
+      if did != None:
+        products = self.db.child(f"Designers/{did}/products").get().val()
+      else:
+        products = self.db.child("Products").get().val()
       return products
     except:
       return None
     
-  def get_product_detail(self, pid):
+  def get_product_detail(self, pid, did=None):  # Designer가 호출한게 아니면 did == None
     try:
-      product_info = self.get_products()[pid]
+      product_info = self.get_products(did=did)[pid]
       return product_info
     except:
       return None
@@ -145,12 +141,14 @@ class DBModule:
     except:
       return False
     
-  def product_delete(self, type, pid):
+  def product_delete(self, type, pid, did=None):
     try:
-      product_info = self.get_product_detail(pid)
-      print(product_info)
-      self.delete_product_data(product_info)
-      self.db.child(f"Products/{pid}").remove()
+      product_info = self.get_product_detail(pid, did=did)
+      self.delete_product_data(product_info, did=did)
+      if type == "Root":
+        self.db.child(f"Products/{pid}").remove()
+      elif type == "Designer" and did != None:
+        self.db.child(f"Designers/{did}/products/{pid}").remove()
       return True
     except:
       return False
@@ -225,7 +223,7 @@ class DBModule:
     elif type == "Root":
       pass
 
-  def delete_product_data(self, product_info):
+  def delete_product_data(self, product_info, did=None):
     if product_info["img_path"] != "No_img":
       os.remove(product_info["img_path"])
 
@@ -249,7 +247,7 @@ class DBModule:
     if type == "Root":
       products = self.get_products()
     elif type == "Designer" and did != None:
-      products = self.get_designer_products(did)
+      products = self.get_products(did=did)
     else:
       products = None
 
