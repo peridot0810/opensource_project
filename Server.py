@@ -44,9 +44,7 @@ class Server:
   # ============= 로그인 여부 체크 =============
   def check_login(self):
     if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디, user_type = 사용자 타입
-      user = self.User.id
-      user_type = self.User.type
-      return user, user_type
+      return self.User
     else:                              # 로그인되어있지 않다면 -> None
       return None
   # ========================================

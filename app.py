@@ -18,16 +18,18 @@ Server = Server()                    # Server 인스턴스 생성
 @app.route("/")
 def index():
   try:
-    user, user_type = Server.check_login()
+    user = Server.check_login()
+    user_id = user.id
+    user_type = user.type
   except:
-    user = "Login_needed"
+    user_id = "Login_needed"
     user_type = None
 
   products = Server.get_products()
 
   if not products:                   # product가 없음 -> 제품 가져오기 실패
     products = "No_products"
-  return render_template("index.html", user = user, type = user_type, products = products)  # index.html에 user, products 넘기기
+  return render_template("index.html", user = user_id, type = user_type, products = products)  # index.html에 user, products 넘기기
 # =====================
 
 
@@ -36,13 +38,13 @@ def index():
 @app.route("/my_page")
 def my_page():
   try:
-    user, user_type = Server.check_login()
+    user = Server.check_login()
   except:
     return redirect(url_for("login_userType"))
   
-  user_info = Server.get_user_detail(user, user_type)
+  user_info = Server.get_user_detail(user.id, user.type)
   
-  return render_template("my_page.html", user_info = user_info, user_type=user_type)
+  return render_template("my_page.html", user_info = user_info, user_type=user.type)
 # ===============================
   
 
@@ -51,22 +53,22 @@ def my_page():
 @app.route("/edit_info")
 def edit_info():
   try:
-    user, user_type = Server.check_login()
+    user = Server.check_login()
   except:
     return redirect(url_for("login_userType"))
   
-  user_info = Server.get_user_detail(user, user_type)
+  user_info = Server.get_user_detail(user.id, user.type)
 
-  if user_type == "Consumer":
+  if user.type == "Consumer":
     return render_template("edit_info_consumer.html", user_info = user_info)
-  if user_type == "Designer":
+  if user.type == "Designer":
     return render_template("edit_info_designer.html", user_info = user_info)
   
 
 @app.route("/edit_done", methods=["post"])  
 def edit_done():
   try:
-    user, user_type = Server.check_login()
+    user = Server.check_login()
   except:
     return redirect(url_for("index"))
   
@@ -76,7 +78,7 @@ def edit_done():
     "name" : request.form.get("name")
   }
 
-  if Server.edit_info(user, user_type, update_info): # 정보 수정 성공
+  if Server.edit_info(user.id, user.type, update_info): # 정보 수정 성공
     return redirect(url_for("my_page"))    
   else:
     flash("정보 수정 실패")                              # 정보 수정 실패
@@ -182,9 +184,11 @@ def logout():
 @app.route("/user_manage")       
 def user_manage():
   try:
-    user, user_type = Server.check_login()
+    user = Server.check_login()
+    user_id = user.id
+    user_type = user.type
   except:                                              # 로그인 상태가 아닌 경우
-    user, user_type = (None, None)
+    user_id, user_type = (None, None)
 
   if user_type == "Root":
     consumers = Server.get_users("Consumer")
@@ -205,9 +209,11 @@ def product_manage():
 @app.route("/user_delete")       
 def user_delete():
   try:
-    user, user_type = Server.check_login()
+    user = Server.check_login()
+    user_id = user.id
+    user_type = user.type
   except:                                              # 로그인 상태가 아닌 경우
-    user, user_type = (None, None)
+    user_id, user_type = (None, None)
 
   if user_type == "Root":
     type = request.args.get('type')
