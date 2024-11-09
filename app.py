@@ -226,7 +226,17 @@ def user_manage():
 
 @app.route("/product_manage")       
 def product_manage():
-  pass
+  try:
+    user = Server.check_login()
+    user_type = user.type
+  except:                                              # 로그인 상태가 아닌 경우
+    user_type = None
+
+  if user_type == "Root":
+    products = Server.get_products()
+    return render_template("product_manage.html", products = products)
+  else:
+    return redirect(url_for("index"))
 # =========================
 
 
@@ -253,7 +263,18 @@ def user_delete():
 
 @app.route("/product_delete")       
 def product_delete():
-  pass
+  try:
+    user = Server.check_login()
+    user_type = user.type
+  except:                                              # 로그인 상태가 아닌 경우
+    user_type = (None, None)
+
+  if user_type == "Root":
+    pid = request.args.get('pid')
+    Server.product_delete("Root", pid)
+    return redirect(url_for("product_manage"))
+  else:
+    return redirect(url_for("index"))
 # ================================
 
 

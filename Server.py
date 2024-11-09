@@ -102,10 +102,11 @@ class Server:
 
   # ========== 유저/제품 삭제 =========
   def user_delete(self, type, id):
-    if self.db.user_delete(type, id):
-      return True
-    else:
-      return False
+    return self.db.user_delete(type, id)
+    
+  def product_delete(self, type, pid):
+    return self.db.product_delete(type, pid)
+
   # ================================
 
 
