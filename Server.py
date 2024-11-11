@@ -46,7 +46,7 @@ class Server:
     if "id" in session:                # 로그인이 되어있다면  -> user = 유저 아이디, user_type = 사용자 타입
       return self.User
     else:                              # 로그인되어있지 않다면 -> None
-      return None
+      raise Exception("로그인 상태가 아닙니다")
   # ========================================
     
 

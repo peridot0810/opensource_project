@@ -40,7 +40,8 @@ def index():
 def my_page():
   try:
     user = Server.check_login()
-  except:
+  except Exception as e:
+    print(e)
     return redirect(url_for("login_userType"))
   
   user_info = Server.get_user_detail(user.id, user.type)
@@ -82,7 +83,7 @@ def edit_done():
   if Server.edit_info(user.id, user.type, update_info): # 정보 수정 성공
     return redirect(url_for("my_page"))    
   else:
-    flash("정보 수정 실패")                              # 정보 수정 실패
+    flash("정보 수정 실패")                                # 정보 수정 실패
     return redirect(url_for("edit_info"))
 # ===============================
 
@@ -91,48 +92,52 @@ def edit_done():
 # ===== 회원가입 =====
 @app.route("/signin_userType")
 def signin_userType():                           # Designer, Consumer 구분
-  if Server.check_login():                       # 로그인 상태라면 redirect -> 메인페이지
+  try:
+    Server.check_login()                  # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  return render_template("signin_userType.html")
+  except:
+    return render_template("signin_userType.html")
 
 
 @app.route("/signin", methods=["post"]) 
 def signin():
-  if Server.check_login():                       # 로그인 상태라면 redirect -> 메인페이지
+  try:
+    Server.check_login()                      # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  
-  type = request.form.get("type")
+  except:
+    type = request.form.get("type")
 
-  if type == "Consumer" :    # 일반 사용자 -> 일반 가입 페이지
-    return render_template("signin_consumer.html")
-  elif type == "Designer":   # 디자이너 사용자 -> 디자이너 가입 페이지
-    return render_template("signin_designer.html")  
-  elif type == "Root":       # 관리자
-    return render_template("signin_root.html")                                   
+    if type == "Consumer" :    # 일반 사용자 -> 일반 가입 페이지
+      return render_template("signin_consumer.html")
+    elif type == "Designer":   # 디자이너 사용자 -> 디자이너 가입 페이지
+      return render_template("signin_designer.html")  
+    elif type == "Root":       # 관리자
+      return render_template("signin_root.html")                                   
 
 
 @app.route("/signin_done", methods=["post"])  
 def signin_done():
-  if Server.check_login():                       # 로그인 상태라면 redirect -> 메인페이지
+  try:
+    Server.check_login()                    # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  
-  user_info = {
-    "id" : request.form.get("id"),
-    "pwd" : request.form.get("pwd"),
-    "name" : request.form.get("name"),
-    "type" : request.form.get("type")
-  }
+  except:
+    user_info = {
+      "id" : request.form.get("id"),
+      "pwd" : request.form.get("pwd"),
+      "name" : request.form.get("name"),
+      "type" : request.form.get("type")
+    }
 
-  if user_info["type"] == "Consumer" and 'consumer_img' in request.files:
-    img = request.files['consumer_img']
-  else:
-    img = None
+    if user_info["type"] == "Consumer" and 'consumer_img' in request.files:
+      img = request.files['consumer_img']
+    else:
+      img = None
 
-  if Server.sign_in(user_info, img):                 # 회원가입 성공
-    return redirect(url_for("login_userType"))    
-  else:
-    flash("이미 존재하는 아이디 입니다")                    # 회원가입 실패
-    return redirect(url_for("signin_userType"))
+    if Server.sign_in(user_info, img):                 # 회원가입 성공
+      return redirect(url_for("login_userType"))    
+    else:
+      flash("이미 존재하는 아이디 입니다")                    # 회원가입 실패
+      return redirect(url_for("signin_userType"))
 # ======================
 
 
@@ -140,37 +145,44 @@ def signin_done():
 # ===== 로그인/로그아웃 =====
 @app.route("/login_userType")
 def login_userType():                            # 디자이너인지 소비자인지 구분
-  if Server.check_login():                       # 로그인 상태라면 redirect -> 메인페이지
+  try:
+    Server.check_login()                     # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  return render_template("login_userType.html")
+  except:
+    return render_template("login_userType.html")
 
 @app.route("/login", methods=["post"]) 
 def login():
-  if Server.check_login():                       # 로그인 상태라면 redirect -> 메인페이지
+  try:
+    Server.check_login()                # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  return render_template("login.html", type = request.form.get("type"))
+  except:
+    return render_template("login.html", type = request.form.get("type"))
 
 @app.route("/login_done", methods=["post"])  
 def login_done():
-  if Server.check_login():                       # 로그인 상태라면 redirect -> 메인페이지
+  try:
+    Server.check_login()                     # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
-  login_info = {
-    "id" : request.form.get("id"),
-    "pwd" : request.form.get("pwd"),
-    "type" : request.form.get("type")
-  }
-  if Server.log_in(login_info):                  # 로그인 성공 -> session["id"] = 유저 아이디
-    return redirect(url_for("index"))
-  else:                                          # 로그인 실패
-    flash("아이디가 없거나 틀린 비밀번호 입니다")
-    return redirect(url_for("login_userType"))
+  except:
+    login_info = {
+      "id" : request.form.get("id"),
+      "pwd" : request.form.get("pwd"),
+      "type" : request.form.get("type")
+    }
+    if Server.log_in(login_info):                  # 로그인 성공 -> session["id"] = 유저 아이디
+      return redirect(url_for("index"))
+    else:                                          # 로그인 실패
+      flash("아이디가 없거나 틀린 비밀번호 입니다")
+      return redirect(url_for("login_userType"))
 
 @app.route("/logout")
 def logout():
-  if Server.check_login():                       # 로그인 상태라면 session에서 "id", "type"이라는 key를 pop
+  try:
+    Server.check_login()                      
     Server.log_out()
     return redirect(url_for("index"))
-  else:                                          # 로그인 상태가 아니라면 redirect -> 로그인 창
+  except:                                          # 로그인 상태가 아니라면 redirect -> 로그인 창
     return redirect(url_for("login_userType"))
 # =================================
   
@@ -212,9 +224,14 @@ def registration_done():
 # ======= 제품 등록 : Designer ========
 @app.route("/upload_product")
 def upload_product():
-  user = Server.check_login()
-  print(user.id)
-  return render_template("upload_product.html", did=user.id)
+  try:
+    user = Server.check_login()
+    if user.type == "Designer":
+      return render_template("upload_product.html", did=user.id)
+    else:
+      return redirect(url_for("index"))
+  except:
+    return redirect(url_for("index"))
 
 @app.route("/upload_product_done/<string:did>", methods=["post"])
 def upload_product_done(did):
