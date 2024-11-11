@@ -116,12 +116,9 @@ class Server:
     print(new_user_info)
     if new_user_info:
       self.log_out()
-      print("로그아웃")
       self.log_in(new_user_info)
-      print("로그인")
       return True
     else:
-      print("로그인/로그아웃 실패")
       return False
   # ==================================
 
