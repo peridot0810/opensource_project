@@ -74,7 +74,6 @@ class Server:
   def get_product_detail(self, pid, did=None):
     product_detail = self.db.get_product_detail(pid, did = did)
     return product_detail
-
   # ========================================
 
 
@@ -114,11 +113,15 @@ class Server:
   # ========== 유저 정보 수정 ==========
   def edit_info(self, id, type, update_info):
     new_user_info = self.db.edit_info(id, type, update_info)
+    print(new_user_info)
     if new_user_info:
       self.log_out()
+      print("로그아웃")
       self.log_in(new_user_info)
+      print("로그인")
       return True
     else:
+      print("로그인/로그아웃 실패")
       return False
   # ==================================
 

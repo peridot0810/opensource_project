@@ -157,23 +157,36 @@ class DBModule:
 
   # ========== 유저 정보 수정 ==========
   def edit_info(self, id, type, update_info):
-    if not self.signin_verification(update_info["id"], type):
+    if id != update_info["id"] and not self.signin_verification(update_info["id"], type):
       return None
 
     try:
-      user_info = self.get_user_detail(id, type)
-      print("DB : 수정 시도")
-      new_path = self.edit_user_data(id, user_info, update_info)
-      if not new_path:
-        return None
-      
-      user_info["id"] = update_info["id"]
-      user_info["pwd"] = update_info["pwd"]
-      user_info["name"] = update_info["name"]
-      user_info["img_path"] = new_path
-      
-      self.db.child(f"{type}s/{update_info["id"]}").set(user_info)
-      self.db.child(f"{type}s/{id}").remove()
+      if id != update_info["id"]:     # id를 변경한 경우
+        if type == "Designer":
+          products = self.get_products(did=id)
+          for product_id in products:
+            parts = products[product_id]['img_path'].split('/')
+            parts[-2] = update_info["id"]
+            new_product_path = '/'.join(parts)
+            self.db.child(f"{type}s/{id}/products/{product_id}/").update({"img_path" : new_product_path})
+
+        user_info = self.get_user_detail(id, type)
+        new_path = self.edit_user_data(id, user_info, update_info)
+        user_info["img_path"] = new_path
+        user_info["id"] = update_info["id"]
+        user_info["pwd"] = update_info["pwd"]
+        user_info["name"] = update_info["name"]
+
+        self.db.child(f"{type}s/{update_info["id"]}").set(user_info)
+        self.db.child(f"{type}s/{id}").remove()
+
+      else:                           # id를 변경하지 않은 경우
+        user_info = self.get_user_detail(id, type)
+        user_info["pwd"] = update_info["pwd"]
+        user_info["name"] = update_info["name"]
+
+        self.db.child(f"{type}s/{id}").update(user_info)
+
       return user_info
     
     except Exception as e:
@@ -241,7 +254,7 @@ class DBModule:
       return new_path
     except Exception as e :
       print(e)
-      return None
+      return "No_img"
     
   def registration_verification(self, pid, type, did=None):    # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
     if type == "Root":
