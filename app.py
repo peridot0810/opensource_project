@@ -8,7 +8,6 @@ import os
 # ==== 초기 설정 ====
 app = Flask(__name__)
 app.secret_key = os.urandom(24)      # 랜덤 secret key -> 서버 시작할때마다 세션 초기화
-# DB = DBModule()                    # DB모듈 인스턴스 생성
 Server = Server()                    # Server 인스턴스 생성
 # =================
 
@@ -59,11 +58,18 @@ def edit_info():
   except:
     return redirect(url_for("login_userType"))
   
-  user_info = Server.get_user_detail(user.id, user.type)
+  user_info = {
+    'id' : user.id,
+    'name' : user.name,
+    'pwd' : user.pwd,
+    'type' : user.type
+  }  
 
   if user.type == "Consumer":
+    user_info["img_path"] = user.img_path
     return render_template("edit_info_consumer.html", user_info = user_info)
   if user.type == "Designer":
+    user_info["img_path"] = user.dir_path
     return render_template("edit_info_designer.html", user_info = user_info)
   
 
@@ -341,6 +347,40 @@ def product_delete():
 # ================================
 
 
+
+# ========== 옷 입어보기 =============
+@app.route("/try_on")
+def try_on():
+  try:
+    user = Server.check_login()
+  except:
+    return redirect(url_for("login_userType"))
+  
+  pid = request.args.get("pid")
+
+  product_info = Server.get_product_detail(pid)
+  product_img_path = product_info["img_path"]
+  if user.img_path == "No_img":
+    flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
+    return redirect(url_for("upload_img", cid=user.id))
+  return render_template("try_on.html", model_img_path=user.img_path, product_img_path=product_img_path)
+
+@app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
+def upload_img(cid):
+  return render_template("upload_img.html", cid=cid)
+
+@app.route("/upload_done", methods=["post"])
+def upload_done():
+  img = None
+  cid = request.args.get("cid")
+  if 'consumer_img' in request.files:
+    img = request.files['consumer_img']
+  if Server.upload_img(img, cid): 
+    return redirect(url_for("index"))
+  else:
+    flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
+    return redirect(url_for("upload_img", cid=cid))
+# ================================
 
 
 

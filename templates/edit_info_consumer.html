@@ -13,8 +13,9 @@
     <input type="password" name="pwd" id="pwd" value="{{user_info["pwd"]}}" required>
     <p>name: </p>
     <input type="text" name="name" id="name" value="{{user_info["name"]}}" required>
-    <!-- <p>옷 입어보기용 이미지: </p>
-    <input type="file" name="consumer_img" id="consumer_img"> -->
+    <a href="{{url_for("upload_img", cid=user_info["id"])}}">
+      <p>옷 입어보기용 이미지 수정하기</p>
+    </a>
     <button type="submit">정보 수정하기</button>
   </form>
 

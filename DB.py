@@ -164,11 +164,12 @@ class DBModule:
       if id != update_info["id"]:     # id를 변경한 경우
         if type == "Designer":
           products = self.get_products(did=id)
-          for product_id in products:
-            parts = products[product_id]['img_path'].split('/')
-            parts[-2] = update_info["id"]
-            new_product_path = '/'.join(parts)
-            self.db.child(f"{type}s/{id}/products/{product_id}/").update({"img_path" : new_product_path})
+          if products:
+            for product_id in products:
+              parts = products[product_id]['img_path'].split('/')
+              parts[-2] = update_info["id"]
+              new_product_path = '/'.join(parts)
+              self.db.child(f"{type}s/{id}/products/{product_id}/").update({"img_path" : new_product_path})
 
         user_info = self.get_user_detail(id, type)
         new_path = self.edit_user_data(id, user_info, update_info)
@@ -192,6 +193,20 @@ class DBModule:
     except Exception as e:
       print(e)
       return None
+  
+  def upload_img(self, img, cid):
+    try:
+      extension = self.get_img_extension(img)
+      img_path = self.set_img_path(cid, extension, "Consumer")
+      if os.path.exists(img_path):
+        os.remove(img_path)
+      img.save(img_path)
+    except:
+      return False
+    
+    update_info = {"img_path" : img_path}
+    self.db.child(f"Consumers/{cid}").update(update_info)
+    return True
   # ==================================
 
 

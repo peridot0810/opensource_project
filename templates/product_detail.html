@@ -27,6 +27,11 @@
     {% endif %}
     {{product_info['product_explain']}} <br>
 
+
+    {% if user_type != "Designer" %}
+    <a href="/try_on?pid={{product_info["pid"]}}">이 옷 입어보기</a>
+    {% endif %}
+
     {% if user_type == "Designer" %}
     <a href="/product_delete?pid={{pid}}">이 제품 삭제하기</a> <br>
     {% endif %}

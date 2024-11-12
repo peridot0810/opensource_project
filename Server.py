@@ -53,7 +53,13 @@ class Server:
 
   # ========= 제품 등록 ===============
   def product_registration(self, product_info, product_img, type, did=None):
-    return self.db.product_registration(product_info, product_img, type, did)
+    if self.db.product_registration(product_info, product_img, type, did):
+      if type == "Designer":
+        self.User.products[product_info["pid"]] = product_info
+        print(self.User.products)
+      return True
+    else:
+      return False
   # ========================================
 
 
@@ -103,7 +109,13 @@ class Server:
     return self.db.user_delete(type, id)
     
   def product_delete(self, type, pid, did=None):
-    return self.db.product_delete(type, pid, did=did)
+    if self.db.product_delete(type, pid, did=did):
+      if type == "Designer":
+        del self.User.products[pid]
+        print(self.User.products)
+      return True
+    else:
+      return False
 
   # ================================
 
@@ -113,13 +125,24 @@ class Server:
   # ========== 유저 정보 수정 ==========
   def edit_info(self, id, type, update_info):
     new_user_info = self.db.edit_info(id, type, update_info)
-    print(new_user_info)
     if new_user_info:
+      print(new_user_info)
       self.log_out()
       self.log_in(new_user_info)
+      # self.User 업데이트
+      self.User.id = new_user_info["id"]
+      self.User.name = new_user_info["name"]
+      self.User.pwd = new_user_info["pwd"]
+      if type == "Consumer":
+        self.User.img_path = new_user_info["img_path"]
+      elif type == "Deisnger":
+        self.User.dir_path = new_user_info["img_path"]
       return True
     else:
       return False
+    
+  def upload_img(self, img, cid):
+    return self.db.upload_img(img, cid)
   # ==================================
 
 
@@ -130,8 +153,14 @@ class Server:
     type = User_info["type"]
     if type == "Consumer":
       self.User = Consumer(User_info["id"], User_info["pwd"], User_info["name"])
+      self.User.img_path = self.get_user_detail(User_info["id"], "Consumer")["img_path"]
+      print(self.User.img_path)
     elif type == "Designer":
       self.User = Designer(User_info["id"], User_info["pwd"], User_info["name"])
+      products = self.get_products()
+      if products:
+        self.User.products = products
+      print(self.User.products)
     elif type == "Root":
       self.User = Root(User_info["id"], User_info["pwd"], User_info["name"])
   # ===================================
