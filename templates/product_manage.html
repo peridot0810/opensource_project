@@ -8,17 +8,18 @@
 <h2>Products</h2>
 
 <div style="margin-top: 20px;">
-  {% if products != None %}
-    {% for category in products %}
-      {% for pid in products[category] %}
-        <h3>{{category}}</h3>  
+  
+    {% for category in categories %}
+    {% if category != None %}
+      {% for pid in category %}
         product : {{pid}} <br>
-        product info : {{products[category][pid]}} <br>
-        <a href="/product_delete?pid={{pid}}&category={{category}}">이 제품 삭제하기</a>
+        product info : {{category[pid]}} <br>
+        <a href="/product_delete?pid={{pid}}">이 제품 삭제하기</a>
         <br><br><br><br>
       {% endfor %}
+    {% endif %}
     {% endfor %}
-  {% endif %}
+  
   
 </div>
 

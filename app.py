@@ -213,14 +213,17 @@ def registration_done():
   product_info = {
     "pid" : request.form.get("id") ,
     "category" : request.form.get("category") ,
-    "price" : request.form.get("price") ,
+    "original_price" : request.form.get("original_price") ,
+    "discounted_price" : request.form.get("discounted_price") ,
+    "discount_rate" : request.form.get("discount_rate") ,
     "product_name" : request.form.get("name") ,
-    "product_explain" : request.form.get("product_explain")  
+    "product_explain" : request.form.get("product_explain"),
+    "rating" : request.form.get("rating"),
+    "sales_volume" : request.form.get("sales_volume")  
   }
   product_img = request.files['product_img']
-  category = request.form.get("category")
 
-  if Server.product_registration(product_info, product_img, "Root", category=category):  # 제품 등록 성공
+  if Server.product_registration(product_info, product_img, "Root", category=product_info["category"]):  # 제품 등록 성공
     return redirect(url_for("index"))
   else:                                                  # 제품 등록 실패
     flash("제품 ID가 중복됩니다")
@@ -301,9 +304,11 @@ def product_manage():
     user_type = None
 
   if user_type == "Root":
-    products = Server.get_products()
-    print(products)
-    return render_template("product_manage.html", products = products)
+    top = Server.get_products(category='top')
+    pants = Server.get_products(category='pants')
+    dress = Server.get_products(category='dress')
+    outer = Server.get_products(category='outer')
+    return render_template("product_manage.html", categories=[top, pants, dress, outer])
   else:
     return redirect(url_for("index"))
 # =========================
@@ -340,9 +345,7 @@ def product_delete():
 
   pid = request.args.get('pid')
   if user_type == "Root":
-    category = request.args.get('category')
-    print(category)
-    Server.product_delete("Root", pid, category=category)
+    Server.product_delete("Root", pid)
     return redirect(url_for("product_manage"))
   elif user_type == "Designer":
     Server.product_delete("Designer", pid, did=user.id)

@@ -96,7 +96,7 @@ class DBModule:
         product_info["img_path"] = "No_img"
   
       if type == "Root":
-        self.db.child(f"Products/{category}/{product_info["pid"]}").set(product_info)
+        self.db.child(f"Products/{product_info["pid"]}").set(product_info)
       elif type == "Designer":
         self.db.child(f"Designers/{did}/products/{product_info["pid"]}").set(product_info)
 
@@ -117,18 +117,23 @@ class DBModule:
       if did != None:
         products = self.db.child(f"Designers/{did}/products").get().val()
       elif category != None:
-        products = self.db.child(f"Products/{category}").get().val()
+        print(category)
+        products = self.db.child(f"Products/").order_by_child("category").equal_to(category).get().val()
+        print(products)
+
       else :
         products = self.db.child(f"Products/").get().val()
       return products
-    except:
+    except Exception as e:
+      print(e)
       return None
     
   def get_product_detail(self, pid, did=None, category=None):  # Designer가 호출한게 아니면 did == None
     try:
       product_info = self.get_products(did=did, category=category)[pid]
       return product_info
-    except:
+    except Exception as e:
+      print(e)
       return None
   # ========================================
 
@@ -147,8 +152,8 @@ class DBModule:
     try:
       product_info = self.get_product_detail(pid, did=did, category=category)
       self.delete_product_data(product_info, did=did)
-      if type == "Root" and category != None:
-        self.db.child(f"Products/{category}/{pid}").remove()
+      if type == "Root" :
+        self.db.child(f"Products/{pid}").remove()
       elif type == "Designer" and did != None:
         self.db.child(f"Designers/{did}/products/{pid}").remove()
       return True
