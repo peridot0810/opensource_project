@@ -73,9 +73,9 @@ class Server:
 
     if user_type == "Designer":
       products = self.db.get_products(did = self.User.id)
-    elif category != None:  # Root 제품 관리 페이지
+    elif category != None:  # 특정 카테고리의 제품만 가져오기
       products = self.db.get_products(category=category)
-    else:   # Consumer, Root, 로그인 X
+    else:                   # 모든 제품 가져오기
       products = self.db.get_products()
     return products
   
@@ -110,8 +110,9 @@ class Server:
   def user_delete(self, type, id):
     return self.db.user_delete(type, id)
     
-  def product_delete(self, type, pid, did=None):
-    if self.db.product_delete(type, pid, did=did):
+  def product_delete(self, type, pid, did=None, category=None):
+    print(category)
+    if self.db.product_delete(type, pid, did=did, category=category):
       if type == "Designer":
         del self.User.products[pid]
         print(self.User.products)

@@ -292,7 +292,7 @@ def user_manage():
   else:
     return redirect(url_for("index"))
 
-@app.route("/product_manage")   # url을 세부사항으로 분리해야할듯!    
+@app.route("/product_manage")   
 def product_manage():
   try:
     user = Server.check_login()
@@ -302,6 +302,7 @@ def product_manage():
 
   if user_type == "Root":
     products = Server.get_products()
+    print(products)
     return render_template("product_manage.html", products = products)
   else:
     return redirect(url_for("index"))
@@ -339,8 +340,9 @@ def product_delete():
 
   pid = request.args.get('pid')
   if user_type == "Root":
-    
-    Server.product_delete("Root", pid)
+    category = request.args.get('category')
+    print(category)
+    Server.product_delete("Root", pid, category=category)
     return redirect(url_for("product_manage"))
   elif user_type == "Designer":
     Server.product_delete("Designer", pid, did=user.id)

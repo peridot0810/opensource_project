@@ -118,6 +118,8 @@ class DBModule:
         products = self.db.child(f"Designers/{did}/products").get().val()
       elif category != None:
         products = self.db.child(f"Products/{category}").get().val()
+      else :
+        products = self.db.child(f"Products/").get().val()
       return products
     except:
       return None
@@ -141,16 +143,17 @@ class DBModule:
     except:
       return False
     
-  def product_delete(self, type, pid, did=None):
+  def product_delete(self, type, pid, did=None, category=None):
     try:
-      product_info = self.get_product_detail(pid, did=did)
+      product_info = self.get_product_detail(pid, did=did, category=category)
       self.delete_product_data(product_info, did=did)
-      if type == "Root":
-        self.db.child(f"Products/{pid}").remove()
+      if type == "Root" and category != None:
+        self.db.child(f"Products/{category}/{pid}").remove()
       elif type == "Designer" and did != None:
         self.db.child(f"Designers/{did}/products/{pid}").remove()
       return True
-    except:
+    except Exception as e:
+      print(e)
       return False
   # ========================================
 
