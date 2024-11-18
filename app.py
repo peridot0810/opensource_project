@@ -212,13 +212,15 @@ def product_registration():
 def registration_done():
   product_info = {
     "pid" : request.form.get("id") ,
+    "category" : request.form.get("category") ,
     "price" : request.form.get("price") ,
     "product_name" : request.form.get("name") ,
     "product_explain" : request.form.get("product_explain")  
   }
   product_img = request.files['product_img']
+  category = request.form.get("category")
 
-  if Server.product_registration(product_info, product_img, "Root"):  # 제품 등록 성공
+  if Server.product_registration(product_info, product_img, "Root", category=category):  # 제품 등록 성공
     return redirect(url_for("index"))
   else:                                                  # 제품 등록 실패
     flash("제품 ID가 중복됩니다")
@@ -290,7 +292,7 @@ def user_manage():
   else:
     return redirect(url_for("index"))
 
-@app.route("/product_manage")       
+@app.route("/product_manage")   # url을 세부사항으로 분리해야할듯!    
 def product_manage():
   try:
     user = Server.check_login()
@@ -337,6 +339,7 @@ def product_delete():
 
   pid = request.args.get('pid')
   if user_type == "Root":
+    
     Server.product_delete("Root", pid)
     return redirect(url_for("product_manage"))
   elif user_type == "Designer":

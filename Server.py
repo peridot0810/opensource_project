@@ -52,8 +52,8 @@ class Server:
 
 
   # ========= 제품 등록 ===============
-  def product_registration(self, product_info, product_img, type, did=None):
-    if self.db.product_registration(product_info, product_img, type, did):
+  def product_registration(self, product_info, product_img, type, did=None, category=None):
+    if self.db.product_registration(product_info, product_img, type, did, category):
       if type == "Designer":
         self.User.products[product_info["pid"]] = product_info
         print(self.User.products)
@@ -65,7 +65,7 @@ class Server:
 
 
   # =============== 제품 get ================
-  def get_products(self):
+  def get_products(self, category=None):
     try:
       user_type = self.User.type
     except:
@@ -73,12 +73,14 @@ class Server:
 
     if user_type == "Designer":
       products = self.db.get_products(did = self.User.id)
+    elif category != None:  # Root 제품 관리 페이지
+      products = self.db.get_products(category=category)
     else:   # Consumer, Root, 로그인 X
       products = self.db.get_products()
     return products
   
-  def get_product_detail(self, pid, did=None):
-    product_detail = self.db.get_product_detail(pid, did = did)
+  def get_product_detail(self, pid, did=None, category=None):
+    product_detail = self.db.get_product_detail(pid, did = did, category=category)
     return product_detail
   # ========================================
 

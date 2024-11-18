@@ -20,6 +20,13 @@
   <form action="{{url_for("registration_done")}}" method="post" enctype="multipart/form-data">
     <p>product id: </p>
     <input type="text" name="id" id="id">
+    <p>product category: </p>
+    <select name="category" id="category">
+      <option value="top">상의</option>
+      <option value="pants">하의</option>
+      <option value="dress">원피스</option>
+      <option value="outer">아우터</option>
+    </select>
     <p>price: </p>
     <input type="text" name="price" id="price">
     <p>product name: </p>

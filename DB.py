@@ -82,21 +82,21 @@ class DBModule:
 
 
   # ============= 제품 등록  ==============  
-  def product_registration(self, product_info, product_img, type, did):  # Root 제품 등록일때 did == None
+  def product_registration(self, product_info, product_img, type, did=None, category=None):  # Root 제품 등록일때 did == None
     if type == "Designer":
         product_info["pid"] = f"{random.randint(100, 999)}"        # Designer 제품에도 pid 부여 : {랜덤3자리수}
 
-    if self.registration_verification(product_info["pid"], type, did):
+    if self.registration_verification(product_info["pid"], type, did, category):
       try:
         extension = self.get_img_extension(product_img)
-        path = self.set_img_path(product_info["pid"], extension, type, did=did)
+        path = self.set_img_path(product_info["pid"], extension, type, did=did, category=category)
         product_img.save(path)
         product_info["img_path"] = path
       except:
         product_info["img_path"] = "No_img"
   
       if type == "Root":
-        self.db.child(f"Products/{product_info["pid"]}").set(product_info)
+        self.db.child(f"Products/{category}/{product_info["pid"]}").set(product_info)
       elif type == "Designer":
         self.db.child(f"Designers/{did}/products/{product_info["pid"]}").set(product_info)
 
@@ -112,19 +112,19 @@ class DBModule:
 
 
   # ========== 제품 정보 가져오기 ===========
-  def get_products(self, did=None):
+  def get_products(self, did=None, category=None):
     try:
       if did != None:
         products = self.db.child(f"Designers/{did}/products").get().val()
-      else:
-        products = self.db.child("Products").get().val()
+      elif category != None:
+        products = self.db.child(f"Products/{category}").get().val()
       return products
     except:
       return None
     
-  def get_product_detail(self, pid, did=None):  # Designer가 호출한게 아니면 did == None
+  def get_product_detail(self, pid, did=None, category=None):  # Designer가 호출한게 아니면 did == None
     try:
-      product_info = self.get_products(did=did)[pid]
+      product_info = self.get_products(did=did, category=category)[pid]
       return product_info
     except:
       return None
@@ -217,13 +217,13 @@ class DBModule:
   def get_img_extension(self, img):
     return img.filename.split(".")[1]
   
-  def set_img_path(self, id, extension, type, did=None):
+  def set_img_path(self, id, extension, type, did=None, category=None):
     img_name = f'{id}.{extension}'
 
     if type == "Consumer":
       path = os.path.join('static/consumer_img', img_name)
     elif type == "Root":
-      path = os.path.join('static/product_img', img_name)
+      path = os.path.join(f'static/product_img/{category}', img_name)
     elif type == "Designer":
       path = os.path.join(f'static/designer_products/{did}', img_name)
 
@@ -271,9 +271,9 @@ class DBModule:
       print(e)
       return "No_img"
     
-  def registration_verification(self, pid, type, did=None):    # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
+  def registration_verification(self, pid, type, did=None, category=None):    # 제품 등록 검증 (pid(product id)가 겹치는 경우는 없는지 확인)
     if type == "Root":
-      products = self.get_products()
+      products = self.get_products(category=category)
     elif type == "Designer" and did != None:
       products = self.get_products(did=did)
     else:
