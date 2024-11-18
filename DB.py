@@ -214,7 +214,7 @@ class DBModule:
     
     update_info = {"img_path" : img_path}
     self.db.child(f"Consumers/{cid}").update(update_info)
-    return True
+    return img_path
   # ==================================
 
 

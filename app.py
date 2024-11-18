@@ -104,7 +104,6 @@ def signin_userType():                           # Designer, Consumer 구분
   except:
     return render_template("signin_userType.html")
 
-
 @app.route("/signin", methods=["post"]) 
 def signin():
   try:
@@ -116,10 +115,7 @@ def signin():
     if type == "Consumer" :    # 일반 사용자 -> 일반 가입 페이지
       return render_template("signin_consumer.html")
     elif type == "Designer":   # 디자이너 사용자 -> 디자이너 가입 페이지
-      return render_template("signin_designer.html")  
-    elif type == "Root":       # 관리자
-      return render_template("signin_root.html")                                   
-
+      return render_template("signin_designer.html")                                   
 
 @app.route("/signin_done", methods=["post"])  
 def signin_done():
@@ -144,6 +140,15 @@ def signin_done():
     else:
       flash("이미 존재하는 아이디 입니다")                    # 회원가입 실패
       return redirect(url_for("signin_userType"))
+
+@app.route("/signin_Root") 
+def signin_Root():
+  try:
+    Server.check_login()                      # 로그인 상태라면 redirect -> 메인페이지
+    return redirect(url_for("index"))
+  except:
+    pass
+  return render_template("signin_root.html")   
 # ======================
 
 
@@ -164,6 +169,14 @@ def login():
     return redirect(url_for("index"))
   except:
     return render_template("login.html", type = request.form.get("type"))
+
+@app.route("/login_Root") 
+def login_Root():
+  try:
+    Server.check_login()                # 로그인 상태라면 redirect -> 메인페이지
+    return redirect(url_for("index"))
+  except:
+    return render_template("login.html", type = "Root")
 
 @app.route("/login_done", methods=["post"])  
 def login_done():

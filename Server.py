@@ -145,7 +145,12 @@ class Server:
       return False
     
   def upload_img(self, img, cid):
-    return self.db.upload_img(img, cid)
+    img_path = self.db.upload_img(img, cid)
+    if img_path:
+      self.User.img_path = img_path
+      return True
+    else:
+      return False
   # ==================================
 
 
