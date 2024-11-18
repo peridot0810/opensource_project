@@ -136,6 +136,8 @@ class Server:
       self.User.id = new_user_info["id"]
       self.User.name = new_user_info["name"]
       self.User.pwd = new_user_info["pwd"]
+      self.User.phone = new_user_info["phone"]
+      self.User.email = new_user_info["email"]
       if type == "Consumer":
         self.User.img_path = new_user_info["img_path"]
       elif type == "Deisnger":
@@ -160,11 +162,11 @@ class Server:
   def make_User(self, User_info):
     type = User_info["type"]
     if type == "Consumer":
-      self.User = Consumer(User_info["id"], User_info["pwd"], User_info["name"])
+      self.User = Consumer(User_info["id"], User_info["pwd"], User_info["name"], User_info["phone"], User_info["email"])
       self.User.img_path = self.get_user_detail(User_info["id"], "Consumer")["img_path"]
       print(self.User.img_path)
     elif type == "Designer":
-      self.User = Designer(User_info["id"], User_info["pwd"], User_info["name"])
+      self.User = Designer(User_info["id"], User_info["pwd"], User_info["name"], User_info["phone"], User_info["email"])
       products = self.get_products()
       if products:
         self.User.products = products

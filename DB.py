@@ -185,6 +185,8 @@ class DBModule:
         user_info["id"] = update_info["id"]
         user_info["pwd"] = update_info["pwd"]
         user_info["name"] = update_info["name"]
+        user_info["phone"] = update_info["phone"]
+        user_info["email"] = update_info["email"]
 
         self.db.child(f"{type}s/{update_info["id"]}").set(user_info)
         self.db.child(f"{type}s/{id}").remove()
@@ -193,6 +195,8 @@ class DBModule:
         user_info = self.get_user_detail(id, type)
         user_info["pwd"] = update_info["pwd"]
         user_info["name"] = update_info["name"]
+        user_info["phone"] = update_info["phone"]
+        user_info["email"] = update_info["email"]
 
         self.db.child(f"{type}s/{id}").update(user_info)
 

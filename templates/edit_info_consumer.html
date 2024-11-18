@@ -13,6 +13,10 @@
     <input type="password" name="pwd" id="pwd" value="{{user_info["pwd"]}}" required>
     <p>name: </p>
     <input type="text" name="name" id="name" value="{{user_info["name"]}}" required>
+    <p>phone: </p>
+    <input type="text" name="phone" id="phone" value="{{user_info["phone"]}}" required>
+    <p>email: </p>
+    <input type="email" name="email" id="email" value="{{user_info["email"]}}" required>
     <a href="{{url_for("upload_img", cid=user_info["id"])}}">
       <p>옷 입어보기용 이미지 수정하기</p>
     </a>

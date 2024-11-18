@@ -62,6 +62,8 @@ def edit_info():
     'id' : user.id,
     'name' : user.name,
     'pwd' : user.pwd,
+    'phone' : user.phone,
+    'email' : user.email,
     'type' : user.type
   }  
 
@@ -83,7 +85,9 @@ def edit_done():
   update_info = {
     "id" : request.form.get("id"),
     "pwd" : request.form.get("pwd"),
-    "name" : request.form.get("name")
+    "name" : request.form.get("name"),
+    "phone" : request.form.get("phone"),
+    "email" : request.form.get("email")
   }
 
   if Server.edit_info(user.id, user.type, update_info): # 정보 수정 성공
@@ -127,6 +131,8 @@ def signin_done():
       "id" : request.form.get("id"),
       "pwd" : request.form.get("pwd"),
       "name" : request.form.get("name"),
+      "phone" : request.form.get("phone"),
+      "email" : request.form.get("email"),
       "type" : request.form.get("type")
     }
 
