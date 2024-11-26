@@ -43,6 +43,9 @@ https://github.com/sebinyday/IDM-VTON
 - 제품 상세페이지에 '이 옷 입어보기' 클릭 -> try on 페이지로 넘어감
 - 회원가입 할때 이미지를 업로드 하지 않았다면 업로드 화면으로 넘어감
 
-## 피그마 시연 영상
-https://github.com/user-attachments/assets/45cc5aa9-7505-4a37-a6ff-209dd40726f8
+## 시연 영상(데모)
+https://github.com/user-attachments/assets/20b6b647-dafd-4694-bb88-73e8fea22bc3
+
+
+
 
