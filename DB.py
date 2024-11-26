@@ -96,9 +96,9 @@ class DBModule:
         product_info["img_path"] = "No_img"
   
       if type == "Root":
-        self.db.child(f"Products/{product_info["pid"]}").set(product_info)
+        self.db.child(f"Products/{product_info['pid']}").set(product_info)
       elif type == "Designer":
-        self.db.child(f"Designers/{did}/products/{product_info["pid"]}").set(product_info)
+        self.db.child(f"Designers/{did}/products/{product_info['pid']}").set(product_info)
 
       return True
     else:
@@ -188,7 +188,7 @@ class DBModule:
         user_info["phone"] = update_info["phone"]
         user_info["email"] = update_info["email"]
 
-        self.db.child(f"{type}s/{update_info["id"]}").set(user_info)
+        self.db.child(f"{type}s/{update_info['id']}").set(user_info)
         self.db.child(f"{type}s/{id}").remove()
 
       else:                           # id를 변경하지 않은 경우
@@ -257,8 +257,8 @@ class DBModule:
           os.remove(user_info["img_path"])
 
     elif type == "Designer":
-      if os.path.exists(f"static/designer_products/{user_info["id"]}"):
-        shutil.rmtree(f"static/designer_products/{user_info["id"]}")  
+      if os.path.exists(f"static/designer_products/{user_info['id']}"):
+        shutil.rmtree(f"static/designer_products/{user_info['id']}")  
 
     elif type == "Root":
       pass
@@ -271,7 +271,7 @@ class DBModule:
     if user_info["type"] == "Consumer" and user_info["img_path"]!="No_img":
       old_path = user_info["img_path"]
       extension = user_info["img_path"].split("/")[-1].split(".")[-1]
-      new_path = f"static/consumer_img/{update_info["id"]}.{extension}"
+      new_path = f"static/consumer_img/{update_info['id']}.{extension}"
     elif user_info["type"] == "Designer":
       old_path = f"static/designer_products/{id}" 
       new_path = f"static/designer_products/{update_info['id']}"

@@ -383,13 +383,14 @@ def try_on():
   except:
     return redirect(url_for("login_userType"))
   
-  pid = request.args.get("pid")
-
-  product_info = Server.get_product_detail(pid)
-  product_img_path = product_info["img_path"]
   if user.img_path == "No_img":
     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
     return redirect(url_for("upload_img", cid=user.id))
+
+  pid = request.args.get("pid")
+  product_info = Server.get_product_detail(pid)
+  product_img_path = product_info["img_path"]
+  
   return render_template("try_on.html", model_img_path=user.img_path, product_img_path=product_img_path)
 
 @app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
@@ -413,6 +414,6 @@ def upload_done():
 
 # ===== 서버 실행 =====
 if __name__ == "__main__":
-  app.run(host = "0.0.0.0", debug=True)
+  app.run(host = "0.0.0.0", debug=True, port=8080)
 
 
