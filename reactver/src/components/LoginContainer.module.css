@@ -1,0 +1,171 @@
+.div,
+.h1 {
+  position: relative;
+}
+.h1 {
+  margin: 0;
+  font-size: inherit;
+  letter-spacing: 0.04em;
+  line-height: 30px;
+  font-weight: 700;
+  font-family: inherit;
+}
+.div {
+  font-size: var(--font-size-xl);
+  line-height: 24px;
+  font-family: var(--font-nanum-gothic);
+}
+.credentialsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-5xl);
+  font-size: var(--font-size-21xl);
+}
+.div1 {
+  position: relative;
+  line-height: 24px;
+  display: inline-block;
+  min-width: 47px;
+}
+.underlineIcon {
+  align-self: stretch;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.idContainer {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 0 var(--padding-12xs);
+  gap: var(--gap-4xs);
+  color: var(--color-gray-500);
+  font-family: var(--font-nanum-gothic);
+}
+.div2 {
+  position: relative;
+  line-height: 24px;
+  display: inline-block;
+  min-width: 62px;
+}
+.underlineIcon1 {
+  flex: 1;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+.passwordInput {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 0 var(--padding-sm);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.showPasswordIcon {
+  height: 28px;
+  width: 28px;
+  position: relative;
+  border-radius: 50%;
+  border: 0 solid var(--text2);
+  box-sizing: border-box;
+  opacity: 0.4;
+}
+.div3 {
+  position: relative;
+  line-height: 24px;
+}
+.passwordContainer,
+.saveIdContainer,
+.showPasswordContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.saveIdContainer {
+  flex-direction: column;
+  padding: var(--padding-11xs) 0 0;
+}
+.passwordContainer,
+.showPasswordContainer {
+  flex-direction: row;
+  gap: var(--gap-6xs);
+  font-family: var(--title-16px-regular);
+}
+.passwordContainer {
+  align-self: stretch;
+  flex-direction: column;
+  padding: 0 0 var(--padding-3xs);
+  box-sizing: border-box;
+  gap: var(--gap-5xs);
+  max-width: 100%;
+  color: var(--color-gray-500);
+  font-family: var(--font-nanum-gothic);
+}
+.div5 {
+  position: relative;
+  line-height: 24px;
+  color: var(--text2);
+  display: inline-block;
+  min-width: 62px;
+}
+.actionsContainer,
+.footerLinks,
+.loginContainer {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-start;
+}
+.footerLinks {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+  font-size: var(--title-16px-regular-size);
+  color: var(--color-gray-600);
+  font-family: var(--font-nanum-gothic);
+}
+.actionsContainer,
+.loginContainer {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--gap-5xl);
+  font-size: var(--font-size-xl);
+}
+.loginContainer {
+  gap: var(--gap-13xl);
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--title-16px-regular-size);
+  color: var(--text2);
+  font-family: var(--font-nanumgothic);
+}
+@media screen and (max-width: 750px) {
+  .h1 {
+    font-size: var(--font-size-13xl);
+    line-height: 24px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .h1 {
+    font-size: var(--font-size-5xl);
+    line-height: 18px;
+  }
+  .div {
+    font-size: var(--title-16px-regular-size);
+    line-height: 19px;
+  }
+  .footerLinks {
+    flex-wrap: wrap;
+  }
+  .loginContainer {
+    gap: var(--gap-base);
+  }
+}

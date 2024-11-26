@@ -1,0 +1,104 @@
+.span {
+  color: var(--color-aquamarine);
+}
+.span1 {
+  white-space: pre-wrap;
+}
+.h1 {
+  margin: 0;
+  height: 40px;
+  flex: 1;
+  position: relative;
+  font-size: inherit;
+  line-height: 45px;
+  font-weight: 700;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+}
+.virtualTryonBanner {
+  width: 1240px;
+  border-radius: var(--br-xl);
+  background-color: var(--text2);
+  overflow: hidden;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: var(--padding-17xl) 129px;
+  box-sizing: border-box;
+}
+.mainContent,
+.mainContentWrapper,
+.virtualTryonBanner {
+  display: flex;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.mainContent {
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 75px;
+  text-align: left;
+  font-size: var(--font-size-21xl);
+  color: var(--bg);
+  font-family: var(--font-nanumgothic);
+}
+.mainContentWrapper {
+  width: 1410px;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 0 var(--padding-51xl) var(--padding-xl);
+  box-sizing: border-box;
+}
+.categoryPage {
+  width: 100%;
+  position: relative;
+  background-color: var(--bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: var(--gap-4xl);
+  line-height: normal;
+  letter-spacing: normal;
+}
+@media screen and (max-width: 1275px) {
+  .virtualTryonBanner {
+    gap: var(--gap-57xl);
+    padding-left: var(--padding-45xl);
+    padding-right: var(--padding-45xl);
+    box-sizing: border-box;
+  }
+  .mainContentWrapper {
+    padding-left: var(--padding-16xl);
+    padding-right: var(--padding-16xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 750px) {
+  .h1 {
+    font-size: var(--font-size-13xl);
+    line-height: 36px;
+  }
+  .virtualTryonBanner {
+    gap: var(--gap-19xl);
+    padding-left: var(--padding-13xl);
+    padding-right: var(--padding-13xl);
+    box-sizing: border-box;
+  }
+  .mainContent {
+    gap: var(--gap-18xl);
+  }
+}
+@media screen and (max-width: 450px) {
+  .h1 {
+    font-size: var(--font-size-5xl);
+    line-height: 27px;
+  }
+  .mainContent,
+  .virtualTryonBanner {
+    gap: var(--gap-lgi);
+  }
+}

@@ -1,0 +1,116 @@
+.home {
+  text-decoration: none;
+  position: relative;
+  color: inherit;
+  display: inline-block;
+  min-width: 46px;
+}
+.homeLink {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-9xs) 0 0;
+}
+.icon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-11xs-5) var(--padding-5xs) 0 0;
+}
+.cart2 {
+  position: relative;
+  color: var(--text2);
+}
+.cart1 {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-9xs);
+}
+.cart3 {
+  margin: 0;
+  position: relative;
+  font-size: var(--font-size-21xl);
+  font-weight: 800;
+  font-family: var(--font-nanum-gothic);
+  color: var(--text2);
+}
+.navigation,
+.navigation1 {
+  display: flex;
+  align-items: flex-start;
+}
+.navigation1 {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 31px;
+}
+.navigation {
+  width: 309px;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 var(--padding-xl);
+  box-sizing: border-box;
+}
+.cart,
+.outfitPreview {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.outfitPreview {
+  align-self: stretch;
+  align-items: flex-start;
+  gap: var(--gap-3xl);
+  flex-shrink: 0;
+  max-width: 100%;
+  text-align: left;
+  font-size: var(--title-16px-regular-size);
+  color: var(--color-gray-600);
+  font-family: var(--font-abeezee);
+}
+.cart {
+  width: 100%;
+  height: 1453px;
+  position: relative;
+  background-color: var(--bg);
+  overflow: hidden;
+  align-items: flex-end;
+  padding: 0 0 669px;
+  box-sizing: border-box;
+  gap: 238px;
+  line-height: normal;
+  letter-spacing: normal;
+}
+@media screen and (max-width: 1100px) {
+  .cart {
+    height: auto;
+  }
+}
+@media screen and (max-width: 750px) {
+  .cart3 {
+    font-size: var(--font-size-13xl);
+  }
+  .cart {
+    gap: 119px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .cart3 {
+    font-size: var(--font-size-5xl);
+  }
+  .cart {
+    gap: 59px;
+  }
+}
