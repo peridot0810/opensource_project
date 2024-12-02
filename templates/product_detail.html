@@ -23,7 +23,10 @@
   <div style="margin-top: 10px;">
     {{product_info['product_name']}} <br>
     {% if user_type != "Designer" %}
-    {{product_info['price']}}원 <br>
+    <p>정가</p>
+    {{product_info['original_price']}}원 <br>
+    <p>판매가</p>
+    {{product_info['discounted_price']}}원 <br>
     {% endif %}
     {{product_info['product_explain']}} <br>
 
