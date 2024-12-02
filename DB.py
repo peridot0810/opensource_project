@@ -3,6 +3,8 @@ import json
 import os
 import shutil
 import random
+from collections import OrderedDict
+
 
 
 class DBModule:
@@ -96,9 +98,9 @@ class DBModule:
         product_info["img_path"] = "No_img"
   
       if type == "Root":
-        self.db.child(f"Products/{product_info["pid"]}").set(product_info)
+        self.db.child(f"Products/{product_info['pid']}").set(product_info)
       elif type == "Designer":
-        self.db.child(f"Designers/{did}/products/{product_info["pid"]}").set(product_info)
+        self.db.child(f"Designers/{did}/products/{product_info['pid']}").set(product_info)
 
       return True
     else:
@@ -117,9 +119,7 @@ class DBModule:
       if did != None:
         products = self.db.child(f"Designers/{did}/products").get().val()
       elif category != None:
-        print(category)
         products = self.db.child(f"Products/").order_by_child("category").equal_to(category).get().val()
-        print(products)
 
       else :
         products = self.db.child(f"Products/").get().val()
@@ -132,6 +132,20 @@ class DBModule:
     try:
       product_info = self.get_products(did=did, category=category)[pid]
       return product_info
+    except Exception as e:
+      print(e)
+      return None
+    
+  def get_products_by(self, by, category=None, num=None, sort=None):
+    try:
+      products = self.get_products(category=category)
+      if sort == "DESC":
+        products = OrderedDict(sorted(products.items(), key=lambda item: float(item[1][by]), reverse=True))
+      else :
+        products = OrderedDict(sorted(products.items(), key=lambda item: float(item[1][by])))
+
+      products = OrderedDict(list(products.items())[:num])
+      return products
     except Exception as e:
       print(e)
       return None
@@ -188,7 +202,7 @@ class DBModule:
         user_info["phone"] = update_info["phone"]
         user_info["email"] = update_info["email"]
 
-        self.db.child(f"{type}s/{update_info["id"]}").set(user_info)
+        self.db.child(f"{type}s/{update_info['id']}").set(user_info)
         self.db.child(f"{type}s/{id}").remove()
 
       else:                           # id를 변경하지 않은 경우
@@ -257,8 +271,8 @@ class DBModule:
           os.remove(user_info["img_path"])
 
     elif type == "Designer":
-      if os.path.exists(f"static/designer_products/{user_info["id"]}"):
-        shutil.rmtree(f"static/designer_products/{user_info["id"]}")  
+      if os.path.exists(f"static/designer_products/{user_info['id']}"):
+        shutil.rmtree(f"static/designer_products/{user_info['id']}")  
 
     elif type == "Root":
       pass
@@ -271,7 +285,7 @@ class DBModule:
     if user_info["type"] == "Consumer" and user_info["img_path"]!="No_img":
       old_path = user_info["img_path"]
       extension = user_info["img_path"].split("/")[-1].split(".")[-1]
-      new_path = f"static/consumer_img/{update_info["id"]}.{extension}"
+      new_path = f"static/consumer_img/{update_info['id']}.{extension}"
     elif user_info["type"] == "Designer":
       old_path = f"static/designer_products/{id}" 
       new_path = f"static/designer_products/{update_info['id']}"

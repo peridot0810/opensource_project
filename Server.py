@@ -82,6 +82,11 @@ class Server:
   def get_product_detail(self, pid, did=None, category=None):
     product_detail = self.db.get_product_detail(pid, did = did, category=category)
     return product_detail
+  
+  # Consumer를 위한 함수 -> Designer는 사용 안하는 것으로 생각
+  def get_products_by(self, by, category=None, num=None, sort=None):
+    products = self.db.get_products_by(by, category=category, num=num, sort=sort)
+    return products
   # ========================================
 
 

@@ -65,15 +65,17 @@ def call_gradio_api(person_image_path, garment_image_path):
 def index():
     if request.method == "POST":
         # 사용자로부터 업로드된 파일 처리
-        person_image = request.files.get("person_image")
-        garment_image = request.files.get("garment_image")
+        person_image = "../" + request.form.get("person_image")
+        garment_image = "../" + request.form.get("garment_image")
 
         if not person_image or not garment_image:
             return "Both person and garment images are required!", 400
 
         # 파일 저장
-        person_png_path = convert_to_png(person_image, "person_image.png")
-        garment_png_path = convert_to_png(garment_image, "garment_image.png")
+        # person_png_path = convert_to_png(person_image, "person_image.png")
+        # garment_png_path = convert_to_png(garment_image, "garment_image.png")
+        person_png_path = person_image
+        garment_png_path = garment_image
 
         # Gradio API 호출
         result_path = call_gradio_api(person_png_path, garment_png_path)
