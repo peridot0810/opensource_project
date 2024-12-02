@@ -61,32 +61,29 @@ def call_gradio_api(person_image_path, garment_image_path):
         print(f"Error calling Gradio API: {e}")
         return None
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["POST"])
 def index():
-    if request.method == "POST":
-        # 사용자로부터 업로드된 파일 처리
+    type = request.form.get("type")
+    # 사용자로부터 업로드된 파일 처리
+    if type == "Consumer":
         person_image = "../" + request.form.get("person_image")
-        garment_image = "../" + request.form.get("garment_image")
+    elif type == "Designer":
+        person_image_file = request.files.get("person_image")
+        person_image = convert_to_png(person_image_file, "person_image.png")
 
-        if not person_image or not garment_image:
-            return "Both person and garment images are required!", 400
+    garment_image = "../" + request.form.get("garment_image")
 
-        # 파일 저장
-        # person_png_path = convert_to_png(person_image, "person_image.png")
-        # garment_png_path = convert_to_png(garment_image, "garment_image.png")
-        person_png_path = person_image
-        garment_png_path = garment_image
+    if not person_image or not garment_image:
+        return "Both person and garment images are required!", 400
 
-        # Gradio API 호출
-        result_path = call_gradio_api(person_png_path, garment_png_path)
+    # Gradio API 호출
+    result_path = call_gradio_api(person_image, garment_image)
 
-        if result_path:
-            # 결과를 보여주는 페이지로 리디렉션
-            return redirect(url_for("result", filename="result.png"))
-        else:
-            return "Error occurred during the virtual try-on process.", 500
+    if result_path:
+        return redirect(url_for("result", filename="result.png"))
+    else:
+        return "Error occurred during the virtual try-on process.", 500
 
-    return render_template("index.html")
 
 @app.route("/result/<filename>")
 def result(filename):
@@ -115,3 +112,5 @@ def convert_to_png(file, output_filename):
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
+
+
