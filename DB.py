@@ -139,9 +139,9 @@ class DBModule:
   def get_products_by(self, by, category=None, num=None, sort=None):
     try:
       products = self.get_products(category=category)
-      if sort == "Desc":
+      if sort == "DESC":
         products = OrderedDict(sorted(products.items(), key=lambda item: float(item[1][by]), reverse=True))
-      elif sort == "Asc":
+      else :
         products = OrderedDict(sorted(products.items(), key=lambda item: float(item[1][by])))
 
       products = OrderedDict(list(products.items())[:num])
