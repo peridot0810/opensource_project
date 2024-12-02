@@ -3,6 +3,8 @@ import json
 import os
 import shutil
 import random
+from collections import OrderedDict
+
 
 
 class DBModule:
@@ -117,9 +119,7 @@ class DBModule:
       if did != None:
         products = self.db.child(f"Designers/{did}/products").get().val()
       elif category != None:
-        print(category)
         products = self.db.child(f"Products/").order_by_child("category").equal_to(category).get().val()
-        print(products)
 
       else :
         products = self.db.child(f"Products/").get().val()
@@ -132,6 +132,20 @@ class DBModule:
     try:
       product_info = self.get_products(did=did, category=category)[pid]
       return product_info
+    except Exception as e:
+      print(e)
+      return None
+    
+  def get_products_by(self, by, category=None, num=None, sort=None):
+    try:
+      products = self.get_products(category=category)
+      if sort == "Desc":
+        products = OrderedDict(sorted(products.items(), key=lambda item: float(item[1][by]), reverse=True))
+      elif sort == "Asc":
+        products = OrderedDict(sorted(products.items(), key=lambda item: float(item[1][by])))
+
+      products = OrderedDict(list(products.items())[:num])
+      return products
     except Exception as e:
       print(e)
       return None
