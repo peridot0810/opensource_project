@@ -1,0 +1,36 @@
+.number {
+  height: 20px;
+  width: 10px;
+  position: relative;
+  line-height: 20px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.content,
+.root {
+  height: 40px;
+  width: 40px;
+  border-radius: var(--br-5xs);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.content {
+  padding: var(--padding-3xs) var(--padding-base-5);
+  box-sizing: border-box;
+}
+.root {
+  overflow: hidden;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-300);
+  font-family: var(--font-nanum-gothic);
+}
+.root[data-shape="Square"][data-state="Default"]:hover {
+  background-color: var(--color-gray-200);
+}
+.root[data-shape="Square"][data-state="Default"]:hover .number {
+  color: var(--text2);
+}

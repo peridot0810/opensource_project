@@ -1,0 +1,407 @@
+.productNameChild {
+  height: 124px;
+  width: 124px;
+  position: relative;
+  border-radius: var(--br-4xs-7);
+  overflow: hidden;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+.gradientGraphicTShirt {
+  position: relative;
+}
+.large {
+  color: var(--color-gray-600);
+}
+.colorWhite,
+.sizeLarge {
+  position: relative;
+}
+.colorWhite {
+  display: inline-block;
+  min-width: 83px;
+}
+.productVariation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-9xs);
+  font-size: var(--font-size-sm);
+}
+.div {
+  position: relative;
+  font-size: var(--font-size-5xl);
+}
+.productNameItem {
+  position: absolute;
+  top: 148px;
+  left: 0;
+  border-top: 1px solid var(--color-gray-400);
+  box-sizing: border-box;
+  width: 667px;
+  height: 1px;
+}
+.productName {
+  align-self: stretch;
+  height: 149px;
+  position: relative;
+  max-width: 100%;
+}
+.heckered {
+  text-transform: lowercase;
+}
+.colorRed {
+  position: relative;
+  display: inline-block;
+  min-width: 70px;
+}
+.checkeredShirtParent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--gap-11xs);
+}
+.list,
+.logout {
+  display: flex;
+  justify-content: space-between;
+}
+.logout {
+  height: 118px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.list {
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  min-width: 343px;
+  max-width: 100%;
+  gap: var(--gap-xl);
+}
+.current,
+.image9Icon {
+  position: absolute;
+  max-width: 100%;
+}
+.current {
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap-base);
+}
+.image9Icon {
+  width: calc(100% - 22px);
+  top: calc(50% - 76px);
+  right: 11px;
+  left: 11px;
+  overflow: hidden;
+  height: 153px;
+  object-fit: cover;
+}
+.imageContainer {
+  height: 124px;
+  width: 124px;
+  position: relative;
+  border-radius: var(--br-4xs-7);
+  background-color: var(--color-whitesmoke-200);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.productImage,
+.productTitle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.productImage {
+  align-self: stretch;
+  flex-direction: row;
+  gap: var(--gap-base);
+}
+.productTitle {
+  flex: 1;
+  border-radius: var(--br-xl);
+  border: 1px solid var(--color-gray-400);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-direction: column;
+  padding: var(--padding-lg) var(--padding-4xl);
+  gap: var(--gap-4xl);
+  min-width: 465px;
+}
+.orderSummary1 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 400;
+  font-family: inherit;
+}
+.summaryValues {
+  position: relative;
+  color: var(--text2);
+  text-align: right;
+}
+.summaryItems {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+}
+.div2 {
+  position: relative;
+  color: var(--color-tomato);
+  text-align: right;
+}
+.deliveryFee {
+  position: relative;
+  display: inline-block;
+  min-width: 115px;
+}
+.summaryDetailsChild {
+  align-self: stretch;
+  height: 1px;
+  position: relative;
+  border-top: 1px solid var(--color-gray-400);
+  box-sizing: border-box;
+}
+.div4 {
+  position: relative;
+  font-size: var(--font-size-5xl);
+  text-align: right;
+}
+.summaryDetails,
+.summaryItems3 {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+  color: var(--text2);
+}
+.summaryDetails {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-600);
+}
+.frameIcon {
+  height: 24px;
+  width: 24px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.addPromoCode {
+  width: calc(100% - 188px);
+  border: 0;
+  outline: 0;
+  font-family: var(--font-abeezee);
+  font-size: var(--title-16px-regular-size);
+  background-color: transparent;
+  flex: 1;
+  position: relative;
+  color: var(--color-gray-500);
+  text-align: left;
+  display: inline-block;
+  min-width: 76px;
+  padding: 0;
+}
+.promoInput {
+  flex: 1;
+  border-radius: var(--br-43xl);
+  background-color: var(--color-whitesmoke-100);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-xs) var(--padding-129xl) var(--padding-xs)
+    var(--padding-base);
+  box-sizing: border-box;
+  gap: var(--gap-xs);
+  min-width: 150px;
+  max-width: 100%;
+}
+.apply {
+  position: relative;
+  font-size: var(--title-16px-regular-size);
+  font-family: var(--font-nanum-gothic);
+  color: var(--bg);
+  text-align: left;
+  display: inline-block;
+  min-width: 44px;
+}
+.applyButton,
+.promoCode {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.applyButton {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-base) var(--padding-18xl);
+  background-color: var(--text2);
+  border-radius: var(--br-43xl);
+  overflow: hidden;
+}
+.applyButton:hover,
+.checkout:hover {
+  background-color: var(--color-darkslategray-100);
+}
+.promoCode {
+  align-self: stretch;
+  gap: var(--gap-xs);
+  max-width: 100%;
+}
+.goToCheckout {
+  position: relative;
+  font-size: var(--title-16px-regular-size);
+  font-family: var(--font-nanum-gothic);
+  color: var(--bg);
+  text-align: left;
+  display: inline-block;
+  min-width: 119px;
+}
+.arrowDownBold1Icon {
+  height: 24px;
+  width: 24px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.checkout {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-lg) var(--padding-132xl);
+  background-color: var(--text2);
+  border-radius: var(--br-43xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+}
+.orderSummary,
+.product,
+.productDetails {
+  display: flex;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.orderSummary {
+  width: 505px;
+  border-radius: var(--br-xl);
+  border: 1px solid var(--color-gray-400);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--padding-lg) var(--padding-4xl) var(--padding-29xl);
+  gap: var(--gap-5xl);
+  font-size: var(--font-size-5xl);
+}
+.product,
+.productDetails {
+  flex-direction: row;
+  justify-content: center;
+}
+.productDetails {
+  width: 1240px;
+  gap: var(--gap-xl);
+}
+.product {
+  align-self: stretch;
+  padding: 0 var(--padding-xl);
+  box-sizing: border-box;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--text2);
+  font-family: var(--font-abeezee);
+}
+@media screen and (max-width: 1100px) {
+  .orderSummary {
+    flex: 1;
+  }
+  .productDetails {
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 750px) {
+  .productName {
+    height: auto;
+    min-height: 149;
+  }
+  .logout {
+    flex: 1;
+  }
+  .list {
+    min-width: 100%;
+  }
+  .current,
+  .list,
+  .productImage {
+    flex-wrap: wrap;
+  }
+  .orderSummary,
+  .productTitle {
+    min-width: 100%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .gradientGraphicTShirt {
+    font-size: var(--title-16px-regular-size);
+  }
+  .div,
+  .orderSummary1 {
+    font-size: var(--font-size-lgi);
+  }
+  .summaryValues {
+    font-size: var(--title-16px-regular-size);
+  }
+  .summaryItems {
+    flex-wrap: wrap;
+  }
+  .deliveryFee,
+  .div2 {
+    font-size: var(--title-16px-regular-size);
+  }
+  .div4 {
+    font-size: var(--font-size-lgi);
+  }
+  .summaryItems3 {
+    flex-wrap: wrap;
+  }
+  .promoInput {
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+  .promoCode {
+    flex-wrap: wrap;
+  }
+  .checkout {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+  .orderSummary {
+    padding-bottom: var(--padding-12xl);
+    box-sizing: border-box;
+  }
+}

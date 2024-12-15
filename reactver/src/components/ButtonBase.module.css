@@ -1,0 +1,27 @@
+.arrowLeftIcon {
+  width: 20px;
+  position: relative;
+  height: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.text {
+  position: relative;
+  line-height: 20px;
+}
+.buttonBase {
+  border-radius: var(--br-5xs);
+  background-color: var(--bg);
+  border: 1px solid var(--color-gray-400);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-5xs) var(--padding-sm);
+  gap: var(--gap-5xs);
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: var(--text2);
+  font-family: var(--font-nanum-gothic);
+}

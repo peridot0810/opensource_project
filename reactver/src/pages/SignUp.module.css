@@ -1,0 +1,124 @@
+.fitme {
+  text-decoration: none;
+  position: relative;
+  color: inherit;
+}
+.fitmeWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 168px 0 169px;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.h1 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: 0.04em;
+  line-height: 30px;
+  font-weight: 700;
+  font-family: inherit;
+}
+.koreanTitle,
+.passwordFields,
+.passwordInput,
+.signUp {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.koreanTitle {
+  flex-direction: row;
+  padding: 0 0 56px;
+  font-size: var(--font-size-21xl);
+  font-family: var(--font-nanumgothic);
+}
+.passwordFields,
+.passwordInput,
+.signUp {
+  box-sizing: border-box;
+}
+.passwordFields {
+  align-self: stretch;
+  flex-direction: row;
+  padding: 0 0 0 var(--padding-12xs);
+  max-width: 100%;
+}
+.passwordInput,
+.signUp {
+  flex-direction: column;
+}
+.passwordInput {
+  padding: 0 0 var(--padding-11xl);
+  gap: 117px;
+  max-width: 100%;
+}
+.signUp {
+  width: 100%;
+  position: relative;
+  background-color: var(--bg);
+  overflow: hidden;
+  padding: 0 403px 112px;
+  gap: 15px;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  font-size: var(--font-size-77xl);
+  color: var(--text2);
+  font-family: var(--font-baloo-paaji);
+}
+@media screen and (max-width: 1200px) {
+  .signUp {
+    padding-left: var(--padding-182xl);
+    padding-right: var(--padding-182xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 1050px) {
+  .fitme {
+    font-size: var(--font-size-29xl);
+  }
+  .h1 {
+    font-size: var(--font-size-13xl);
+    line-height: 24px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .fitmeWrapper {
+    padding-left: var(--padding-65xl);
+    padding-right: var(--padding-65xl);
+    box-sizing: border-box;
+  }
+  .passwordInput {
+    gap: 58px;
+  }
+  .signUp {
+    padding-left: var(--padding-81xl);
+    padding-right: var(--padding-81xl);
+    box-sizing: border-box;
+  }
+}
+@media screen and (max-width: 450px) {
+  .fitme {
+    font-size: var(--font-size-10xl);
+  }
+  .fitmeWrapper {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+  .h1 {
+    font-size: var(--font-size-5xl);
+    line-height: 18px;
+  }
+  .passwordInput {
+    gap: var(--gap-10xl);
+  }
+  .signUp {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+}

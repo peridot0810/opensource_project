@@ -1,0 +1,24 @@
+.viewAllProducts {
+  height: 24px;
+  width: 143px;
+  position: relative;
+  line-height: 24px;
+  display: inline-block;
+}
+.button {
+  width: 370px;
+  border-radius: var(--br-9xs);
+  background-color: var(--color-whitesmoke-100);
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-base) var(--padding-103xl);
+  box-sizing: border-box;
+  z-index: 2;
+  text-align: left;
+  font-size: var(--font-size-xl);
+  color: var(--text2);
+  font-family: var(--font-nanumgothic);
+}
