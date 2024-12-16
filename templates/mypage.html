@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Paaji:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Bhai:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=IBM+Plex+Sans+KR&display=swap" >
+    <title>Fitme</title>
+    <!-- 공통 js -->
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <!-- 자체 js(파일 이름 변경해서 사용) -->
+    <script src="{{ url_for('static', filename='js/mypage.js') }}" defer></script>
+    <!-- 공통 Global CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- 각 컴포넌트 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/header.css') }}"> <!-- header CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/footer.css') }}"> <!-- Footer CSS -->
+    <!-- 현재 페이지의 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="154x154" href="{{ url_for('static', filename='img/icon.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="mypage-container">
+        <!-- 사용자 정보 섹션 -->
+        <section class="user-info-section">
+            <div class="user-img">
+                <!-- 사용자 이미지 -->
+                <img src="{{ user_info['img_path'] }}" alt="사용자 이미지" />
+            </div>
+            <div class="user-details">
+                <h2>{{ user_info['name'] }} 님</h2>
+                <p><strong>아이디:</strong> {{ user_info['id'] }}</p>
+                <p><strong>이메일:</strong> {{ user_info['email'] }}</p>
+                <p><strong>전화번호:</strong> {{ user_info['phone'] }}</p>
+                <p><strong>유형:</strong> {{ user_type }}</p>
+            </div>
+        </section>
+
+        <!-- 비밀번호 변경 섹션 -->
+        <section class="password-section">
+            <h3>비밀번호 변경</h3>
+            <form action="/change-password" method="POST">
+                <label for="current-pwd">현재 비밀번호</label>
+                <input type="password" id="current-pwd" name="current_pwd" required>
+
+                <label for="new-pwd">새 비밀번호</label>
+                <input type="password" id="new-pwd" name="new_pwd" required>
+
+                <label for="confirm-pwd">비밀번호 확인</label>
+                <input type="password" id="confirm-pwd" name="confirm_pwd" required>
+
+                <button type="submit">비밀번호 변경</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+</body>
+</html>

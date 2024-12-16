@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Paaji:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Bhai:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=IBM+Plex+Sans+KR&display=swap" >
+    <title>Fitme</title>
+    <!-- 공통 js -->
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <!-- 자체 js(파일 이름 변경해서 사용) -->
+    <script src="{{ url_for('static', filename='js/cart.js') }}" defer></script>
+    <!-- 공통 Global CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- 각 컴포넌트 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/header.css') }}"> <!-- header CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/footer.css') }}"> <!-- Footer CSS -->
+    <!-- 현재 페이지의 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="154x154" href="{{ url_for('static', filename='img/icon.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="cart-page">
+        <!-- 장바구니 아이템 목록 -->
+        <section class="cart-items">
+            <div class="cart-item">
+                <div class="item-details">
+                    <p class="item-name">Gradient Graphic T-shirt</p>
+                    <p>Size: Large</p>
+                    <p>Color: White</p>
+                    <p class="item-price">$145</p>
+                </div>
+                <div class="item-controls">
+                    <button class="qty-btn">-</button>
+                    <span class="qty">1</span>
+                    <button class="qty-btn">+</button>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <div class="item-details">
+                    <p class="item-name">Checkered Shirt</p>
+                    <p>Size: Medium</p>
+                    <p>Color: Red</p>
+                    <p class="item-price">$180</p>
+                </div>
+                <div class="item-controls">
+                    <button class="qty-btn">-</button>
+                    <span class="qty">1</span>
+                    <button class="qty-btn">+</button>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <div class="item-details">
+                    <p class="item-name">Skinny Fit Jeans</p>
+                    <p>Size: Large</p>
+                    <p>Color: Blue</p>
+                    <p class="item-price">$240</p>
+                </div>
+                <div class="item-controls">
+                    <button class="qty-btn">-</button>
+                    <span class="qty">1</span>
+                    <button class="qty-btn">+</button>
+                    <button class="delete-btn">🗑️</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 주문 요약 -->
+        <section class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <span>$565</span>
+            </div>
+            <div class="summary-line">
+                <span>Discount (-20%)</span>
+                <span class="discount">-$113</span>
+            </div>
+            <div class="summary-line">
+                <span>Delivery Fee</span>
+                <span>$15</span>
+            </div>
+            <div class="summary-total">
+                <strong>Total</strong>
+                <strong>$467</strong>
+            </div>
+            <!-- 프로모션 코드 -->
+            <div class="promo-code">
+                <input type="text" placeholder="Add promo code">
+                <button>Apply</button>
+            </div>
+            <!-- 결제 버튼 -->
+            <button class="checkout-btn">Go to Checkout →</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+</body>
+</html>
