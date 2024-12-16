@@ -35,6 +35,12 @@ def ren_pd():
     기본 경로로 접속하면 templates/index.html 파일을 렌더링합니다.
     """
     return render_template('product_detail.html')
+@app.route('/ct')
+def ren_ct():
+    """
+    기본 경로로 접속하면 templates/index.html 파일을 렌더링합니다.
+    """
+    return render_template('cart.html')
 #=================
 
 
