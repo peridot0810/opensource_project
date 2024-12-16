@@ -88,3 +88,7 @@
     background-color: #ffffff; /* 배경색 (선택 사항) */
     box-sizing: border-box; /* padding이나 border가 width에 포함되도록 설정 */
 }
+.header {
+    border-bottom: 1px solid #000000; /* 헤더 아래에 선 추가 */
+    padding-bottom: 5px; /* 선과 콘텐츠 사이 여백 추가 */
+}
