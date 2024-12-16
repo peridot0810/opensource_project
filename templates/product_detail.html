@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Paaji:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Bhai:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=IBM+Plex+Sans+KR&display=swap" >
+    <title>Fitme</title>
+    <!-- 공통 js -->
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <!-- 자체 js(파일 이름 변경해서 사용) -->
+    <script src="{{ url_for('static', filename='js/product_detail.js') }}" defer></script>
+    <!-- 공통 Global CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- 각 컴포넌트 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/header.css') }}"> <!-- header CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/footer.css') }}"> <!-- Footer CSS -->
+    <!-- 현재 페이지의 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product_detail.css') }}">
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="154x154" href="{{ url_for('static', filename='img/icon.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <section class="product-detail">
+          <div class="product-container">
+            <!-- 제품 이미지 컨테이너 -->
+            <div class="product-image-container">
+              <div class="product-image">
+                <img src="/static/img/retro_hoodie.png" alt="레트로 후드집업">
+              </div>
+            </div>
+      
+            <!-- 제품 정보 -->
+            <div class="product-info">
+              <h2 class="product-title">레트로 후드집업</h2>
+              <div class="product-rating">
+                ★★★★☆ <span>4.5/5</span>
+              </div>
+              <p class="product-price">98,000원</p>
+              <p class="product-description">Retro Patch Hooded Zip-Up 2024</p>
+              
+              <!-- 사이즈 선택 -->
+              <div class="product-size">
+                <h3>Choose Size</h3>
+                <div class="size-options">
+                  <button class="size-btn">S</button>
+                  <button class="size-btn">M</button>
+                </div>
+              </div>
+      
+              <!-- 색상 선택 -->
+              <div class="product-color">
+                <h3>Choose Color</h3>
+                <div class="color-options">
+                  <button class="color-btn">화이트</button>
+                  <button class="color-btn">블랙</button>
+                  <button class="color-btn">차콜</button>
+                  <button class="color-btn active">핫핑크</button>
+                </div>
+              </div>
+      
+              <!-- 수량 선택 및 장바구니 -->
+              <div class="product-actions">
+                <div class="quantity-selector">
+                  <button class="qty-btn">-</button>
+                  <span class="qty">1</span>
+                  <button class="qty-btn">+</button>
+                </div>
+                <button class="add-to-cart-btn">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="parent">
+    		<b class="b">
+      			<span class="txt">
+        				<span class="span">이 옷, 내 스타일일까..🤔?                    </span>
+        				<span class="span1">             미리 입어보기 </span>
+        				<span>→</span>
+      			</span>
+    		</b>
+    		<a href="" class="frame-wrapper" id="frameContainer">
+      			<div class="frame-container">
+        				<div class="virtual-try-on-wrapper">
+          					<div class="virtual-try-on" >Virtual Try on</div>
+        				</div>
+      			</div>
+    		</a>
+  	</div>
+      <div class="detail-container">
+        <div class="top-selling-word">상품 상세정보</div>
+        <div class="product-detail-box">
+            <p>
+                여기에 제품의 상세한 설명이 들어갑니다. 예를 들어 소재, 세탁 방법, 디자인 설명, 사이즈 정보 등이 포함됩니다.
+            </p>
+            <p>
+                예시:<br>
+                - 소재: 면 100%<br>
+                - 세탁 방법: 손세탁 권장<br>
+                - 제조국: 대한민국<br>
+                - 제품 특징: 편안한 착용감과 트렌디한 디자인.
+            </p>
+        </div>
+    </div>
+    </main>
+      
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+</body>
+</html>
