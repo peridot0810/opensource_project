@@ -85,10 +85,13 @@ section#copyright{
 	margin-right: -10px;	
 }
 section.header_text{
-	background:url(../images/bg_h.png) no-repeat bottom;
+	/* background:url(../images/bg_h.png) no-repeat bottom; */
+	background: #000000;
+	color:#ffffff;
 	text-align:center;
 	padding:15px 0 20px 0;
-	font-size:16px;
+	font-size:25px;
+	font-weight: bold;
 	line-height:30px;
 	border-bottom:1px solid #fff;
 }
