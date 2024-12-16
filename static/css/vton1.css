@@ -1,4 +1,4 @@
-/* 메인 레이아웃 스타일 */
+/* fitme-tryon 섹션 스타일 */
 .fitme-tryon {
     text-align: center;
     margin: 20px auto;
@@ -9,28 +9,31 @@
     margin-bottom: 20px;
 }
 
-/* Flexbox를 활용한 가로 정렬 */
+/* 레이아웃 스타일 */
 .fitme-tryon-layout {
-    display: flex; /* Flexbox 사용 */
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    gap: 20px; /* 요소 간 간격 */
-    max-width: 800px;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* 요소 사이의 간격 */
 }
 
-/* 이미지 상자 스타일 */
-.image-box {
-    flex: 0 0 250px; /* 이미지 박스 고정 크기 */
-    height: auto;
-}
-
-.image-box img {
-    width: 100%; /* 이미지 박스에 맞춤 */
-    height: auto;
-    object-fit: contain;
-    border: 1px solid #ddd;
+/* 이미지 컨테이너 스타일 */
+.image-container {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9; /* 배경색 */
+    border: 1px solid #ddd; /* 테두리 */
     border-radius: 8px;
+}
+
+/* 이미지 박스 */
+.image-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* 이미지 비율 유지 및 컨테이너에 맞춤 */
 }
 
 /* + 기호 스타일 */
@@ -38,6 +41,4 @@
     font-size: 36px;
     font-weight: bold;
     color: #333;
-    line-height: 1;
-    text-align: center;
 }
