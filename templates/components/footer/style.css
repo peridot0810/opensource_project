@@ -1,0 +1,138 @@
+.footer-fitme {
+    position: relative;
+}
+.footer-you-can-virtually {
+    width: 248px;
+    position: relative;
+    font-size: 14px;
+    line-height: 22px;
+    font-family: ABeeZee;
+    color: rgba(0, 0, 0, 0.6);
+    display: inline-block;
+}
+.footer-fitme-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 25px;
+}
+.footer-icon {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 28px;
+    height: 28px;
+}
+.footer-icon1 {
+    position: absolute;
+    top: 0px;
+    left: 40px;
+    width: 28px;
+    height: 28px;
+}
+.footer-icon2 {
+    position: absolute;
+    top: 0px;
+    left: 80px;
+    width: 28px;
+    height: 28px;
+}
+.footer-icon3 {
+    position: absolute;
+    top: 0px;
+    left: 120px;
+    width: 28px;
+    height: 28px;
+}
+.footer-social {
+    width: 148px;
+    position: relative;
+    height: 28px;
+}
+.footer-frame-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 35px;
+    font-size: 32px;
+    font-family: 'Baloo Paaji';
+}
+.footer-help-menu {
+    position: relative;
+    letter-spacing: 3px;
+    line-height: 18px;
+    text-transform: uppercase;
+}
+.footer-image-icon {
+    width: 81px;
+    position: relative;
+    height: 81px;
+    object-fit: cover;
+}
+.footer-you-can-quickly {
+    margin: 0;
+}
+.footer-about-features-works-container {
+    position: relative;
+    line-height: 19px;
+    font-family: ABeeZee;
+    color: rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+.footer-help-menu-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+}
+.footer-about-features-works-container1 {
+    position: relative;
+    line-height: 19px;
+    font-family: ABeeZee;
+    color: rgba(0, 0, 0, 0.6);
+}
+.footer-help-menu-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 26px;
+}
+.footer-about-features-works-container2 {
+    width: 149px;
+    position: relative;
+    line-height: 19px;
+    font-family: ABeeZee;
+    color: rgba(0, 0, 0, 0.6);
+    display: inline-block;
+}
+.footer-frame-parent {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: left;
+    font-size: 16px;
+    color: #000;
+    font-family: NanumGothic;
+}
+.footer-content {
+    width: 1440px;       /* 가로 너비 설정 */
+    height: 300px;        /* 높이 설정 */
+    margin: 0 auto;      /* 중앙 정렬 */
+    padding: 0px;
+    display: flex;       /* 플렉스 박스로 설정 */
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: space-between; /* 내부 요소 간격 설정 */
+    background-color: #F0F0F0; /* 배경색 (선택 사항) */
+    box-sizing: border-box; /* padding이나 border가 width에 포함되도록 설정 */
+}
+.footer-container {
+    width: 100%;
+    background-color: #F0F0F0;
+}
