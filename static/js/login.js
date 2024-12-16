@@ -26,15 +26,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(requestData)
             });
 
-            const result = await response.json();
+            // 서버의 리다이렉트 URL 확인
+            const finalUrl = response.url;
 
-            if (response.ok) {
-                // 로그인 성공 처리
+            if (finalUrl.includes("/")) {
+                // 로그인 성공, 홈 페이지로 이동
                 alert("로그인 성공!");
-                window.location.href = "/home"; // 홈 페이지로 이동
+                window.location.href = finalUrl; // 리다이렉트 URL로 이동
+            } else if (finalUrl.includes("/login")) {
+                // 로그인 실패, flash 메시지 표시
+                const result = await response.text();
+                alert(result || "로그인에 실패했습니다.");
             } else {
-                // 로그인 실패 처리
-                alert(result.message || "로그인에 실패했습니다.");
+                alert("예상치 못한 응답입니다.");
             }
         } catch (error) {
             console.error("Error:", error);

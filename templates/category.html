@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Paaji:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Bhai:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=IBM+Plex+Sans+KR&display=swap" >
+    <title>Fitme</title>
+    <!-- 공통 js -->
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <!-- 자체 js(파일 이름 변경해서 사용) -->
+    <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+    <!-- 공통 Global CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- 각 컴포넌트 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/header.css') }}"> <!-- header CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/footer.css') }}"> <!-- Footer CSS -->
+    <!-- 현재 페이지의 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="154x154" href="{{ url_for('static', filename='img/icon.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+    <div class="top-selling-word">All Products</div>
+    <div class="top-products-container">
+        <!-- 상품 1 -->
+        <div class="top-product">
+            <img src="image1.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 1</h3>
+            <div class="top-product-rating">
+                ★★★☆☆ <span>3.5/5</span>
+            </div>
+            <p class="top-product-price">39,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <!-- 상품 2 -->
+        <div class="top-product">
+            <img src="image2.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 2</h3>
+            <div class="top-product-rating">
+                ★★★★☆ <span>4.5/5</span>
+            </div>
+            <p class="top-product-price">45,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <!-- 상품 3 -->
+        <div class="top-product">
+            <img src="image3.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 3</h3>
+            <div class="top-product-rating">
+                ★★★★★ <span>5.0/5</span>
+            </div>
+            <p class="top-product-price">59,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <!-- 상품 4 -->
+        <div class="top-product">
+            <img src="image4.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 4</h3>
+            <div class="top-product-rating">
+                ★★★☆☆ <span>3.5/5</span>
+            </div>
+            <p class="top-product-price">33,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <!-- 상품 5 -->
+        <div class="top-product">
+            <img src="image5.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 5</h3>
+            <div class="top-product-rating">
+                ★★★★☆ <span>4.5/5</span>
+            </div>
+            <p class="top-product-price">49,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <!-- 상품 6 -->
+        <div class="top-product">
+            <img src="image6.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 6</h3>
+            <div class="top-product-rating">
+                ★★★★★ <span>5.0/5</span>
+            </div>
+            <p class="top-product-price">69,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <!-- 상품 7 -->
+        <div class="top-product">
+            <img src="image7.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 7</h3>
+            <div class="top-product-rating">
+                ★★★☆☆ <span>3.0/5</span>
+            </div>
+            <p class="top-product-price">25,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <!-- 상품 8 -->
+        <div class="top-product">
+            <img src="image8.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 8</h3>
+            <div class="top-product-rating">
+                ★★★★☆ <span>4.0/5</span>
+            </div>
+            <p class="top-product-price">55,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <!-- 상품 9 -->
+        <div class="top-product">
+            <img src="image9.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 9</h3>
+            <div class="top-product-rating">
+                ★★★★☆ <span>4.2/5</span>
+            </div>
+            <p class="top-product-price">42,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <div class="top-product">
+            <img src="image10.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 10</h3>
+            <div class="top-product-rating">
+                ★★★★☆ <span>4.2/5</span>
+            </div>
+            <p class="top-product-price">42,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <div class="top-product">
+            <img src="image11.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 11</h3>
+            <div class="top-product-rating">
+                ★★★★☆ <span>4.2/5</span>
+            </div>
+            <p class="top-product-price">42,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+
+        <div class="top-product">
+            <img src="image12.png" class="top-product-image">
+            <h3 class="top-product-title">상품명 12</h3>
+            <div class="top-product-rating">
+                ★★★★☆ <span>4.2/5</span>
+            </div>
+            <p class="top-product-price">42,000원</p>
+            <button class="top-virtual-try-on">Virtual Try On</button>
+        </div>
+    </div>
+    <div class="pagination-container">
+        <div class="pagination-bar">
+            <a href="#" class="pagination-link">&laquo;</a>
+            <a href="#" class="pagination-link active">1</a>
+            <a href="#" class="pagination-link">2</a>
+            <a href="#" class="pagination-link">3</a>
+            <a href="#" class="pagination-link">4</a>
+            <a href="#" class="pagination-link">5</a>
+            <a href="#" class="pagination-link">&raquo;</a>
+        </div>
+    </div>
+    <p></p>
+    <p></p>
+    <p></p>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+</body>
+</html>

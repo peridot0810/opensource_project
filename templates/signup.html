@@ -33,71 +33,64 @@
 
         <!-- 정보 입력 섹션 -->
         <section class="information">
-            <form class="signup-form" action="#" method="POST">
+            <form class="signup-form" action="/signin_done" method="POST" id="signup-form">
                 <!-- 회원 유형 -->
                 <div class="form-group">
                     <label>회원 유형 *</label>
-                    <p></p>
                     <div class="membership-type">
                         <label>
                             개인 회원
-                            <p></p>
-                            <input type="radio" name="membership" value="personal" checked>
+                            <input type="radio" name="type" value="personal" checked>
                         </label>
                         <label>
                             디자이너 회원
-                            <p></p>
-                            <input type="radio" name="membership" value="designer">
+                            <input type="radio" name="type" value="designer">
                         </label>
                     </div>
                 </div>
-
+            
                 <!-- 아이디 -->
                 <div class="form-group">
                     <label for="id">아이디 *</label>
                     <input type="text" id="id" name="id" placeholder="영문소문자/숫자, 4~16자" required>
                 </div>
-
+            
                 <!-- 비밀번호 -->
                 <div class="form-group">
-                    <label for="password">비밀번호 *</label>
-                    <input type="password" id="password" name="password" placeholder="영문 대소문자/숫자/특수문자 조합, 8~16자" required>
+                    <label for="pwd">비밀번호 *</label>
+                    <input type="password" id="pwd" name="pwd" placeholder="영문 대소문자/숫자/특수문자 조합, 8~16자" required>
                 </div>
-
+            
                 <!-- 비밀번호 확인 -->
                 <div class="form-group">
                     <label for="password-confirm">비밀번호 확인 *</label>
-                    <input type="password" id="password-confirm" name="password-confirm" required>
+                    <input type="password" id="password-confirm" required>
                 </div>
-
+            
                 <!-- 이름 -->
                 <div class="form-group">
                     <label for="name">이름 *</label>
                     <input type="text" id="name" name="name" required>
                 </div>
-
+            
                 <!-- 휴대전화 -->
                 <div class="form-group phone-group">
                     <label for="phone">휴대전화 *</label>
-                    <div class="phone-inputs">
-                        
-                        <input type="text" id="phone-prefix" name="phone-prefix" maxlength="3" placeholder="010" required>
-                        <input type="text" id="phone-middle" name="phone-middle" maxlength="4" placeholder="1234" required>
-                        <input type="text" id="phone-end" name="phone-end" maxlength="4" placeholder="5678" required>
-                    </div>
+                    <input type="text" id="phone" name="phone" placeholder="010-1234-5678" required>
                 </div>
-
+            
                 <!-- 이메일 -->
                 <div class="form-group">
                     <label for="email">이메일 *</label>
                     <input type="email" id="email" name="email" placeholder="example@domain.com" required>
                 </div>
-
+            
                 <!-- 제출 버튼 -->
                 <div class="form-group">
                     <button type="submit" class="submit-btn">가입하기</button>
                 </div>
             </form>
+            
         </section>
     </main>
     <!-- Footer -->

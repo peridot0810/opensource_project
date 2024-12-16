@@ -10,7 +10,26 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)      # 랜덤 secret key -> 서버 시작할때마다 세션 초기화
 Server = Server()                    # Server 인스턴스 생성
 # =================
-
+#======김동우 테스트용======
+@app.route('/category')
+def ren_category():
+    """
+    기본 경로로 접속하면 templates/index.html 파일을 렌더링합니다.
+    """
+    return render_template('category.html')
+@app.route('/vton1')
+def ren_vton1():
+    """
+    기본 경로로 접속하면 templates/index.html 파일을 렌더링합니다.
+    """
+    return render_template('vton1.html')
+@app.route('/vton2')
+def ren_vton2():
+    """
+    기본 경로로 접속하면 templates/index.html 파일을 렌더링합니다.
+    """
+    return render_template('vton2.html')
+#=================
 
 
 # ===== 메인 페이지 =====
@@ -430,5 +449,3 @@ def test():
 # ===== 서버 실행 =====
 if __name__ == "__main__":
   app.run(host = "0.0.0.0", debug=True, port=8080)
-
-

@@ -1,0 +1,46 @@
+/* 입어보기 완료 섹션 스타일 */
+.fitme-tryon-complete {
+    text-align: center;
+    margin: 20px auto;
+    font-family: 'Nanum Gothic', sans-serif;
+  }
+  
+  .fitme-tryon-complete h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* 이미지 컨테이너 */
+  .tryon-image-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 400px;
+  }
+  
+  .tryon-image-container img {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  /* 상세 페이지 링크 스타일 */
+  .product-link {
+    margin-top: 10px;
+  }
+  
+  .product-link a {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+  }
+  
+  .product-link a:hover {
+    color: #d9534f;
+    border-bottom: 1px solid #d9534f;
+  }
+  

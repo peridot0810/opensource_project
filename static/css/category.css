@@ -1,0 +1,116 @@
+.pagination-container {
+    width: 100%; /* 부모 요소의 전체 너비 */
+    display: flex; /* 가로 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    margin-bottom: 200px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+}
+
+.pagination-bar {
+    display: flex; /* 가로 정렬 */
+    height: 100px;
+    font-family: "Frank Ruhl Libre";
+    gap: 10px; /* 각 링크 사이 여백 */
+}
+
+.pagination-link {
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    
+}
+
+.pagination-link:hover {
+    background-color: #ddd;
+    color: #000;
+}
+
+.pagination-link.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* 부모 컨테이너 설정 */
+.top-products-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 항상 3열 유지 */
+    gap: 20px; /* 각 카드 사이의 간격 */
+    width: 960px; /* 3열 고정 너비 (300px * 3 + 20px * 2) */
+    margin: 0 auto; /* 화면 중앙에 배치 */
+    padding: 20px 0; /* 상하 여백 추가 */
+    box-sizing: border-box;
+}
+
+/* 부모 컨테이너를 포함하는 메인 요소 */
+main {
+    display: flex;
+    justify-content: center; /* 메인 요소 중앙 배치 */
+}
+
+/* 개별 상품 카드 스타일 */
+.top-product {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.top-product:hover {
+    transform: translateY(-5px);
+}
+
+/* 이미지 */
+.top-product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+/* 상품 제목 */
+.top-product-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* 평점 */
+.top-product-rating {
+    font-size: 14px;
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+/* 가격 */
+.top-product-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* 버튼 */
+.top-virtual-try-on {
+    background-color: #52ffc0;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.top-virtual-try-on:hover {
+    background-color: #40d9a4;
+}
+
