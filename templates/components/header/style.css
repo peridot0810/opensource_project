@@ -57,7 +57,7 @@
     letter-spacing: 0.29em;
     cursor: pointer;
 }
-.header-frame-group {
+.frame-group {
     display: flex;
     flex-direction: row;
     align-items: flex-start;

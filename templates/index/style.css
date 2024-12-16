@@ -1,0 +1,148 @@
+.hero-section-child {
+    top: 2px;
+    left: 0px;
+    width: 1440px;
+    height: 663px;
+    height: auto; /* 비율에 맞게 높이 자동 조정 */
+    object-fit: cover;
+}
+
+.vector-icon {
+    position: absolute;
+    height: 137.48px; /* 20.75% of 663px */
+    width: 104.06px;  /* 7.22% of 1440px */
+    top: 61.76px;     /* 9.32% of 663px */
+    right: 66.96px;   /* 4.65% of 1440px */
+    bottom: 463.22px; /* 69.92% of 663px */
+    left: 1269.07px;  /* 88.13% of 1440px */
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+}
+
+.vector-icon1 {
+    position: absolute;
+    height: 79.78px;  /* 12.03% of 663px */
+    width: 56.02px;   /* 3.89% of 1440px */
+    top: 129.64px;    /* 19.55% of 663px */
+    right: 598.01px;  /* 41.53% of 1440px */
+    bottom: 453.89px; /* 68.42% of 663px */
+    left: 785.95px;   /* 54.58% of 1440px */
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+}
+
+.fitme {
+    position: absolute;
+    top: 62px;
+    left: 91px;
+    font-size: 96px;
+    font-family: 'Baloo Paaji';
+}
+.p {
+    margin: 0;
+}
+.txt {
+    width: 100%;
+}
+.div {
+    position: absolute;
+    top: 221px;
+    left: 91px;
+    font-size: 48px;
+    line-height: 59px;
+    font-weight: 800;
+    color: #000;
+    display: flex;
+    align-items: center;
+    width: 1006px;
+}
+.fitme-conveys-the {
+    position: absolute;
+    top: 377px;
+    left: 100px;
+    line-height: 22px;
+    font-family: ABeeZee;
+    color: rgba(0, 0, 0, 0.6);
+    display: inline-block;
+    width: 545px;
+}
+.shop-now {
+    position: relative;
+}
+.shop-now-wrapper {
+    position: absolute;
+    top: 513px;
+    left: 100px;
+    border-radius: 62px;
+    background-color: #000;
+    width: 210px;
+    height: 52px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 54px;
+    box-sizing: border-box;
+    color: #fff;
+}
+.hero-section {
+    width: 100%;
+    position: relative;
+    min-height: 665px; /* 최소 높이 설정 */
+    overflow: hidden;
+    display: flex;           /* Flexbox 활성화 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;     /* 세로 중앙 정렬 */
+    text-align: left;
+    font-size: 16px;
+    color: #1b6147;
+    font-family: NanumGothic;
+    box-sizing: border-box; /* 모든 여백 포함 */
+    background-color: #F0F0F0;
+}
+
+.hero-container {
+    max-width: 1440px; /* 최대 너비 설정 */
+    width: 100%;
+    position: relative;
+    margin: 0 auto; /* 부모 요소 기준 중앙 정렬 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 내부 요소 간격 설정 */
+    padding: 0 20px; /* 좌우 패딩 추가 */
+    box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+}
+
+.boarding-child {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 1440px;
+    height: 122px;
+}
+.borr {
+    line-height: 82px;
+    font-weight: 800;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    width: 1006px;
+}
+.boarding {
+    width: 100%;
+    position: relative;
+    background-color: #000;
+    height: 122px;
+    overflow: hidden;
+    text-align: center;
+    font-size: 40px;
+    color: #fff;
+    font-family: NanumGothic;
+
+    /* Flex 설정 추가 */
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: center; /* 가로 가운데 정렬 */
+}
+
