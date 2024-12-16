@@ -153,8 +153,9 @@
     flex-wrap: wrap; /* 화면이 줄어들면 요소를 다음 줄로 넘김 */
     gap: 20px; /* 각 상품 사이의 간격 */
     padding: 20px;
-    max-width: 1200px; /* 최대 너비 설정 */
+    max-width: 1440px; /* 최대 너비 설정 */
     margin: 0 auto; /* 화면 가운데 정렬 */
+    margin-bottom: 50px;
     background-color: #ffffff;
 }
 
@@ -215,5 +216,15 @@
     background-color: #40d9a4;
 }
 
+main {
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
 
 
+.top-selling-word {
+    font-size: 48px; /* 폰트 크기 */
+    font-weight: bold; /* 폰트 두께 */
+    font-family: "Frank Ruhl Libre";
+    margin: 50px 0; /* 위아래 마진 20px, 좌우 마진 0 */
+    color: #000; /* 텍스트 색상 */
+}
