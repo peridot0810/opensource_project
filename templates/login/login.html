@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Paaji:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Paaji:wght@400&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee:wght@400&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Bhai:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhai:wght@400&display=swap" />
     <title>Fitme</title>
     <!-- 공통 js -->
     <script src="../global/main.js" defer></script>
-    <!-- 자체 js(파일 이름 변경해서 사용) -->
+    <!-- 자체 js -->
     <script src="login.js" defer></script>
     <!-- 공통 Global CSS -->
     <link rel="stylesheet" href="../global/style.css">
@@ -34,22 +34,41 @@
         <div class="container">
             <div class="parent">
                 <b class="title">로그인</b>
+
+                <!-- 아이디 입력 -->
                 <div class="input-label">아이디</div>
-                <input type="text" class="input-field" placeholder="아이디 입력" />
+                <input type="text" name="id" class="input-field" placeholder="아이디 입력" />
+
+                <!-- 비밀번호 입력 -->
                 <div class="input-label">비밀번호</div>
-                <input type="password" class="input-field" placeholder="비밀번호 입력" />
+                <input type="password" name="pwd" class="input-field" placeholder="비밀번호 입력" />
                 
+                <!-- 링크 섹션 -->
                 <div class="links">
-                    <span class="link">아이디 찾기</span> | <span class="link">비밀번호 찾기</span>
+                    <span class="link">아이디 찾기</span> | 
+                    <span class="link">비밀번호 찾기</span> | 
                     <span class="link">회원가입</span>
                 </div>
-                <div class="button">
+
+                <!-- 회원 유형 선택 -->
+                <div class="membership-type">
+                    <label>
+                        개인 회원
+                        <input type="radio" name="membership" value="personal" checked>
+                    </label>
+                    <label>
+                        디자이너 회원
+                        <input type="radio" name="membership" value="designer">
+                    </label>
+                </div>
+
+                <!-- 로그인 버튼 -->
+                <div class="button" id="login-button">
                     <b class="button-text">로그인</b>
                 </div>
             </div>
         </div>
     </main>
-    
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>
