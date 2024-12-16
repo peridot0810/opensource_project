@@ -963,7 +963,15 @@ a:hover {
 }
 
 
-/* loader bar css end */
+
+/* 전체 페이지 컨테이너 스타일 */
+.container-main {
+    width: 100%;              /* 전체 너비를 기본값으로 설정 */
+    max-width: 1400px;        /* 최대 너비를 1200px로 제한 */
+    margin: 0 auto;           /* 중앙 정렬 */
+    padding: 0 15px;          /* 좌우 패딩 추가 (여백 확보) */
+    box-sizing: border-box;   /* 패딩 포함된 너비 계산 */
+}
 
 
 /* jewellery section end */
