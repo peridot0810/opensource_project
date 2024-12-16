@@ -9,6 +9,6 @@ function loadComponent(componentPath, targetId) {
 
 document.addEventListener("DOMContentLoaded", () => {
     // Header와 Footer 삽입
-    loadComponent("../components/header/header.html", "header-placeholder");
-    loadComponent("../components/footer/footer.html", "footer-placeholder");
+    loadComponent("/static/components/header.html", "header-placeholder");
+    loadComponent("/static/components/footer.html", "footer-placeholder");
 });

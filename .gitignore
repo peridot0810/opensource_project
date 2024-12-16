@@ -2,3 +2,4 @@ venv_opensource/
 __pycache__/
 .DS_Store
 VTON/static/
+venv/
