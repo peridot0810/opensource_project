@@ -4,7 +4,7 @@ os.environ["TMPDIR"] = "/home/her/s/VTON/tmp"
 from gradio_client import Client, file
 
 # Client 인스턴스 생성
-client = Client("Nymbo/Virtual-Try-On")
+client = Client("yisol/IDM-VTON")
 
 # API 호출 및 결과 출력
 result = client.predict(

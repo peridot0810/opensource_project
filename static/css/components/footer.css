@@ -53,8 +53,8 @@
 .footer-frame-group {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+    /* align-items: flex-start;
+    justify-content: flex-start; */
     gap: 35px;
     font-size: 32px;
     font-family: 'Baloo Paaji';
@@ -97,9 +97,9 @@
 .footer-help-menu-group {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 26px;
+    /* align-items: flex-start;
+    justify-content: flex-start; */
+    gap: 20px;
 }
 .footer-about-features-works-container2 {
     width: 149px;
