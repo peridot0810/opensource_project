@@ -35,7 +35,15 @@
             <div class="user-img">
                 <!-- 사용자 이미지 -->
                 <img src="{{ user_info['img_path'] }}" alt="사용자 이미지" />
+                
+                <!-- 이미지 변경 버튼 -->
+                <form action="/upload_profile_image" method="POST" enctype="multipart/form-data" class="change-image-form">
+                    <label for="file-upload" class="change-image-button">이미지 변경</label>
+                    <input type="file" id="file-upload" name="profile_image" accept="image/*" hidden>
+                    <button type="submit" class="upload-image-button">업로드</button>
+                </form>
             </div>
+            
             <div class="user-details">
                 <h2>{{ user_info['name'] }} 님</h2>
                 <p><strong>아이디:</strong> {{ user_info['id'] }}</p>
