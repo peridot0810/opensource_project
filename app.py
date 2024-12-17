@@ -69,7 +69,7 @@ def index():
 
 # =========== 제품 카테고리 페이지 ==========
 @app.route('/category')
-def ren_category():
+def category():
   try:
     user = Server.check_login()
     user_id = user.id

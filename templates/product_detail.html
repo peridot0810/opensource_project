@@ -35,18 +35,18 @@
             <!-- 제품 이미지 컨테이너 -->
             <div class="product-image-container">
               <div class="product-image">
-                <img src="/static/img/retro_hoodie.png" alt="레트로 후드집업">
+                <img src="{{product_info["img_path"]}}" alt="{{product_info["product_name"]}}">
               </div>
             </div>
       
             <!-- 제품 정보 -->
             <div class="product-info">
-              <h2 class="product-title">레트로 후드집업</h2>
+              <h2 class="product-title">{{product_info["product_name"]}}</h2>
               <div class="product-rating">
-                ★★★★☆ <span>4.5/5</span>
+                ★★★★☆ <span>{{product_info["rating"]}}/5</span>
               </div>
-              <p class="product-price">98,000원</p>
-              <p class="product-description">Retro Patch Hooded Zip-Up 2024</p>
+              <p class="product-price">{{product_info["discounted_price"]}}원</p>
+              <p class="product-description">{{product_info["product_explain"]}}</p>
               
               <!-- 사이즈 선택 -->
               <div class="product-size">
@@ -97,8 +97,16 @@
     		</a>
   	</div>
       <div class="detail-container">
-        <div class="top-selling-word">상품 상세정보</div>
         <div class="product-detail-box">
+          
+          <div class="top-selling-word">Check Point!</div>
+            <p>
+              {% for check_point in product_info["check_points"].split("|") %}
+              - {{check_point}} <br>
+              {% endfor %}
+            </p>
+
+            <div class="top-selling-word">상품 상세정보</div>
             <p>
                 여기에 제품의 상세한 설명이 들어갑니다. 예를 들어 소재, 세탁 방법, 디자인 설명, 사이즈 정보 등이 포함됩니다.
             </p>
