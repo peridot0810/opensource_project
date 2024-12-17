@@ -36,7 +36,7 @@
         {% for pid in products %}
             <div class="top-product" onclick="window.location.href='/product_detail?pid={{pid}}'">
                 <img src="{{products[pid]["img_path"]}}" class="top-product-image">
-                <h3 class="top-product-title">{{products[pid]["product_name"]}}/h3>
+                <h3 class="top-product-title">{{products[pid]["product_name"]}}</h3>
                 <div class="top-product-rating">
                     ★★★☆☆ <span>{{products[pid]["rating"]}}/5</span>
                 </div>
