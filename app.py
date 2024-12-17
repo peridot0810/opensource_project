@@ -131,10 +131,11 @@ def edit_done():
   }
 
   if Server.edit_info(user.id, user.type, update_info): # 정보 수정 성공
+    flash("비밀번호 변경 완료")
     return redirect(url_for("my_page"))    
   else:
     flash("정보 수정 실패")                                # 정보 수정 실패
-    return redirect(url_for("edit_info"))
+    return redirect(url_for("my_page"))
 # ===============================
 
 
@@ -445,6 +446,7 @@ def upload_done():
   if 'consumer_img' in request.files:
     img = request.files['consumer_img']
   if Server.upload_img(img, cid): 
+    flash("이미지 업로드 성공")
     return redirect(url_for("my_page"))
   else:
     flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
