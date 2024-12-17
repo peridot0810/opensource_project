@@ -58,13 +58,14 @@ def index():
     user_id = "Login_needed"
     user_type = None
 
-  top_selling = Server.get_products_by("sales_volume", num=4, sort="DESC")
+  if user_type != "Designer" :
+    products = Server.get_products_by("sales_volume", num=4, sort="DESC")
+  else:
+    products = Server.get_products()
 
-  if not top_selling:                   # product가 없음 -> 제품 가져오기 실패
-    top_selling = "No_products"
-
-  top_selling_list = list(top_selling)
-  return render_template("index.html", user = user_id, type = user_type, top_selling = top_selling, top_selling_list = top_selling_list)  # index.html에 user, products 넘기기
+  if not products:                   # product가 없음 -> 제품 가져오기 실패
+    products = "No_products"
+  return render_template("index.html", user = user_id, type = user_type, products = products)  # index.html에 user, products 넘기기
 # =====================
 
 
@@ -81,9 +82,10 @@ def category():
     user_type = None
 
   products = Server.get_products()
-  
+  print(products)
   if not products:                   # product가 없음 -> 제품 가져오기 실패
     products = "No_products"
+  print(products)
 
   return render_template('category.html', products = products)
 # ======================================
