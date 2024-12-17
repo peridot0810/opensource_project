@@ -12,10 +12,13 @@
       			<img class="header-frame-icon1" alt="" src="../../../static/img/search.svg">
       			<div class="header-shop">Search for products...</div>
     		</div>
-    		<div class="header-div1" id="text1" onclick="window.location.href = '/category';">전체제품 </div>
-    		<div class="header-div1" id="text1" onclick="window.location.href = '/signin';">가입하기 </div>
-
+    		<div class="header-div1" id="text1" onclick="window.location.href = '/category';">전체 제품 </div>
+				
+				{% if user_type == "Designer" %}
+				<div class="header-div1" id="text1" onclick="window.location.href = '/upload_product';">제품 등록 </div>
+				{% endif %}
 				{% if user_id == "Login_needed" %}
+				<div class="header-div1" id="text1" onclick="window.location.href = '/signin';">가입하기 </div>
 				<div class="header-div1" id="text2" onclick="window.location.href = '/login';">로그인</div>
 				{% else %}
 				<div class="header-div1" id="text2" onclick="window.location.href = '/logout';">로그아웃</div>

@@ -47,7 +47,9 @@
                 ★★★★☆ <span>{{product_info["rating"]}}/5</span>
               </div>
               <p class="product-price">{{product_info["discounted_price"]}}원</p>
+              {% endif %}
               <p class="product-description">{{product_info["product_explain"]}}</p>
+
               
               <!-- 사이즈 선택 -->
               <div class="product-size">
@@ -69,6 +71,7 @@
                 </div>
               </div>
       
+              {% if user_type != "Designer" %}
               <!-- 수량 선택 및 장바구니 -->
               <div class="product-actions">
                 <div class="quantity-selector">
@@ -100,6 +103,16 @@
         				</div>
       			</div>
     		</a>
+
+        {% if user_type == "Designer" %}
+        <a href="/product_delete?pid={{pid}}" class="frame-wrapper" id="frameContainer">
+          <div class="frame-container">
+              <div class="virtual-try-on-wrapper">
+                  <div class="virtual-try-on">제품 삭제하기</div>
+              </div>
+          </div>
+        </a>
+        {% endif %}
   	  </div>
       <div class="detail-container">
         <div class="product-detail-box">

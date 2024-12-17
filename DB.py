@@ -123,9 +123,11 @@ class DBModule:
 
       else :
         products = self.db.child(f"Products/").get().val()
+
+      print(products)
       return products
     except Exception as e:
-      print(e)
+      print("get_products : ", e)
       return None
     
   def get_product_detail(self, pid, did=None, category=None):  # Designer가 호출한게 아니면 did == None
@@ -133,7 +135,7 @@ class DBModule:
       product_info = self.get_products(did=did, category=category)[pid]
       return product_info
     except Exception as e:
-      print(e)
+      print("get_product_detail : ", e)
       return None
     
   def get_products_by(self, by, category=None, num=None, sort=None):

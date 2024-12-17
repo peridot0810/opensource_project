@@ -56,7 +56,6 @@ class Server:
     if self.db.product_registration(product_info, product_img, type, did, category):
       if type == "Designer":
         self.User.products[product_info["pid"]] = product_info
-        print(self.User.products)
       return True
     else:
       return False
@@ -120,7 +119,6 @@ class Server:
     if self.db.product_delete(type, pid, did=did, category=category):
       if type == "Designer":
         del self.User.products[pid]
-        print(self.User.products)
       return True
     else:
       return False
