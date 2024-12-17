@@ -103,7 +103,7 @@ def my_page():
   
   return render_template("mypage.html", user_info = user_info, user_type=user.type)
 # ===============================
-  
+
 
 
 # ========= 내 정보 수정 ============
@@ -404,7 +404,7 @@ def try_on():
   
   if user.type == "Consumer" and user.img_path == "No_img":
     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
-    return redirect(url_for("upload_img", cid=user.id))
+    return redirect(url_for("my_page"))
 
   pid = request.args.get("pid")
   
@@ -417,7 +417,7 @@ def try_on():
   product_img_path = product_info["img_path"]
   product_name = product_info["product_name"]
   
-  return render_template("vton1.html", user_name = user.name, product_name = product_name, model_img_path=model_img_path, product_img_path=product_img_path, type=user.type)
+  return render_template("vton1.html", user_name = user.name, product_name = product_name, model_img_path=model_img_path, product_img_path=product_img_path, type=user.type, pid=pid)
 
 @app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
 def upload_img(cid):
@@ -430,10 +430,10 @@ def upload_done():
   if 'consumer_img' in request.files:
     img = request.files['consumer_img']
   if Server.upload_img(img, cid): 
-    return redirect(url_for("index"))
+    return redirect(url_for("my_page"))
   else:
     flash("업로드에 실패했습니다")                  # 이미지를 업로드 하지 않은 채 제출한 경우
-    return redirect(url_for("upload_img", cid=cid))
+    return redirect(url_for("my_page", cid=cid))
 # ================================
 
 

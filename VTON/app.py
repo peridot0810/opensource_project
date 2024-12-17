@@ -69,6 +69,7 @@ def index():
     data = request.json
     print(data)
     type = data['type']
+    pid = data['pid']
     # 사용자로부터 업로드된 파일 처리
     if type == "Consumer":
         person_image = "../" + data["model_img_path"]
@@ -85,16 +86,32 @@ def index():
     result_path = call_gradio_api(person_image, garment_image)
 
     if result_path:
-        return redirect(url_for("result", filename="result.png"))
+        return redirect(url_for("result", filename="result.png", pid=pid))
     else:
         return "Error occurred during the virtual try-on process.", 500
 
 
-@app.route("/result/<filename>")
-def result(filename):
+@app.route("/result/<filename>/<pid>")
+def result(filename, pid):
     # 결과 이미지를 표시하는 페이지 렌더링
     image_url = url_for("static", filename=f"results/{filename}")
-    return render_template("vton2.html", image_url=image_url)
+    return render_template("vton2.html", image_url=image_url, pid=pid)
+
+
+
+# ========= header/footer 렌더링 ==========
+@app.route('/header')
+def header():
+    return render_template('components/header.html')  # templates/components/header.html 렌더링
+
+@app.route('/footer')
+def footer():
+    return render_template('components/footer.html')  # templates/components/footer.html 렌더링
+# ================================
+
+
+
+
 
 def convert_to_png(file, output_filename):
     """

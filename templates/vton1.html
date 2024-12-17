@@ -55,7 +55,7 @@
                 </div>
             </div>
             <p></p>
-            <button onclick="vton_request('{{type}}', '{{product_img_path}}', '{{model_img_path}}')">시착 결과 보기</button>
+            <button onclick="vton_request('{{type}}', '{{product_img_path}}', '{{model_img_path}}', '{{pid}}')">시착 결과 보기</button>
         </section>
     </main>
     
@@ -64,14 +64,15 @@
     <div id="footer-placeholder"></div>
 
     <script>
-        function vton_request(type, product_img_path, model_img_path){
+        function vton_request(type, product_img_path, model_img_path, pid){
             console.log(type)
             console.log(product_img_path)
             console.log(model_img_path)
             const data = {
                 type : type,
                 product_img_path : product_img_path,
-                model_img_path : model_img_path
+                model_img_path : model_img_path,
+                pid : pid
             }
             fetch("http://127.0.0.1:5000", {
                 method : "POST",
