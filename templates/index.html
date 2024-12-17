@@ -54,7 +54,9 @@
         <div class="boarding">
     	<div class="boarding-child">
     	</div>
-    	<div class="borr">마이페이지에 내 사진 등록하고 가상 피팅해보세요!</div>
+
+        {% if type == "Consumer" %}
+        <div class="borr">마이페이지에 내 사진 등록하고 가상 피팅해보세요!</div>
   	    </div>
         <div class ="top-selling-word">Top Selling</div>
         <div class="top-products-container">
@@ -70,10 +72,14 @@
                 <button class="top-virtual-try-on">Virtual Try On</button>
             </div>
             {% endfor %}
-
-
             
         </div>
+
+        {% elif type == "Designer" %}
+        <p>디자이너 제품 목록</p>
+        {% endif %}
+
+    	
         
         
     </main>

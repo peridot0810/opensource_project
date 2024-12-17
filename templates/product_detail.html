@@ -42,6 +42,7 @@
             <!-- 제품 정보 -->
             <div class="product-info">
               <h2 class="product-title">{{product_info["product_name"]}}</h2>
+              {% if user_type == "Consumer" %}
               <div class="product-rating">
                 ★★★★☆ <span>{{product_info["rating"]}}/5</span>
               </div>
@@ -77,17 +78,21 @@
                 </div>
                 <button class="add-to-cart-btn">Add to Cart</button>
               </div>
+              {% endif %}
+              
             </div>
           </div>
         </section>
-        <div class="parent">
-    		<b class="b">
-      			<span class="txt">
-        				<span class="span">이 옷, 내 스타일일까..🤔?                    </span>
-        				<span class="span1">             미리 입어보기 </span>
-        				<span>→</span>
-      			</span>
-    		</b>
+      <div class="parent">
+        {% if user_type == "Consumer" %}
+        <b class="b">
+          <span class="txt">
+              <span class="span">이 옷, 내 스타일일까..🤔?                    </span>
+              <span class="span1">             미리 입어보기 </span>
+              <span>→</span>
+          </span>
+      </b>
+        {% endif %}
     		<a href="/try_on?pid={{pid}}&type={{user_type}}" class="frame-wrapper" id="frameContainer">
       			<div class="frame-container">
         				<div class="virtual-try-on-wrapper">
@@ -95,10 +100,11 @@
         				</div>
       			</div>
     		</a>
-  	</div>
+  	  </div>
       <div class="detail-container">
         <div class="product-detail-box">
           
+          {% if user_type == "Consumer" %}
           <div class="top-selling-word">Check Point!</div>
             <p>
               {% for check_point in product_info["check_points"].split("|") %}
@@ -117,6 +123,8 @@
                 - 제조국: 대한민국<br>
                 - 제품 특징: 편안한 착용감과 트렌디한 디자인.
             </p>
+          {% endif %}
+          
         </div>
     </div>
     </main>
