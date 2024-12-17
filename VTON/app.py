@@ -65,7 +65,6 @@ def call_gradio_api(person_image_path, garment_image_path):
 
 @app.route("/", methods=["POST"])
 def index():
-    print("post 요청 받음")
     data = request.json
     print(data)
     type = data['type']

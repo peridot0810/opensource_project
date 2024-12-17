@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Paaji:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee:wght@400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo Bhai:wght@400&display=swap" />
+    <title>Fitme</title>
+    <!-- 공통 js -->
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <!-- 자체 js(파일 이름 변경해서 사용) -->
+    
+    <!-- 공통 Global CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- 각 컴포넌트 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/header.css') }}"> <!-- header CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/footer.css') }}"> <!-- Footer CSS -->
+    <!-- 현재 페이지의 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload_product.css') }}">
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="154x154" href="{{ url_for('static', filename='img/icon.png') }}">
+</head> 
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="signup-container">
+        <h1 class="signup-title">제품 등록하기</h1>
+
+        <!-- 정보 입력 섹션 -->
+        <section class="information">
+            <form class="signup-form" action="{{url_for("upload_product_done", did=did)}}" method="POST" id="signup-form" enctype="multipart/form-data" >
+            
+                <!-- 제품 명 -->
+                <div class="form-group">
+                    <label for="id">제품명 *</label>
+                    <input type="text" id="product_name" name="product_name" placeholder="제품 이름" required>
+                </div>
+
+                <!-- 제품 설명 -->
+                <div class="form-group">
+                    <label for="id">제품명 *</label>
+                    <input type="text" id="product_explain" name="product_explain" placeholder="제품 설명" required>
+                </div>
+            
+                <!-- 제품 이미지 -->
+                <div class="form-group image-upload-group">
+                    <label for="profile-image">제품 이미지 *</label>
+                    <input type="file" id="product_img" name="product_img" accept="image/*" required>
+                    <p class="upload-instructions">JPG, PNG 파일만 허용되며, 최대 2MB까지 업로드 가능합니다.</p>
+                </div>
+            
+                <!-- 제출 버튼 -->
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">제품 등록하기</button>
+                </div>
+                
+            </form>
+            
+        </section>
+    </main>
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+</body>
+</html>

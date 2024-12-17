@@ -65,6 +65,8 @@ def index():
 
   if not products:                   # product가 없음 -> 제품 가져오기 실패
     products = "No_products"
+
+  print(products)
   return render_template("index.html", user = user_id, type = user_type, products = products)  # index.html에 user, products 넘기기
 # =====================
 
@@ -288,9 +290,11 @@ def upload_product():
 def upload_product_done(did):
   product_img = request.files['product_img']
   product_info = {
-    "product_name" : request.form.get("name"),
+    "product_name" : request.form.get("product_name"),
     "product_explain" : request.form.get("product_explain")
   }
+  print(product_info)
+
   if Server.product_registration(product_info, product_img, "Designer", did=did): 
     return redirect(url_for("index"))
   else:
@@ -450,7 +454,7 @@ def header():
     except:
       user_id = "Login_needed"
       user_type = None
-    return render_template('components/header.html', user_id=user_id)  # templates/components/header.html 렌더링
+    return render_template('components/header.html', user_id=user_id, user_type = user_type)  # templates/components/header.html 렌더링
 
 @app.route('/footer')
 def footer():
@@ -458,14 +462,6 @@ def footer():
 # ================================
 
 
-
-
-# ====== test =======
-@app.route("/test")
-def test():
-  products = Server.get_products_by("rating", num=3, sort="DESC")
-  print(products)
-  return products
 
 
 
