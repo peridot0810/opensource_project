@@ -40,11 +40,11 @@
                     <div class="membership-type">
                         <label>
                             개인 회원
-                            <input type="radio" name="type" value="personal" checked>
+                            <input type="radio" name="type" value="Consumer" id="Consumer-radio" checked>
                         </label>
                         <label>
                             디자이너 회원
-                            <input type="radio" name="type" value="designer">
+                            <input type="radio" name="type" value="Designer" id="Designer-radio">
                         </label>
                     </div>
                 </div>
@@ -100,5 +100,24 @@
     </main>
     <!-- Footer -->
     <div id="footer-placeholder"></div>
+
+    <script>
+        const consumerRadio = document.getElementById("Consumer-radio");
+        const designerRadio = document.getElementById("Designer-radio");
+        const targetElement = document.getElementById("profile-image");
+
+        // 라디오 버튼의 상태에 따라 요소의 display 속성 변경
+        consumerRadio.addEventListener("change", function() {
+            if (consumerRadio.checked) {
+                targetElement.style.display = "block"; // 개인 회원 선택 시 요소 표시
+            }
+        });
+
+        designerRadio.addEventListener("change", function() {
+            if (designerRadio.checked) {
+                targetElement.style.display = "none"; // 디자이너 회원 선택 시 요소 숨김
+            }
+        });
+    </script>
 </body>
 </html>

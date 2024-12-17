@@ -162,7 +162,7 @@ def signin_userType():                           # Designer, Consumer 구분
   except:
     return render_template("signin_userType.html")
 
-@app.route("/signin", methods=["post"]) 
+@app.route("/signin") 
 def signin():
   try:
     Server.check_login()                      # 로그인 상태라면 redirect -> 메인페이지
@@ -170,10 +170,7 @@ def signin():
   except:
     type = request.form.get("type")
 
-    if type == "Consumer" :    # 일반 사용자 -> 일반 가입 페이지
-      return render_template("signin_consumer.html")
-    elif type == "Designer":   # 디자이너 사용자 -> 디자이너 가입 페이지
-      return render_template("signin_designer.html")                                   
+    return render_template("signup.html")                                   
 
 @app.route("/signin_done", methods=["post"])  
 def signin_done():
@@ -190,16 +187,13 @@ def signin_done():
       "type" : request.form.get("type")
     }
 
-    if user_info["type"] == "Consumer" and 'consumer_img' in request.files:
-      img = request.files['consumer_img']
-    else:
-      img = None
+    img = request.files.get('profile_image')
 
     if Server.sign_in(user_info, img):                 # 회원가입 성공
-      return redirect(url_for("login_userType"))    
+      return redirect(url_for("login"))    
     else:
       flash("이미 존재하는 아이디 입니다")                    # 회원가입 실패
-      return redirect(url_for("signin_userType"))
+      return redirect(url_for("signin"))
 
 @app.route("/signin_Root") 
 def signin_Root():
