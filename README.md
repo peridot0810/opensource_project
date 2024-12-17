@@ -4,38 +4,44 @@
 1. clone 하기 
 ```bash
 $ git clone https://github.com/2024-SSU-OpenSource-team10/FitMe
+```
 
 2. FitMe 디렉토리 진입
 ```bash
 $ cd FitMe
+```
 
 3. 가상환경 생성 및 실행
 ```bash
 $ conda create -n {가상환경 이름} python=3.12
 $ conda activate {가상환경 이름}
+```
 
 4. 필요한 패키지 설치
 ```bash
 $ pip install -r requirements.txt
+```
 
 5. 서버 실행
 ```bash
 $ python3 app.py
-
+```
 6. FitMe 페이지 접속 : http://127.0.0.1:8080/
 
 7. 새로운 터미널에서 VTON 폴더 진입 
 ```bash
 $ cd VTON
+```
 
 8. 가상환경 실행
 ```bash
 $ conda activate {가상환경 이름}
+```
 
 9. VTON 서버 실행
 ```bash
 $ python3 app.py
-
+```
 
 ## 회원가입
 - 일반 사용자(consumer), 디자이너(designer)중 택1
