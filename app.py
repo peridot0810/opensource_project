@@ -11,12 +11,7 @@ app.secret_key = os.urandom(24)      # 랜덤 secret key -> 서버 시작할때�
 Server = Server()                    # Server 인스턴스 생성
 # =================
 #======김동우 테스트용======
-@app.route('/category')
-def ren_category():
-    """
-    기본 경로로 접속하면 templates/index.html 파일을 렌더링합니다.
-    """
-    return render_template('category.html')
+
 @app.route('/vton1')
 def ren_vton1():
     """
@@ -61,13 +56,35 @@ def index():
     user_id = "Login_needed"
     user_type = None
 
-  products = Server.get_products()
+  top_selling = Server.get_products_by("sales_volume", num=4, sort="DESC")
 
+  if not top_selling:                   # product가 없음 -> 제품 가져오기 실패
+    top_selling = "No_products"
+
+  top_selling_list = list(top_selling)
+  return render_template("index.html", user = user_id, type = user_type, top_selling = top_selling, top_selling_list = top_selling_list)  # index.html에 user, products 넘기기
+# =====================
+
+
+
+# =========== 제품 카테고리 페이지 ==========
+@app.route('/category')
+def ren_category():
+  try:
+    user = Server.check_login()
+    user_id = user.id
+    user_type = user.type
+  except:
+    user_id = "Login_needed"
+    user_type = None
+
+  products = Server.get_products()
+  
   if not products:                   # product가 없음 -> 제품 가져오기 실패
     products = "No_products"
 
-  return render_template("index.html", user = user_id, type = user_type, products = products)  # index.html에 user, products 넘기기
-# =====================
+  return render_template('category.html', products = products)
+# ======================================
 
 
 
@@ -205,7 +222,7 @@ def login_userType():                            # 디자이너인지 소비자�
   except:
     return render_template("login_userType.html")
 
-@app.route("/login", methods=["post"]) 
+@app.route("/login") 
 def login():
   try:
     Server.check_login()                # 로그인 상태라면 redirect -> 메인페이지
@@ -227,16 +244,19 @@ def login_done():
     Server.check_login()                     # 로그인 상태라면 redirect -> 메인페이지
     return redirect(url_for("index"))
   except:
+    data = request.get_json()
+
     login_info = {
-      "id" : request.form.get("id"),
-      "pwd" : request.form.get("pwd"),
-      "type" : request.form.get("type")
+      "id" : data.get("id"),
+      "pwd" : data.get("pwd"),
+      "type" : data.get("type")
     }
+
     if Server.log_in(login_info):                  # 로그인 성공 -> session["id"] = 유저 아이디
       return redirect(url_for("index"))
     else:                                          # 로그인 실패
       flash("아이디가 없거나 틀린 비밀번호 입니다")
-      return redirect(url_for("login_userType"))
+      return redirect(url_for("login"))
 
 @app.route("/logout")
 def logout():
@@ -245,7 +265,7 @@ def logout():
     Server.log_out()
     return redirect(url_for("index"))
   except:                                          # 로그인 상태가 아니라면 redirect -> 로그인 창
-    return redirect(url_for("login_userType"))
+    return redirect(url_for("login"))
 # =================================
   
 

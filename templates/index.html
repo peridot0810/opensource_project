@@ -61,45 +61,45 @@
             
             <!-- 상품 1 -->
             <div class="top-product">
-                <img src="image1.png"class="top-product-image">
+                <img src="{{top_selling[top_selling_list[0]]['img_path']}}"class="top-product-image">
                 <h3 class="top-product-title"></h3>
                 <div class="top-product-rating">
-                    ★★★☆☆ <span>3.5/5</span>
+                    ★★★☆☆ <span>{{top_selling[top_selling_list[0]]['rating']}}/5</span>
                 </div>
-                <p class="top-product-price">원</p>
+                <p class="top-product-price">{{top_selling[top_selling_list[0]]['discounted_price']}}원</p>
                 <button class="top-virtual-try-on">Virtual Try On</button>
             </div>
         
             <!-- 상품 2 -->
             <div class="top-product">
-                <img src="image2.png"class="top-product-image">
+                <img src="{{top_selling[top_selling_list[1]]['img_path']}}"class="top-product-image">
                 <h3 class="top-product-title"></h3>
                 <div class="top-product-rating">
-                    ★★★★☆ <span>4.5/5</span>
+                    ★★★★☆ <span>{{top_selling[top_selling_list[1]]['rating']}}/5</span>
                 </div>
-                <p class="top-product-price">원</p>
+                <p class="top-product-price">{{top_selling[top_selling_list[1]]['discounted_price']}}원</p>
                 <button class="top-virtual-try-on">Virtual Try On</button>
             </div>
         
             <!-- 상품 3 -->
             <div class="top-product">
-                <img src="image3.png"class="top-product-image">
+                <img src="{{top_selling[top_selling_list[2]]['img_path']}}"class="top-product-image">
                 <h3 class="top-product-title"></h3>
                 <div class="top-product-rating">
-                    ★★★★★ <span>5.0/5</span>
+                    ★★★★★ <span>{{top_selling[top_selling_list[2]]['rating']}}/5</span>
                 </div>
-                <p class="top-product-price">원</p>
+                <p class="top-product-price">{{top_selling[top_selling_list[2]]['discounted_price']}}원</p>
                 <button class="top-virtual-try-on">Virtual Try On</button>
             </div>
         
             <!-- 상품 4 -->
             <div class="top-product">
-                <img src="image4.png"class="top-product-image">
+                <img src="{{top_selling[top_selling_list[3]]['img_path']}}"class="top-product-image">
                 <h3 class="top-product-title"></h3>
                 <div class="top-product-rating">
-                    ★★★☆☆ <span>3.5/5</span>
+                    ★★★☆☆ <span>{{top_selling[top_selling_list[3]]['rating']}}/5</span>
                 </div>
-                <p class="top-product-price">원</p>
+                <p class="top-product-price">{{top_selling[top_selling_list[3]]['discounted_price']}}원</p>
                 <button class="top-virtual-try-on">Virtual Try On</button>
             </div>
         </div>
