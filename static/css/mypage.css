@@ -32,6 +32,7 @@ body {
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #ccc;
+    margin-bottom: 10px;
 }
 
 .user-details h2 {
@@ -42,6 +43,49 @@ body {
 .user-details p {
     margin: 5px 0;
     color: #555;
+}
+
+.change-image-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-image-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.change-image-button:hover {
+    background-color: #0056b3;
+}
+
+#file-upload {
+    display: none; /* 파일 입력창은 숨김 */
+}
+
+.upload-image-button {
+    display: inline-block;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-image-button:hover {
+    background-color: #218838;
 }
 
 /* 비밀번호 변경 폼 */
