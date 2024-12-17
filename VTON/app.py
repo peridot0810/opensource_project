@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
+from flask_cors import CORS
 from gradio_client import Client as GradioClient, file
 import cv2
 
@@ -9,6 +10,7 @@ os.makedirs("static/tmp", exist_ok=True)
 
 # Flask 애플리케이션 초기화
 app = Flask(__name__)
+CORS(app)
 
 # 업로드된 이미지 및 결과 이미지를 저장할 디렉토리
 UPLOAD_FOLDER = "static/uploads"
@@ -63,15 +65,18 @@ def call_gradio_api(person_image_path, garment_image_path):
 
 @app.route("/", methods=["POST"])
 def index():
-    type = request.form.get("type")
+    print("post 요청 받음")
+    data = request.json
+    print(data)
+    type = data['type']
     # 사용자로부터 업로드된 파일 처리
     if type == "Consumer":
-        person_image = "../" + request.form.get("person_image")
+        person_image = "../" + data["model_img_path"]
     elif type == "Designer":
-        person_image_file = request.files.get("person_image")
-        person_image = convert_to_png(person_image_file, "person_image.png")
+        person_image_file = data["model_img_path"]
+        person_image = convert_to_png(person_image_file, "model_img_path.png")
 
-    garment_image = "../" + request.form.get("garment_image")
+    garment_image = "../" + data["product_img_path"]
 
     if not person_image or not garment_image:
         return "Both person and garment images are required!", 400
@@ -89,7 +94,7 @@ def index():
 def result(filename):
     # 결과 이미지를 표시하는 페이지 렌더링
     image_url = url_for("static", filename=f"results/{filename}")
-    return render_template("result.html", image_url=image_url)
+    return render_template("vton2.html", image_url=image_url)
 
 def convert_to_png(file, output_filename):
     """

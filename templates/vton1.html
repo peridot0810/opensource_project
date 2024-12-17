@@ -31,7 +31,7 @@
     <!-- 메인 콘텐츠 -->
     <main>
         <section class="fitme-tryon">
-            <h2>&lt;고객 id&gt;님이 &lt;상품 이름&gt; 입어보는 중...</h2>
+            <h2>&lt;{{user_name}}&gt;님이 &lt;{{product_name}}&gt; 입어보는 중...</h2>
             <div class="fitme-tryon-layout">
                 <!-- 왼쪽 이미지 컨테이너 -->
                 {% if type == "Consumer" %}
@@ -55,12 +55,43 @@
                 </div>
             </div>
             <p></p>
-            <button>시착 결과 보기</button>
+            <button onclick="vton_request('{{type}}', '{{product_img_path}}', '{{model_img_path}}')">시착 결과 보기</button>
         </section>
     </main>
     
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>
+
+    <script>
+        function vton_request(type, product_img_path, model_img_path){
+            console.log(type)
+            console.log(product_img_path)
+            console.log(model_img_path)
+            const data = {
+                type : type,
+                product_img_path : product_img_path,
+                model_img_path : model_img_path
+            }
+            fetch("http://127.0.0.1:5000", {
+                method : "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.text();
+                }
+            })
+            .then(data => {
+                console.log("Response Data:", data);
+            })
+            .catch(error => console.error("Error:", error));
+                    }
+    </script>
 </body>
 </html>

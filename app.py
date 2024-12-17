@@ -1,4 +1,5 @@
 from flask import Flask, redirect, render_template, url_for, request, flash, session
+from flask_cors import CORS
 from DB import DBModule
 from Users import Consumer, Designer, Root
 from Server import Server
@@ -8,6 +9,7 @@ import os
 # ==== 초기 설정 ====
 app = Flask(__name__)
 app.secret_key = os.urandom(24)      # 랜덤 secret key -> 서버 시작할때마다 세션 초기화
+CORS(app)
 Server = Server()                    # Server 인스턴스 생성
 # =================
 #======김동우 테스트용======
@@ -400,9 +402,9 @@ def try_on():
   except:
     return redirect(url_for("login"))
   
-  # if user.type == "Consumer" and user.img_path == "No_img":
-  #   flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
-  #   return redirect(url_for("upload_img", cid=user.id))
+  if user.type == "Consumer" and user.img_path == "No_img":
+    flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
+    return redirect(url_for("upload_img", cid=user.id))
 
   pid = request.args.get("pid")
   
@@ -413,9 +415,9 @@ def try_on():
     product_info = Server.get_product_detail(pid, did=user.id)
     model_img_path = None
   product_img_path = product_info["img_path"]
+  product_name = product_info["product_name"]
   
-  print("api called")
-  return render_template("vton1.html", model_img_path=model_img_path, product_img_path=product_img_path, type=user.type)
+  return render_template("vton1.html", user_name = user.name, product_name = product_name, model_img_path=model_img_path, product_img_path=product_img_path, type=user.type)
 
 @app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
 def upload_img(cid):
