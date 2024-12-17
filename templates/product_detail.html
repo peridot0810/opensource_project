@@ -35,7 +35,7 @@
             <!-- 제품 이미지 컨테이너 -->
             <div class="product-image-container">
               <div class="product-image">
-                <img src="{{product_info["img_path"]}}" alt="{{product_info["product_name"]}}">
+                <img src="{{product_info['img_path']}}" alt="{{product_info['product_name']}}">
               </div>
             </div>
       
@@ -44,8 +44,18 @@
               <h2 class="product-title">{{product_info["product_name"]}}</h2>
               {% if user_type != "Designer" %}
               <div class="product-rating">
-                ★★★★☆ <span>{{product_info["rating"]}}/5</span>
+                  <!-- 별 개수 표시 -->
+                  {% set rating = product_info["rating"]|int %}
+                  {% for i in range(5) %}
+                      {% if i < rating %}
+                          ★
+                      {% else %}
+                          ☆
+                      {% endif %}
+                  {% endfor %}
+                <span>{{product_info["rating"]}}/5</span>
               </div>
+              
               <p class="product-price">{{product_info["discounted_price"]}}원</p>
               {% endif %}
               <p class="product-description">{{product_info["product_explain"]}}</p>
@@ -57,17 +67,7 @@
                 <div class="size-options">
                   <button class="size-btn">S</button>
                   <button class="size-btn">M</button>
-                </div>
-              </div>
-      
-              <!-- 색상 선택 -->
-              <div class="product-color">
-                <h3>Choose Color</h3>
-                <div class="color-options">
-                  <button class="color-btn">화이트</button>
-                  <button class="color-btn">블랙</button>
-                  <button class="color-btn">차콜</button>
-                  <button class="color-btn active">핫핑크</button>
+                  <button class="size-btn">L</button>
                 </div>
               </div>
       
@@ -75,9 +75,9 @@
               <!-- 수량 선택 및 장바구니 -->
               <div class="product-actions">
                 <div class="quantity-selector">
-                  <button class="qty-btn">-</button>
-                  <span class="qty">1</span>
-                  <button class="qty-btn">+</button>
+                    <button class="qty-btn" id="decrease-btn">-</button>
+                    <span class="qty" id="quantity">1</span>
+                    <button class="qty-btn" id="increase-btn">+</button>
                 </div>
                 <button class="add-to-cart-btn">Add to Cart</button>
               </div>
@@ -126,7 +126,7 @@
             </p>
 
             <div class="top-selling-word">Details</div>
-            <img src="{{product_info["detail_img_path"]}}" alt="">
+            <img src="{{product_info['detail_img_path']}}" alt="" >
           {% endif %}
           
         </div>
