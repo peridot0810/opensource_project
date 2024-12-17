@@ -55,19 +55,45 @@
             <form id="image-upload-form">
                 <!-- 사용자 이미지 업로드 -->
                 <label for="user-image-upload" class="upload-button">모델 이미지 업로드</label>
-                <input type="file" id="user-image-upload" accept="image/*" hidden>
-
-                <!-- 상품 이미지 업로드 -->
-                <label for="product-image-upload" class="upload-button">상품 이미지 업로드</label>
-                <input type="file" id="product-image-upload" accept="image/*" hidden>
+                <input type="file" id="user-image-upload" accept="image/*" hidden required>
             </form>
 
             <p></p>
-            <button>시착 결과 보기</button>
+            <button onclick="vton_request('{{type}}', '{{product_img_path}}', '{{pid}}')">시착 결과 보기</button>
         </section>
     </main>
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>
+
+    <script>
+        function vton_request(type, product_img_path, pid){
+            const formData = new FormData();
+            const imageFile = document.getElementById('user-image-upload').files[0];
+            const data = {
+                type : type,
+                product_img_path : product_img_path,
+                pid : pid
+            }
+            const jsonData = JSON.stringify(data);
+            formData.append('model_image', imageFile); 
+            formData.append('data', jsonData)
+            fetch("http://127.0.0.1:5000", {
+                method : "POST",
+                body: formData
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.text();
+                }
+            })
+            .then(data => {
+                console.log("Response Data:", data);
+            })
+            .catch(error => console.error("Error:", error));
+                    }
+    </script>
 </body>
 </html>

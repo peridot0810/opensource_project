@@ -95,7 +95,7 @@ def category():
     products = "No_products"
   print(products)
 
-  return render_template('category.html', products = products)
+  return render_template('category.html', products = products, user_type = user_type)
 # ======================================
 
 
@@ -423,13 +423,15 @@ def try_on():
   if user.type == "Consumer":
     product_info = Server.get_product_detail(pid)
     model_img_path = user.img_path
+    render_html = "vton1.html"
   elif user.type == "Designer":
     product_info = Server.get_product_detail(pid, did=user.id)
     model_img_path = None
+    render_html = "vton_design.html"
   product_img_path = product_info["img_path"]
   product_name = product_info["product_name"]
   
-  return render_template("vton1.html", user_name = user.name, product_name = product_name, model_img_path=model_img_path, product_img_path=product_img_path, type=user.type, pid=pid)
+  return render_template(render_html, user_name = user.name, product_name = product_name, model_img_path=model_img_path, product_img_path=product_img_path, type=user.type, pid=pid)
 
 @app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
 def upload_img(cid):

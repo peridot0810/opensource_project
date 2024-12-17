@@ -65,21 +65,18 @@
 
     <script>
         function vton_request(type, product_img_path, model_img_path, pid){
-            console.log(type)
-            console.log(product_img_path)
-            console.log(model_img_path)
+            const formData = new FormData();
             const data = {
                 type : type,
                 product_img_path : product_img_path,
                 model_img_path : model_img_path,
                 pid : pid
             }
+            const jsonData = JSON.stringify(data);
+            formData.append('data', jsonData)
             fetch("http://127.0.0.1:5000", {
                 method : "POST",
-                headers: {
-                    "Content-Type" : "application/json"
-                },
-                body: JSON.stringify(data)
+                body: formData
             })
             .then(response => {
                 if (response.redirected) {

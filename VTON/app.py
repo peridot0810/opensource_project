@@ -3,6 +3,8 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_cors import CORS
 from gradio_client import Client as GradioClient, file
 import cv2
+import json
+
 
 # Gradio가 사용할 임시 디렉토리 설정
 os.environ["TMPDIR"] = "static/tmp"
@@ -29,7 +31,7 @@ def get_gradio_client():
     """Gradio Client를 필요할 때만 초기화"""
     global gradio_client
     if gradio_client is None:
-        gradio_client = GradioClient("Nymbo/Virtual-Try-On")
+        gradio_client = GradioClient("yisol/Virtual-Try-On")
     return gradio_client
 
 def call_gradio_api(person_image_path, garment_image_path):
@@ -65,18 +67,21 @@ def call_gradio_api(person_image_path, garment_image_path):
 
 @app.route("/", methods=["POST"])
 def index():
-    data = request.json
+    data = request.form.get('data')
+    data = json.loads(data)  # JSON 문자열을 파싱
     print(data)
-    type = data['type']
+    type = data["type"]
     pid = data['pid']
     # 사용자로부터 업로드된 파일 처리
     if type == "Consumer":
         person_image = "../" + data["model_img_path"]
     elif type == "Designer":
-        person_image_file = data["model_img_path"]
+        person_image_file = request.files['model_image']
         person_image = convert_to_png(person_image_file, "model_img_path.png")
 
     garment_image = "../" + data["product_img_path"]
+
+    
 
     if not person_image or not garment_image:
         return "Both person and garment images are required!", 400
