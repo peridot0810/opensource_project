@@ -32,6 +32,7 @@
     <main>
     <div class="top-selling-word">All Products</div>
     <div class="top-products-container">
+        {% if products != "No_products" %}
         {% for pid in products %}
             <div class="top-product" onclick="window.location.href='/product_detail?pid={{pid}}'">
                 <img src="{{products[pid]["img_path"]}}" class="top-product-image">
@@ -43,8 +44,13 @@
                 <button class="top-virtual-try-on">Virtual Try On</button>
             </div>
         {% endfor %}
+
+        {% else %}
+        <div class="top-selling-word">아직 제품이 없습니다</div>
+        {% endif %}
         
-    <div class="pagination-container">
+        
+    <!-- <div class="pagination-container">
         <div class="pagination-bar">
             <a href="#" class="pagination-link">&laquo;</a>
             <a href="#" class="pagination-link active">1</a>
@@ -54,7 +60,7 @@
             <a href="#" class="pagination-link">5</a>
             <a href="#" class="pagination-link">&raquo;</a>
         </div>
-    </div>
+    </div> -->
     <p></p>
     <p></p>
     <p></p>
