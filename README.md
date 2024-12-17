@@ -63,6 +63,5 @@ $ python3 app.py
 - 제품 상세페이지에 'Virtual Try on' 클릭 -> try on 페이지로 넘어감
 - 회원가입 할때 이미지를 업로드 하지 않았다면 마이페이지로 넘어감
 
-## 피그마 시연 영상
-https://github.com/user-attachments/assets/45cc5aa9-7505-4a37-a6ff-209dd40726f8
-
+## 최종 시연 영상
+https://youtu.be/OxibUSB8Bfs 
