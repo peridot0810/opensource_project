@@ -2,9 +2,11 @@
     position: relative;
     font-size: 32px;
     font-family: 'Baloo Paaji';
+    cursor: pointer;
 }
 .header-shop {
     position: relative;
+    cursor: pointer;
 }
 .header-frame-icon {
     width: 16px;
