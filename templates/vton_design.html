@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Paaji:wght@400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ABeeZee:wght@400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhai:wght@400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&family=IBM+Plex+Sans+KR&display=swap">
+    <title>Fitme</title>
+    <!-- 공통 js -->
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <!-- 자체 js (파일 이름 변경해서 사용) -->
+    <script src="{{ url_for('static', filename='js/vton_design.js') }}" defer></script>
+    <!-- 공통 Global CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <!-- 각 컴포넌트 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/footer.css') }}">
+    <!-- 현재 페이지의 CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vton_design.css') }}">
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="154x154" href="{{ url_for('static', filename='img/icon.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- 메인 콘텐츠 -->
+    <main>
+        <section class="fitme-tryon">
+            <h2>virtul try on 디자이너 시스템</h2>
+            <div class="fitme-tryon-layout">
+                <!-- 왼쪽 이미지 컨테이너 -->
+                <div class="image-container">
+                    <div class="image-box">
+                        <img id="uploaded-user-image" src="{{model_img_path}}" alt="사용자 이미지">
+                    </div>
+                </div>
+    
+                <!-- 중앙 + 기호 -->
+                <div class="plus-sign">+</div>
+    
+                <!-- 오른쪽 이미지 컨테이너 -->
+                <div class="image-container">
+                    <div class="image-box">
+                        <img id="uploaded-product-image" src="{{product_img_path}}" alt="상품 이미지">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 이미지 업로드 기능 -->
+            <form id="image-upload-form">
+                <!-- 사용자 이미지 업로드 -->
+                <label for="user-image-upload" class="upload-button">모델 이미지 업로드</label>
+                <input type="file" id="user-image-upload" accept="image/*" hidden>
+
+                <!-- 상품 이미지 업로드 -->
+                <label for="product-image-upload" class="upload-button">상품 이미지 업로드</label>
+                <input type="file" id="product-image-upload" accept="image/*" hidden>
+            </form>
+
+            <p></p>
+            <button>시착 결과 보기</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+</body>
+</html>
