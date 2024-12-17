@@ -35,11 +35,24 @@
         {% if products != "No_products" %}
         {% for pid in products %}
             <div class="top-product" onclick="window.location.href='/product_detail?pid={{pid}}'">
-                <img src="{{products[pid]["img_path"]}}" class="top-product-image">
+                <img src="{{products[pid]['img_path']}}" class="top-product-image">
                 <h3 class="top-product-title">{{products[pid]["product_name"]}}</h3>
-                <div class="top-product-rating">
+                <!-- <div class="top-product-rating">
                     ★★★☆☆ <span>{{products[pid]["rating"]}}/5</span>
+                </div> -->
+                <div class="top-product-rating">
+                    <!-- 별 개수 표시 -->
+                    {% set rating = products[pid]["rating"]|int %}
+                    {% for i in range(5) %}
+                        {% if i < rating %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                    <span>{{ products[pid]["rating"] }}/5</span>
                 </div>
+                
                 <p class="top-product-price">{{products[pid]["discounted_price"]}}원</p>
                 <button class="top-virtual-try-on">Virtual Try On</button>
             </div>
