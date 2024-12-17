@@ -35,7 +35,7 @@
             <!-- 제품 이미지 컨테이너 -->
             <div class="product-image-container">
               <div class="product-image">
-                <img src="{{product_info["img_path"]}}" alt="{{product_info["product_name"]}}">
+                <img src="{{product_info['img_path']}}" alt="{{product_info['product_name']}}">
               </div>
             </div>
       
@@ -44,8 +44,18 @@
               <h2 class="product-title">{{product_info["product_name"]}}</h2>
               {% if user_type != "Designer" %}
               <div class="product-rating">
-                ★★★★☆ <span>{{product_info["rating"]}}/5</span>
+                  <!-- 별 개수 표시 -->
+                  {% set rating = product_info["rating"]|int %}
+                  {% for i in range(5) %}
+                      {% if i < rating %}
+                          ★
+                      {% else %}
+                          ☆
+                      {% endif %}
+                  {% endfor %}
+                <span>{{product_info["rating"]}}/5</span>
               </div>
+              
               <p class="product-price">{{product_info["discounted_price"]}}원</p>
               <p class="product-description">{{product_info["product_explain"]}}</p>
               
