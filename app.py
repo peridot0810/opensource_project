@@ -472,7 +472,14 @@ def upload_done():
 # ========= header/footer 렌더링 ==========
 @app.route('/header')
 def header():
-    return render_template('components/header.html')  # templates/components/header.html 렌더링
+    try:
+      user = Server.check_login()
+      user_id = user.id
+      user_type = user.type
+    except:
+      user_id = "Login_needed"
+      user_type = None
+    return render_template('components/header.html', user_id=user_id)  # templates/components/header.html 렌더링
 
 @app.route('/footer')
 def footer():
