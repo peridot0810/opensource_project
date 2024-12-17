@@ -60,7 +60,8 @@
               {% endif %}
               <p class="product-description">{{product_info["product_explain"]}}</p>
 
-              
+
+              {% if user_type != "Designer" %}
               <!-- 사이즈 선택 -->
               <div class="product-size">
                 <h3>Choose Size</h3>
@@ -70,8 +71,6 @@
                   <button class="size-btn">L</button>
                 </div>
               </div>
-      
-              {% if user_type != "Designer" %}
               <!-- 수량 선택 및 장바구니 -->
               <div class="product-actions">
                 <div class="quantity-selector">
@@ -82,39 +81,50 @@
                 <button class="add-to-cart-btn">Add to Cart</button>
               </div>
               {% endif %}
+
+              {% if user_type == "Designer" %}
+              <a href="/product_delete?pid={{pid}}" class="frame-wrapper" id="frameContainer">
+                <div class="frame-container">
+                    <div class="virtual-try-on-wrapper">
+                        <div class="virtual-try-on">제품 삭제하기</div>
+                    </div>
+                </div>
+              </a>
+              <br>
+              <a href="/try_on?pid={{pid}}&type={{user_type}}" class="frame-wrapper" id="frameContainer">
+                <div class="frame-container">
+                    <div class="virtual-try-on-wrapper">
+                        <div class="virtual-try-on">Virtual Try on</div>
+                    </div>
+                </div>
+              </a>
+              {% endif %}
               
             </div>
           </div>
         </section>
-      <div class="parent">
+      
         {% if user_type != "Designer" %}
+        <div class="parent">
         <b class="b">
           <span class="txt">
               <span class="span">이 옷, 내 스타일일까..🤔?</span>
               <span class="span1">미리 입어보기 </span>
               <span>→</span>
           </span>
-      </b>
-      
-        {% endif %}
-    		<a href="/try_on?pid={{pid}}&type={{user_type}}" class="frame-wrapper" id="frameContainer">
-      			<div class="frame-container">
-        				<div class="virtual-try-on-wrapper">
-          					<div class="virtual-try-on">Virtual Try on</div>
-        				</div>
-      			</div>
-    		</a>
-
-        {% if user_type == "Designer" %}
-        <a href="/product_delete?pid={{pid}}" class="frame-wrapper" id="frameContainer">
-          <div class="frame-container">
-              <div class="virtual-try-on-wrapper">
-                  <div class="virtual-try-on">제품 삭제하기</div>
-              </div>
-          </div>
+        </b>
+        
+          
+        <a href="/try_on?pid={{pid}}&type={{user_type}}" class="frame-wrapper" id="frameContainer">
+            <div class="frame-container">
+                <div class="virtual-try-on-wrapper">
+                    <div class="virtual-try-on">Virtual Try on</div>
+                </div>
+            </div>
         </a>
+        </div>
         {% endif %}
-  	  </div>
+  	  
       <div class="detail-container">
         <div class="product-detail-box">
           
