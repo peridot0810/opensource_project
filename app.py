@@ -469,6 +469,19 @@ def upload_done():
 
 
 
+# ========= header/footer 렌더링 ==========
+@app.route('/header')
+def header():
+    return render_template('components/header.html')  # templates/components/header.html 렌더링
+
+@app.route('/footer')
+def footer():
+    return render_template('components/footer.html')  # templates/components/footer.html 렌더링
+# ================================
+
+
+
+
 # ====== test =======
 @app.route("/test")
 def test():
