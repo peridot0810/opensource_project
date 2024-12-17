@@ -3,3 +3,4 @@ __pycache__/
 .DS_Store
 VTON/static/
 venv/
+static/consumer_img/

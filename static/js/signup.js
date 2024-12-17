@@ -28,12 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const finalUrl = response.url;
 
-            if (finalUrl.includes("/login")) {
+            if (finalUrl.includes("/signin")) {
+                alert(`회원가입 실패`);
+                window.location.href = finalUrl;
+            } else if (finalUrl.includes("/login")) {
                 alert("회원가입 성공!");
                 window.location.href = finalUrl;
-            } else if (finalUrl.includes("/signin")) {
-                const result = await response.text();
-                alert(`회원가입 실패: ${result}`);
             } else {
                 alert("예상치 못한 응답입니다.");
             }
