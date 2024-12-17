@@ -70,6 +70,7 @@
 }
 .shop-now {
     position: relative;
+    cursor: pointer;
 }
 .shop-now-wrapper {
     position: absolute;

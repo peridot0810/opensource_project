@@ -1,3 +1,8 @@
+img {
+  display: block; /* 인라인 이미지를 블록 요소로 변경 */
+  margin: 0 auto; /* 좌우 마진을 자동으로 설정해 수평 중앙 정렬 */
+}
+
 /* 제품 상세 페이지 공통 스타일 */
 .product-detail {
     max-width: 1000px;
@@ -190,7 +195,7 @@
 /* 상세정보 컨테이너 스타일 */
 .detail-container {
     width: 1440px;
-    height: 800px;
+    /* height: 800px; */
     margin: 40px auto; /* 가운데 정렬 */
     border-radius: 8px;
     padding: 20px; /* 내부 여백 */
