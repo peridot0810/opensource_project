@@ -1,32 +1,27 @@
 <footer class="header">
-    <div class="header-content">
-        <div class="header-fitme-parent">
-    		<div class="header-fitme"  onclick="window.location.href='/'">Fit.Me</div>
-    		<div class="header-frame-wrapper">
-      			<div class="header-shop-parent">
-        				<div class="header-shop">Shop</div>
-        				<img class="header-frame-icon" alt="" src="../../../static/img/dropdown.svg">
-      			</div>
-    		</div>
-    		<div class="header-frame-parent">
-      			<img class="header-frame-icon1" alt="" src="../../../static/img/search.svg">
-      			<div class="header-shop">Search for products...</div>
-    		</div>
-    		<div class="header-div1" id="text1" onclick="redirect('/category');">전체제품 </div>
-    		<div class="header-div1" id="text1" onclick="redirect('/signin');">가입하기 </div>
-				
-				<div class="header-div1" id="text2" onclick="redirect('/logout');">로그아웃</div>
-    		
-    		<div class="header-frame-group">
-      			<img class="header-frame-icon1" alt="" src="../../../static/img/cart-icon.svg">
-      			<img class="header-frame-icon1" alt="" src="../../../static/img/user.svg" onclick="redirect('/my_page')">
-    		</div>
-  	    </div>
-    </div>
+	<div class="header-content">
+			<div class="header-fitme-parent">
+			<div class="header-fitme"  onclick="window.location.href='/'">Fit.Me</div>
+			<div class="header-frame-wrapper">
+					<div class="header-shop-parent">
+							<div class="header-shop"  onclick="window.location.href = '/category';">Shop</div>
+							<img class="header-frame-icon" alt="" src="../../../static/img/dropdown.svg">
+					</div>
+			</div>
+			<div class="header-frame-parent">
+					<img class="header-frame-icon1" alt="" src="../../../static/img/search.svg">
+					<div class="header-shop">Search for products...</div>
+			</div>
+			<div class="header-div1" id="text1" onclick="window.location.href = '/category';">전체 제품 </div>
+			
+			<div class="header-div1" id="text2" onclick="window.location.href = '/logout';">로그아웃</div>
+			
+			
+			<div class="header-frame-group">
+					<img class="header-frame-icon1" alt="" src="../../../static/img/cart-icon.svg">
+					<img class="header-frame-icon1" alt="" src="../../../static/img/user.svg" onclick="window.location.href='/my_page'">
+			</div>
+			</div>
+	</div>
 </footer>
 <script src="header.js"></script>
-<script>
-	function redirect(url){
-		window.location.href = "http://127.0.0.1:8080" + url
-	}
-</script>
