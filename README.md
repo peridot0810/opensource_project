@@ -71,7 +71,9 @@ $ python3 app.py
 - 제품 상세페이지에 'Virtual Try on' 클릭 -> try on 페이지로 넘어감
 - 회원가입 할때 이미지를 업로드 하지 않았다면 마이페이지로 넘어감
 - designer의 경우, 모델 이미지도 직접 입력
-  
 
 ## 최종 시연 영상
 https://youtu.be/OxibUSB8Bfs 
+
+## 최종 보고서
+[10조 최종 발표 보고서_FitMe.pdf](https://github.com/user-attachments/files/18167409/10._FitMe.pdf)
