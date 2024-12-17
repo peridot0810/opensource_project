@@ -412,6 +412,7 @@ def try_on():
   try:
     user = Server.check_login()
   except:
+    flash("로그인이 필요한 서비스입니다") 
     return redirect(url_for("login"))
   
   if user.type == "Consumer" and user.img_path == "No_img":

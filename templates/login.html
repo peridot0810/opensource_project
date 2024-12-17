@@ -24,6 +24,17 @@
     <link rel="icon" type="image/png" sizes="154x154" href="{{ url_for('static', filename='img/icon.png') }}">
 </head> 
 <body>
+    <!-- Flash 메시지 표시 -->
+    {% block message %}
+        {%with messages = get_flashed_messages()%}
+            {%if messages %}
+            <script type="text/javascript">
+            alert("{{messages[-1]}}");
+            </script>
+            {%endif%}
+        {%endwith%}
+    {% endblock message %}
+    
     <!-- Header -->
     <div id="header-placeholder"></div>
 
