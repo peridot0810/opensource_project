@@ -26,7 +26,7 @@ $ pip install -r requirements.txt
 ```bash
 $ python3 app.py
 ```
-6. FitMe 페이지 접속 : http://127.0.0.1:8080/
+6. FitMe 페이지 접속 : http://127.0.0.1:8080/
 
 7. 새로운 터미널에서 VTON 폴더 진입 
 ```bash
