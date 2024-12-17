@@ -51,57 +51,28 @@
                 </div>
             </div>
   	    </div>
-          <div class="boarding">
-    		<div class="boarding-child">
-    		</div>
-    		<div class="borr">마이페이지에 내 사진 등록하고 가상 피팅해보세요!</div>
+        <div class="boarding">
+    	<div class="boarding-child">
+    	</div>
+    	<div class="borr">마이페이지에 내 사진 등록하고 가상 피팅해보세요!</div>
   	    </div>
-          <div class ="top-selling-word">Top Selling</div>
-          <div class="top-products-container">
+        <div class ="top-selling-word">Top Selling</div>
+        <div class="top-products-container">
             
-            <!-- 상품 1 -->
-            <div class="top-product">
-                <img src="{{top_selling[top_selling_list[0]]['img_path']}}"class="top-product-image">
+            {% for pid in top_selling %}
+            <div class="top-product" onclick="window.location.href='/product_detail?pid={{pid}}'">
+                <img src="{{top_selling[pid]['img_path']}}"class="top-product-image">
                 <h3 class="top-product-title"></h3>
                 <div class="top-product-rating">
-                    ★★★☆☆ <span>{{top_selling[top_selling_list[0]]['rating']}}/5</span>
+                    ★★★☆☆ <span>{{top_selling[pid]['rating']}}/5</span>
                 </div>
-                <p class="top-product-price">{{top_selling[top_selling_list[0]]['discounted_price']}}원</p>
+                <p class="top-product-price">{{top_selling[pid]['discounted_price']}}원</p>
                 <button class="top-virtual-try-on">Virtual Try On</button>
             </div>
-        
-            <!-- 상품 2 -->
-            <div class="top-product">
-                <img src="{{top_selling[top_selling_list[1]]['img_path']}}"class="top-product-image">
-                <h3 class="top-product-title"></h3>
-                <div class="top-product-rating">
-                    ★★★★☆ <span>{{top_selling[top_selling_list[1]]['rating']}}/5</span>
-                </div>
-                <p class="top-product-price">{{top_selling[top_selling_list[1]]['discounted_price']}}원</p>
-                <button class="top-virtual-try-on">Virtual Try On</button>
-            </div>
-        
-            <!-- 상품 3 -->
-            <div class="top-product">
-                <img src="{{top_selling[top_selling_list[2]]['img_path']}}"class="top-product-image">
-                <h3 class="top-product-title"></h3>
-                <div class="top-product-rating">
-                    ★★★★★ <span>{{top_selling[top_selling_list[2]]['rating']}}/5</span>
-                </div>
-                <p class="top-product-price">{{top_selling[top_selling_list[2]]['discounted_price']}}원</p>
-                <button class="top-virtual-try-on">Virtual Try On</button>
-            </div>
-        
-            <!-- 상품 4 -->
-            <div class="top-product">
-                <img src="{{top_selling[top_selling_list[3]]['img_path']}}"class="top-product-image">
-                <h3 class="top-product-title"></h3>
-                <div class="top-product-rating">
-                    ★★★☆☆ <span>{{top_selling[top_selling_list[3]]['rating']}}/5</span>
-                </div>
-                <p class="top-product-price">{{top_selling[top_selling_list[3]]['discounted_price']}}원</p>
-                <button class="top-virtual-try-on">Virtual Try On</button>
-            </div>
+            {% endfor %}
+
+
+            
         </div>
         
         

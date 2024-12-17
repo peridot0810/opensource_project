@@ -95,40 +95,16 @@ def my_page():
     user = Server.check_login()
   except Exception as e:
     print(e)
-    return redirect(url_for("login_userType"))
+    return redirect(url_for("login"))
   
   user_info = Server.get_user_detail(user.id, user.type)
   
-  return render_template("my_page.html", user_info = user_info, user_type=user.type)
+  return render_template("mypage.html", user_info = user_info, user_type=user.type)
 # ===============================
   
 
 
 # ========= 내 정보 수정 ============
-@app.route("/edit_info")
-def edit_info():
-  try:
-    user = Server.check_login()
-  except:
-    return redirect(url_for("login_userType"))
-  
-  user_info = {
-    'id' : user.id,
-    'name' : user.name,
-    'pwd' : user.pwd,
-    'phone' : user.phone,
-    'email' : user.email,
-    'type' : user.type
-  }  
-
-  if user.type == "Consumer":
-    user_info["img_path"] = user.img_path
-    return render_template("edit_info_consumer.html", user_info = user_info)
-  if user.type == "Designer":
-    user_info["img_path"] = user.dir_path
-    return render_template("edit_info_designer.html", user_info = user_info)
-  
-
 @app.route("/edit_done", methods=["post"])  
 def edit_done():
   try:
@@ -137,11 +113,9 @@ def edit_done():
     return redirect(url_for("index"))
   
   update_info = {
-    "id" : request.form.get("id"),
-    "pwd" : request.form.get("pwd"),
-    "name" : request.form.get("name"),
-    "phone" : request.form.get("phone"),
-    "email" : request.form.get("email")
+    "current_pwd" : request.form.get("current_pwd"),
+    "new_pwd" : request.form.get("new_pwd"),
+    "confirm_pwd" : request.form.get("confirm_pwd"),
   }
 
   if Server.edit_info(user.id, user.type, update_info): # 정보 수정 성공
@@ -208,14 +182,6 @@ def signin_Root():
 
 
 # ===== 로그인/로그아웃 =====
-@app.route("/login_userType")
-def login_userType():                            # 디자이너인지 소비자인지 구분
-  try:
-    Server.check_login()                     # 로그인 상태라면 redirect -> 메인페이지
-    return redirect(url_for("index"))
-  except:
-    return render_template("login_userType.html")
-
 @app.route("/login") 
 def login():
   try:
@@ -432,7 +398,7 @@ def try_on():
   try:
     user = Server.check_login()
   except:
-    return redirect(url_for("login_userType"))
+    return redirect(url_for("login"))
   
   if user.type == "Consumer" and user.img_path == "No_img":
     flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 

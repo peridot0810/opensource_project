@@ -179,40 +179,33 @@ class DBModule:
 
   # ========== 유저 정보 수정 ==========
   def edit_info(self, id, type, update_info):
-    if id != update_info["id"] and not self.signin_verification(update_info["id"], type):
-      return None
-
     try:
-      if id != update_info["id"]:     # id를 변경한 경우
-        if type == "Designer":
-          products = self.get_products(did=id)
-          if products:
-            for product_id in products:
-              parts = products[product_id]['img_path'].split('/')
-              parts[-2] = update_info["id"]
-              new_product_path = '/'.join(parts)
-              self.db.child(f"{type}s/{id}/products/{product_id}/").update({"img_path" : new_product_path})
+      
+      # if type == "Designer":
+      #   products = self.get_products(did=id)
+      #   if products:
+      #     for product_id in products:
+      #       parts = products[product_id]['img_path'].split('/')
+      #       parts[-2] = update_info["id"]
+      #       new_product_path = '/'.join(parts)
+      #       self.db.child(f"{type}s/{id}/products/{product_id}/").update({"img_path" : new_product_path})
 
-        user_info = self.get_user_detail(id, type)
-        new_path = self.edit_user_data(id, user_info, update_info)
-        user_info["img_path"] = new_path
-        user_info["id"] = update_info["id"]
-        user_info["pwd"] = update_info["pwd"]
-        user_info["name"] = update_info["name"]
-        user_info["phone"] = update_info["phone"]
-        user_info["email"] = update_info["email"]
+      # user_info = self.get_user_detail(id, type)
+      # new_path = self.edit_user_data(id, user_info, update_info)
+      # user_info["img_path"] = new_path
+      # user_info["id"] = update_info["id"]
+      # user_info["pwd"] = update_info["pwd"]
+      # user_info["name"] = update_info["name"]
+      # user_info["phone"] = update_info["phone"]
+      # user_info["email"] = update_info["email"]
 
-        self.db.child(f"{type}s/{update_info['id']}").set(user_info)
-        self.db.child(f"{type}s/{id}").remove()
+      # self.db.child(f"{type}s/{update_info['id']}").set(user_info)
+      # self.db.child(f"{type}s/{id}").remove()
 
-      else:                           # id를 변경하지 않은 경우
-        user_info = self.get_user_detail(id, type)
-        user_info["pwd"] = update_info["pwd"]
-        user_info["name"] = update_info["name"]
-        user_info["phone"] = update_info["phone"]
-        user_info["email"] = update_info["email"]
+      user_info = self.get_user_detail(id, type)
+      user_info["pwd"] = update_info["new_pwd"]
 
-        self.db.child(f"{type}s/{id}").update(user_info)
+      self.db.child(f"{type}s/{id}").update(user_info)
 
       return user_info
     
