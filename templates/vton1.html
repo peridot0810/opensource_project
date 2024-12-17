@@ -34,11 +34,16 @@
             <h2>&lt;고객 id&gt;님이 &lt;상품 이름&gt; 입어보는 중...</h2>
             <div class="fitme-tryon-layout">
                 <!-- 왼쪽 이미지 컨테이너 -->
+                {% if type == "Consumer" %}
                 <div class="image-container">
                     <div class="image-box">
-                        <img src="/static/img/tryon_user.png" alt="사용자 이미지">
+                        <img src="{{model_img_path}}" alt="사용자 이미지">
                     </div>
                 </div>
+
+                {% elif type == "Designer" %}
+                {% endif %}
+                
     
                 <!-- 중앙 + 기호 -->
                 <div class="plus-sign">+</div>
@@ -46,14 +51,13 @@
                 <!-- 오른쪽 이미지 컨테이너 -->
                 <div class="image-container">
                     <div class="image-box">
-                        <img src="/static/img/retro_hoodie.png" alt="상품 이미지">
+                        <img src="{{product_img_path}}" alt="상품 이미지">
                     </div>
                 </div>
             </div>
         </section>
     </main>
     
-      
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>

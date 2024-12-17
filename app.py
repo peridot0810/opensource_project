@@ -400,12 +400,12 @@ def try_on():
   except:
     return redirect(url_for("login"))
   
-  if user.type == "Consumer" and user.img_path == "No_img":
-    flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
-    return redirect(url_for("upload_img", cid=user.id))
+  # if user.type == "Consumer" and user.img_path == "No_img":
+  #   flash("해당 서비스 이용을 위해서는 사진 업로드가 필요합니다") 
+  #   return redirect(url_for("upload_img", cid=user.id))
 
   pid = request.args.get("pid")
-  type = request.args.get("type")
+  
   if user.type == "Consumer":
     product_info = Server.get_product_detail(pid)
     model_img_path = user.img_path
@@ -414,7 +414,8 @@ def try_on():
     model_img_path = None
   product_img_path = product_info["img_path"]
   
-  return render_template("try_on.html", model_img_path=model_img_path, product_img_path=product_img_path, type=user.type)
+  print("api called")
+  return render_template("vton1.html", model_img_path=model_img_path, product_img_path=product_img_path, type=user.type)
 
 @app.route("/upload_img/<string:cid>")        # 회원가입때 이미지를 업로드하지 않은 경우
 def upload_img(cid):
