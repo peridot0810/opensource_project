@@ -31,7 +31,7 @@ def get_gradio_client():
     """Gradio Client를 필요할 때만 초기화"""
     global gradio_client
     if gradio_client is None:
-        gradio_client = GradioClient("yisol/Virtual-Try-On")
+        gradio_client = GradioClient("yisol/IDM-VTON")
     return gradio_client
 
 def call_gradio_api(person_image_path, garment_image_path):
