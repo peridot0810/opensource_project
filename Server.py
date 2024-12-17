@@ -138,15 +138,7 @@ class Server:
       self.log_out()
       self.log_in(new_user_info)
       # self.User 업데이트
-      self.User.id = new_user_info["id"]
-      self.User.name = new_user_info["name"]
       self.User.pwd = new_user_info["pwd"]
-      self.User.phone = new_user_info["phone"]
-      self.User.email = new_user_info["email"]
-      if type == "Consumer":
-        self.User.img_path = new_user_info["img_path"]
-      elif type == "Deisnger":
-        self.User.dir_path = new_user_info["img_path"]
       return True
     else:
       return False
